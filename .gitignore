@@ -41,3 +41,11 @@ yarn-error.log
 # System Files
 .DS_Store
 Thumbs.db
+3rdpartylicenses.txt
+favicon.ico
+index.html
+inline.35740927cc1786a2ac54.bundle.js
+main.9cb3125bdaa3b61c089d.bundle.js
+polyfills.f77454f386e1728adda2.bundle.js
+styles.d41d8cd98f00b204e980.bundle.css
+vendor.330bdb50b9e3457f8646.bundle.js
