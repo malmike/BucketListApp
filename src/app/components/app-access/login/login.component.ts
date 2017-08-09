@@ -40,6 +40,10 @@ export class LoginComponent implements OnInit{
         this.buildForm();
     }
 
+    navRegistration(){
+        this.router.navigate(['/registration']);
+    }
+
     buildForm(): void {
          this.loginForm = this.fb.group({
             'email':[null,[
