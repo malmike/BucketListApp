@@ -1,5 +1,24 @@
-<div layout="row" layout-align="center center" id="container">
+ <div layout="row" layout-align="center center" id="container">
     <md-card>
-      <md-card-title>{{ title }}</md-card-title>
+        <md-card-header>
+            <img md-card-image src="assets/images/BucketListLogo.png" style="margin:auto; width: 70%; background-color: skyblue ">
+        </md-card-header><br>
+        <md-card-content>
+            <form>
+                <md-input-container>
+                    <input mdInput placeholder="Email" type="email" id="email" required>
+                    <md-hint align="end"></md-hint>
+                </md-input-container><br/>
+                <md-input-container>
+                    <input mdInput placeholder="Password" type="password" id="password" required>
+                </md-input-container>
+                <div id="submit-container">
+                    <button md-raised-button type="submit">LOGIN</button>
+                </div>
+            </form>
+        </md-card-content>
+        <md-card-footer>
+            <a >Have no account, Register here</a>
+        </md-card-footer>
     </md-card>
 </div>
