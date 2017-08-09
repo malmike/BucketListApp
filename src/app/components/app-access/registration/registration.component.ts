@@ -22,8 +22,18 @@ import { UserModel } from '../../../models/user.model';
 })
 
 export class RegistrationComponent implements OnInit{
+
+    constructor(
+        private fb: FormBuilder,
+        private router: Router,
+        private regExpService: RegExpService,
+        private webApiPathService: WebApiPathService,
+        private registrationService: RegistrationService,
+        private snackBar: MdSnackBar){}
+
     ngOnInit(): void {
         throw new Error("Method not implemented.");
     }
+
 
 }
