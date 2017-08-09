@@ -12,9 +12,9 @@ export class RegistrationService {
 
     authUrl:string = GlobalVariables.getInstance().getWebApi();
     private user: UserModel = new UserModel();
+    private response: ResponseModel = new ResponseModel();
     private token: string;
     private password: string;
-    private response: ResponseModel;
 
     constructor(private http: Http) {}
 
@@ -37,6 +37,7 @@ export class RegistrationService {
                             this.user.password = this.password;
                             this.token = resp.token;
                             localStorage.setItem('currentUser', JSON.stringify({ user: this.user, token: this.token }));
+                            console.log(resp)
                             this.response.status = resp.status;
                             this.response.message = resp.message;
                             return this.response;

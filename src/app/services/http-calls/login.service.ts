@@ -12,9 +12,9 @@ export class LoginService {
 
     authUrl:string = GlobalVariables.getInstance().getWebApi();
     private user: UserModel = new UserModel();
+    private response: ResponseModel = new ResponseModel();
     private token: string;
     private password: string;
-    private response: ResponseModel
 
     constructor(private http: Http) {}
 
