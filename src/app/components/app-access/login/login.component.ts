@@ -83,5 +83,28 @@ export class LoginComponent implements OnInit{
         }
     }
 
+     onSubmitForm(){
+        this.user = this.loginForm.value;
+        this.loginService.authenticate(this.user, this.webApiPathService.getWebApiPath('login').path)
+            .subscribe(responseSp => {
+                if (responseSp.status === "success") {
+                    console.log(responseSp.message);
+                    this.snackBar.open(responseSp.message, '', {
+                        duration: 2000,
+                    });
+                }else{
+                    this.snackBar.open(responseSp.message, '', {
+                        duration: 2000,
+                    });
+                    console.log(responseSp.message);
+                }
+            },
+            errMsg => {
+                this.snackBar.open(errMsg, '', {
+                        duration: 2000,
+                });
+                console.log(errMsg);
+            });
+    }
 
 }
