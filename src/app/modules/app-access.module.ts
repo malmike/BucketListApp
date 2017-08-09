@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { ReactiveFormsModule  } from '@angular/forms';
 
 //Components
+import { LoginComponent } from '../components/app-access/login/login.component';
 import { RegistrationComponent } from '../components/app-access/registration/registration.component';
 
 //Routing Modules
@@ -18,6 +19,7 @@ import { AppAccessRoutingModule } from '../routes/app-access-routing.module';
         AppAccessRoutingModule
     ],
     declarations: [
+        LoginComponent,
         RegistrationComponent
     ],
     providers: [
