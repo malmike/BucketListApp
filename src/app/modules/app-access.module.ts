@@ -15,6 +15,11 @@ import { RegistrationComponent } from '../components/app-access/registration/reg
 // Routing Modules
 import { AppAccessRoutingModule } from '../routes/app-access-routing.module';
 
+// Service
+import { WebApiPathService } from '../services/shared-information/webapi-path.service';
+import { RegistrationService } from '../services/http-calls/registration.service';
+import { LoginService } from '../services/http-calls/login.service';
+
 @NgModule({
     imports: [
         CommonModule,
@@ -28,6 +33,10 @@ import { AppAccessRoutingModule } from '../routes/app-access-routing.module';
         RegistrationComponent
     ],
     providers: [
+        WebApiPathService,
+        RegistrationService,
+        LoginService
     ]
 })
+
 export class AppAccessModule { }
