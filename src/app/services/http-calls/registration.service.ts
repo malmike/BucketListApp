@@ -7,7 +7,7 @@ import { GlobalVariables } from '../../global-variables/global-variables';
 import { UserModel } from '../../models/user.model';
 
 @Injectable()
-export class RegisterSpService {
+export class RegistrationService {
 
     authUrl:string = GlobalVariables.getInstance().getWebApi();
     private user: UserModel = new UserModel();
