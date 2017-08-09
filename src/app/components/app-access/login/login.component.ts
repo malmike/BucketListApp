@@ -14,13 +14,28 @@ import { UserModel } from '../../../models/user.model';
 
 
 @Component({
-  selector: 'login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+    selector: 'login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css']
 })
 
 export class LoginComponent implements OnInit{
-  ngOnInit(): void {
-    throw new Error("Method not implemented.");
-  }
+    loginForm: FormGroup;
+    active:boolean = true;
+    user: UserModel = new UserModel();
+
+    constructor(
+        private fb: FormBuilder,
+        private router: Router,
+        private regExpService: RegExpService,
+        private webApiPathService: WebApiPathService,
+        private loginService: LoginService,
+        private snackBar: MdSnackBar){}
+
+
+    ngOnInit(): void {
+        throw new Error("Method not implemented.");
+    }
+
+
 }
