@@ -35,5 +35,9 @@ export class RegistrationComponent implements OnInit{
         throw new Error("Method not implemented.");
     }
 
+    navLogin(){
+        this.router.navigate(['/login']);
+    }
+
 
 }
