@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'sp-register',
+  selector: 'registration',
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
 
 export class RegistrationComponent {
-  title = 'BucketListApp';
+  title = 'BucketListApp Registration';
 }
