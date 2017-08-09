@@ -4,21 +4,26 @@
             <img md-card-image src="assets/images/BucketListLogo.png" style="margin:auto; width: 70%; background-color: skyblue ">
         </md-card-header><br>
         <md-card-content>
-            <form>
+            <form [formGroup]="registrationForm" *ngIf="active">
                 <md-input-container>
-                    <input mdInput placeholder="First Name" type="text" id="fname" required>
-                    <md-hint align="end"></md-hint>
+                    <input mdInput placeholder="First Name" formControlName="fname" type="text" id="fname" required>
+                    <md-hint align="end" *ngIf="formErrors.fname">{{ formErrors.fname }}</md-hint>
                 </md-input-container><br>
                 <md-input-container>
-                    <input mdInput placeholder="Last Name" type="text" id="lname" required>
-                    <md-hint align="end"></md-hint>
+                    <input mdInput placeholder="Last Name" formControlName="lname" type="text" id="lname" required>
+                    <md-hint align="end" *ngIf="formErrors.lname">{{ formErrors.lname }}</md-hint>
                 </md-input-container><br>
                 <md-input-container>
-                    <input mdInput placeholder="Email" type="email" id="email" required>
-                    <md-hint align="end"></md-hint>
+                    <input mdInput placeholder="Email" formControlName="email" type="email" id="email" required>
+                    <md-hint align="end" *ngIf="formErrors.email">{{ formErrors.email }}</md-hint>
                 </md-input-container><br>
                 <md-input-container>
-                    <input mdInput placeholder="Password" type="password" id="password" required>
+                    <input mdInput placeholder="Password" formControlName="password" type="password" id="password" required>
+                    <md-hint align="end" *ngIf="formErrors.password">{{ formErrors.password }}</md-hint>
+                </md-input-container><br>
+                <md-input-container>
+                    <input mdInput placeholder="Re-Enter Password" type="password" formControlName="confirmPassword" id="confirmPassword" required>
+                    <md-hint align="end" *ngIf="provePassword">{{ provePassword }}</md-hint>
                 </md-input-container>
                 <div id="submit-container">
                     <button md-raised-button type="submit">REGISTER</button>
