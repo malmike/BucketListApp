@@ -87,7 +87,7 @@ export class LoginComponent implements OnInit{
         }
     }
 
-     onSubmitForm(){
+    onSubmitForm(){
         this.user = this.loginForm.value;
         this.loginService.authenticate(this.user, this.webApiPathService.getWebApiPath('login').path)
             .subscribe(responseSp => {
