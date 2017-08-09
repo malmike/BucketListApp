@@ -4,13 +4,13 @@
             <img md-card-image src="assets/images/BucketListLogo.png" style="margin:auto; width: 70%; background-color: skyblue ">
         </md-card-header><br>
         <md-card-content>
-            <form>
+            <form [formGroup]="loginForm" *ngIf="active">
                 <md-input-container>
-                    <input mdInput placeholder="Email" type="email" id="email" required>
-                    <md-hint align="end"></md-hint>
+                    <input mdInput placeholder="Email" formControlName="email" type="email" id="email" required>
+                    <md-hint align="end" *ngIf="formErrors.email">{{ formErrors.email }}</md-hint>
                 </md-input-container><br/>
                 <md-input-container>
-                    <input mdInput placeholder="Password" type="password" id="password" required>
+                    <input mdInput placeholder="Password" formControlName="password" type="password" id="password" required>
                 </md-input-container>
                 <div id="submit-container">
                     <button md-raised-button type="submit">LOGIN</button>
