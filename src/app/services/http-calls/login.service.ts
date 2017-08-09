@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 
 import { GlobalVariables } from '../../global-variables/global-variables';
 import { UserModel } from '../../models/user.model';
+import { ResponseModel } from '../../models/response.model'
 
 @Injectable()
 export class LoginService {
@@ -13,10 +14,11 @@ export class LoginService {
     private user: UserModel = new UserModel();
     private token: string;
     private password: string;
+    private response: ResponseModel
 
     constructor(private http: Http) {}
 
-    authenticate(user: UserModel, path: string): Observable<string>{
+    authenticate(user: UserModel, path: string): Observable<ResponseModel>{
         let headers = new Headers();
         this.password = user.password;
         headers.append('Content-Type', 'application/json');
@@ -31,15 +33,19 @@ export class LoginService {
         return this.http
             .post(urlPath, JSON.stringify(user), requestoptions)
             .map((res: Response) => {
-                let response = res.json();
-                if(response.status === 'success'){
-                    this.user = response.data;
+                let resp = res.json();
+                if(resp.status === 'success'){
+                    this.user = resp.data;
                     this.user.password = this.password;
-                    this.token = response.token;
+                    this.token = resp.token;
                     localStorage.setItem('currentUser', JSON.stringify({ user: this.user, token: this.token }));
-                    return response.message;
+                    this.response.status = resp.status;
+                    this.response.message = resp.message;
+                    return this.response;
                 }else{
-                    return response.message;
+                    this.response.status = "fail";
+                    this.response.message = resp.message;
+                    return this.response;
                 }
             })
             .catch((err) => this.handleError(err));
