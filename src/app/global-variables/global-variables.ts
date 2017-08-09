@@ -1,6 +1,6 @@
 export class GlobalVariables {
     private static instance: GlobalVariables;
-    private webApi:string = "http://localhost:5000/api/v1/";
+    private webApi:string = "http://localhost:5000/";
     private constructor() {}
     static getInstance() {
         if (!GlobalVariables.instance) {
