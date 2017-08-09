@@ -1,4 +1,17 @@
-import { Component } from '@angular/core';
+// External Dependencies
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MdSnackBar } from '@angular/material';
+
+// Services
+import { RegExpService } from '../../../services/shared-information/reg-exp.service';
+import { WebApiPathService } from '../../../services/shared-information/webapi-path.service';
+import { LoginService } from '../../../services/http-calls/login.service';
+
+// Models
+import { UserModel } from '../../../models/user.model';
+
 
 @Component({
   selector: 'login',
@@ -6,6 +19,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./login.component.css']
 })
 
-export class LoginComponent {
-  title = 'BucketListApp Login';
+export class LoginComponent implements OnInit{
+  ngOnInit(): void {
+    throw new Error("Method not implemented.");
+  }
 }
