@@ -4,7 +4,7 @@
             <img md-card-image src="assets/images/BucketListLogo.png" style="margin:auto; width: 70%; background-color: skyblue ">
         </md-card-header><br>
         <md-card-content>
-            <form [formGroup]="registrationForm" *ngIf="active">
+            <form [formGroup]="registrationForm" *ngIf="active" (ngSubmit)="onSubmitForm()">
                 <md-input-container>
                     <input mdInput placeholder="First Name" formControlName="fname" type="text" id="fname" required>
                     <md-hint align="end" *ngIf="formErrors.fname">{{ formErrors.fname }}</md-hint>
@@ -26,7 +26,7 @@
                     <md-hint align="end" *ngIf="provePassword">{{ provePassword }}</md-hint>
                 </md-input-container>
                 <div id="submit-container">
-                    <button md-raised-button type="submit">REGISTER</button>
+                    <button md-raised-button type="submit" [disabled]="!registrationForm.valid">REGISTER</button>
                 </div>
             </form>
         </md-card-content>
