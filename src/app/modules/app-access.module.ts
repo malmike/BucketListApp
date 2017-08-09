@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import 'hammerjs';
 
 // Modules
@@ -26,6 +26,7 @@ import { LoginService } from '../services/http-calls/login.service';
         CommonModule,
         HttpModule,
         FormsModule,
+        ReactiveFormsModule,
         AppAccessRoutingModule,
         CustomMaterialModule
     ],
