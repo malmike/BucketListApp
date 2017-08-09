@@ -2,7 +2,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
-import { ReactiveFormsModule  } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import 'hammerjs';
 
 // Modules
 import { CustomMaterialModule } from './custom-material.module';
@@ -18,7 +19,7 @@ import { AppAccessRoutingModule } from '../routes/app-access-routing.module';
     imports: [
         CommonModule,
         HttpModule,
-        ReactiveFormsModule,
+        FormsModule,
         AppAccessRoutingModule,
         CustomMaterialModule
     ],
