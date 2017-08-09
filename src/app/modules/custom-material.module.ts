@@ -1,10 +1,10 @@
 //External modules and dependencies
 import { NgModule } from '@angular/core';
-import { MdCardModule } from '@angular/material';
+import { MdCardModule, MdInputModule, MdButtonModule } from '@angular/material';
 
 @NgModule({
-  imports: [MdCardModule],
-  exports: [MdCardModule],
+  imports: [MdCardModule, MdInputModule, MdButtonModule],
+  exports: [MdCardModule, MdInputModule, MdButtonModule]
 })
 
 export class CustomMaterialModule { }
