@@ -139,7 +139,7 @@ export class RegistrationComponent implements OnInit{
                     this.snackBar.open(responseSp.message, '', {
                         duration: 2000,
                     });
-                    this.router.navigate(['/nav', '']);
+                    this.router.navigate(['/nav', 'bucketlist']);
                 }else{
                     this.snackBar.open(responseSp.message, '', {
                         duration: 2000,
