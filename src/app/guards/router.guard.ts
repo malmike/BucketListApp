@@ -47,7 +47,7 @@ export class CanActivateGuard implements CanActivate{
         if (this.permissions.canLoadChildren(this.currentUser)){
             return true;
         }
-        this.router.navigate(['/registration']);
+        this.router.navigate(['/login']);
         return false
     }
 }
