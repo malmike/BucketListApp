@@ -12,7 +12,7 @@ import { BucketlistPageComponent } from '../components/bucketlist-page/bucketlis
 
 @NgModule({
     imports: [RouterModule.forChild([
-        {path: '', component:BucketlistComponent,
+        {path: '', component:BucketlistComponent, canActivate:[CanActivateGuard],
             children:[
                 { path: '', redirectTo:'/bucketlist', pathMatch: 'full'},
                 { path: 'bucketlist', component: BucketlistPageComponent }]
