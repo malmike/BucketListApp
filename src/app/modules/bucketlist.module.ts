@@ -9,11 +9,14 @@ import 'hammerjs';
 import { CustomMaterialModule } from './custom-material.module';
 
 // Components
-import { BucketlistComponent } from '../components/bucketlist/bucketlist.component'
-import { BucketlistPageComponent } from '../components/bucketlist-page/bucketlist-page.component'
+import { BucketlistComponent } from '../components/bucketlist/bucketlist.component';
+import { BucketlistPageComponent } from '../components/bucketlist-page/bucketlist-page.component';
 
 // Routing Modules
-import { BucketlistRoutingModule } from '../routes/bucketlist-routing.module'
+import { BucketlistRoutingModule } from '../routes/bucketlist-routing.module';
+
+// Guards
+import { Permissions, CanActivateGuard } from '../guards/router.guard';
 
 // Service
 
@@ -32,6 +35,8 @@ import { BucketlistRoutingModule } from '../routes/bucketlist-routing.module'
         BucketlistPageComponent
     ],
     providers: [
+        Permissions,
+        CanActivateGuard
     ]
 })
 
