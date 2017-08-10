@@ -7,9 +7,13 @@ import { AppRoutingModule } from './routes/app-routing.module'
 
 // Modules
 import { AppAccessModule } from './modules/app-access.module';
+import { BucketlistModule } from './modules/bucketlist.module';
 
 // Components
 import { AppComponent } from './app.component';
+
+// Guards
+import { CanLoadGuard } from './guards/router.guard'
 
 @NgModule({
   declarations: [
@@ -18,9 +22,12 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserAnimationsModule,
     AppRoutingModule,
-    AppAccessModule
+    AppAccessModule,
+    BucketlistModule
   ],
-  providers: [],
+  providers: [
+    CanLoadGuard
+  ],
   bootstrap: [AppComponent]
 })
 
