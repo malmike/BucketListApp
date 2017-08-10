@@ -7,13 +7,15 @@ import { CanActivateGuard } from '../guards/router.guard';
 
 //Components
 import { BucketlistComponent } from '../components/bucketlist/bucketlist.component';
+import { BucketlistPageComponent } from '../components/bucketlist-page/bucketlist-page.component';
+
 
 @NgModule({
     imports: [RouterModule.forChild([
         {path: '', component:BucketlistComponent,
             children:[
                 { path: '', redirectTo:'/bucketlist', pathMatch: 'full'},
-                { path: 'bucketlist', component:BucketlistComponent }]
+                { path: 'bucketlist', component: BucketlistPageComponent }]
         }
 
     ])],
