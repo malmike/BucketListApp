@@ -12,9 +12,6 @@ import { BucketlistModule } from './modules/bucketlist.module';
 // Components
 import { AppComponent } from './app.component';
 
-// Guards
-import { CanLoadGuard } from './guards/router.guard'
-
 @NgModule({
   declarations: [
     AppComponent
@@ -25,9 +22,7 @@ import { CanLoadGuard } from './guards/router.guard'
     AppAccessModule,
     BucketlistModule
   ],
-  providers: [
-    CanLoadGuard
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 
