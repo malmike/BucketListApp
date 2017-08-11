@@ -83,7 +83,12 @@ export abstract class HttpInterceptor extends Http{
     }
 
     private intercept(observable: Observable<Response>): Observable<Response>{
-        return observable;
+        return observable.catch((err, source) => {
+            return Observable.throw(err);
+        });
     }
+
+    protected abstract saveToken(token: string): Promise<string>;
+    protected abstract refreshToken(): Observable<Response>;
 
 }
