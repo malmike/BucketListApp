@@ -23,10 +23,11 @@ export abstract class HttpInterceptor extends Http{
     private requestWithToken(
         req_method: RequestMethod, req_body: any, req_options: RequestOptionsArgs,
         req_url: string, token: string): Observable<Response>{
+        let header = this.getTokenHeader();
         if(!token){
             return Observable.throw(new Error("No token provided"));
         }
-        req_options.headers.set("header", token);
+        req_options.headers.set(header, token);
 
         if (req_method === RequestMethod.Get) return super.get(req_url, req_options);
         if(req_method === RequestMethod.Post) return super.post(req_url, req_body, req_options);
