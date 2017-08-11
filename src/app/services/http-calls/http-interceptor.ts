@@ -5,8 +5,6 @@ import 'rxjs/add/operator/mergeMap';
 
 
 export abstract class HttpInterceptor extends Http{
-    // This is the name assigned to the token header in the api
-    ;
     // Variable will hold the request object when there is need to resend it
     private request_method: RequestMethod = null;
     private request_body: any = null;
