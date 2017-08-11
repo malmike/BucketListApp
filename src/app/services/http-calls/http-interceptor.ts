@@ -72,11 +72,10 @@ export abstract class HttpInterceptor extends Http{
         return this.intercept(super.put(url, body, options));
     }
 
-    delete(url: string, body:any, options?: RequestOptionsArgs, noIntercept?: boolean):Observable<Response>{
+    delete(url: string, options?: RequestOptionsArgs, noIntercept?: boolean):Observable<Response>{
         this.request_url = url;
         this.request_options = options;
         this.request_method = RequestMethod.Delete;
-        this.request_body = body;
         if(noIntercept) return super.delete(url, options);
         return this.intercept(super.delete(url, options));
     }
