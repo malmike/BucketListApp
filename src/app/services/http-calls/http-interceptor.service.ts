@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Rx';
 import { HttpInterceptor } from './http-interceptor';
 
 import { CurrentUserModel } from '../../models/current-user.model';
+import { UserModel } from '../../models/user.model';
 
 import { GlobalVariables } from '../../global-variables/global-variables';
 
@@ -22,26 +23,28 @@ export class HttpInterceptorService extends HttpInterceptor{
     }
 
     protected saveToken(token: string): string {
-        this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        let store_user = GlobalVariables.getInstance().getStoreUser();
+        this.currentUser = JSON.parse(localStorage.getItem(store_user));
         this.currentUser.token = token;
-        localStorage.setItem("currentUser", JSON.stringify(this.currentUser));
+        localStorage.setItem(store_user, JSON.stringify(this.currentUser));
         return token;
     }
 
     protected refreshToken(): Observable<Response> {
-        this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        this.currentUser = JSON.parse(localStorage.getItem(GlobalVariables.getInstance().getStoreUser()));
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Accept', 'application/json');
         let requestoptions = new RequestOptions({
             headers: headers
         });
+        let user: UserModel = this.currentUser.user;
         let urlPath = this.loginUrl;
-        return super.post(urlPath, JSON.stringify(this.currentUser), requestoptions, false);
+        return super.post(urlPath, JSON.stringify(user), requestoptions, false);
     }
 
     protected getTokenHeader(): string {
         return this.tokenHeader;
     }
-    
+
 }
