@@ -12,6 +12,7 @@ import { GlobalVariables } from '../../global-variables/global-variables';
 export class HttpInterceptorService extends HttpInterceptor{
 
     loginUrl:string = GlobalVariables.getInstance().getLoginUrl();
+    tokenHeader:string = GlobalVariables.getInstance().getTokenHeader();
     currentUser: CurrentUserModel = new CurrentUserModel();
     constructor(
         backend: ConnectionBackend,
@@ -20,11 +21,11 @@ export class HttpInterceptorService extends HttpInterceptor{
         super(backend, defaultOptions);
     }
 
-    protected saveToken(token: string): Promise<string> {
+    protected saveToken(token: string): string {
         this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
         this.currentUser.token = token;
         localStorage.setItem("currentUser", JSON.stringify(this.currentUser));
-        throw token;
+        return token;
     }
 
     protected refreshToken(): Observable<Response> {
@@ -38,4 +39,9 @@ export class HttpInterceptorService extends HttpInterceptor{
         let urlPath = this.loginUrl;
         return super.post(urlPath, JSON.stringify(this.currentUser), requestoptions, false);
     }
+
+    protected getTokenHeader(): string {
+        return this.tokenHeader;
+    }
+    
 }
