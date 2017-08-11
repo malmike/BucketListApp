@@ -12,6 +12,8 @@ import { CurrentUserModel } from '../../models/current-user.model';
 import { AddBucketlistService } from '../../services/http-calls/add-bucketlist.service';
 import { WebApiPathService } from '../../services/shared-information/webapi-path.service';
 
+// Global Variables
+import { GlobalVariables } from '../../global-variables/global-variables';
 
 @Component({
     selector: 'bucketlistpage',
@@ -80,7 +82,7 @@ export class BucketlistPageComponent implements OnInit{
 
     onSubmitForm(){
         this.bucketlist = this.addbucketlistForm.value;
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        this.currentUser = JSON.parse(localStorage.getItem(GlobalVariables.getInstance().getStoreUser()));
         this.addBucketlistService.addBucketlist(this.bucketlist, this.webApiPathService.getWebApiPath('bucketlist').path, this.currentUser.token)
             .subscribe(response => {
                 if (response.status === "success") {
