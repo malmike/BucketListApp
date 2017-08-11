@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Response, RequestOptions, ConnectionBackend } from '@angular/http';
+import { Headers, Response, RequestOptions, ConnectionBackend } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
 import { HttpInterceptor } from './http-interceptor';
 
 import { CurrentUserModel } from '../../models/current-user.model';
 
+import { GlobalVariables } from '../../global-variables/global-variables';
+
 @Injectable()
 export class HttpInterceptorService extends HttpInterceptor{
+
+    loginUrl:string = GlobalVariables.getInstance().getLoginUrl();
     currentUser: CurrentUserModel = new CurrentUserModel();
     constructor(
         backend: ConnectionBackend,
@@ -24,6 +28,14 @@ export class HttpInterceptorService extends HttpInterceptor{
     }
 
     protected refreshToken(): Observable<Response> {
-        throw new Error("Method not implemented.");
+        this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
+        let requestoptions = new RequestOptions({
+            headers: headers
+        });
+        let urlPath = this.loginUrl;
+        return super.post(urlPath, JSON.stringify(this.currentUser), requestoptions, false);
     }
 }
