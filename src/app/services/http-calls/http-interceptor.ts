@@ -22,11 +22,11 @@ export abstract class HttpInterceptor extends Http{
 
     private requestWithToken(
         req_method: RequestMethod, req_body: any, req_options: RequestOptionsArgs,
-        req_url: string, token: string, header: string): Observable<Response>{
+        req_url: string, token: string): Observable<Response>{
         if(!token){
             return Observable.throw(new Error("No token provided"));
         }
-        req_options.headers.set(header, token);
+        req_options.headers.set("header", token);
 
         if (req_method === RequestMethod.Get) return super.get(req_url, req_options);
         if(req_method === RequestMethod.Post) return super.post(req_url, req_body, req_options);
@@ -84,6 +84,23 @@ export abstract class HttpInterceptor extends Http{
 
     private intercept(observable: Observable<Response>): Observable<Response>{
         return observable.catch((err, source) => {
+            if(err.status === 401){
+                let req_method = this.request_method;
+                let req_body = this.request_body;
+                let req_options = this.request_options;
+                let req_url = this.request_url;
+                return this.refreshToken().mergeMap(res =>{
+                    if(res){
+                        let data = res.json();
+                        if(data.token){
+                            return this.saveToken(data.token);
+                        }
+                        return "";
+                    }
+                }).mergeMap(token =>{
+                    return this.requestWithToken(req_method, req_body, req_options, req_url, token)
+                })
+            }
             return Observable.throw(err);
         });
     }
