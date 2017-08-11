@@ -17,6 +17,10 @@ export abstract class HttpInterceptor extends Http{
         super(backend, defaultOptions);
     }
 
+    private requestWithToken(){
+
+    }
+
     private getRequestOptions(options?: RequestOptionsArgs): RequestOptionsArgs{
         if(options == null){
             options = new RequestOptions();
@@ -30,22 +34,27 @@ export abstract class HttpInterceptor extends Http{
 
     get(url: string, options?: RequestOptionsArgs):Observable<Response>{
         console.log('Haha, using my get');
-        return super.get(url, options);
+        return this.intercept(super.get(url, options));
     }
 
     post(url: string, body:any, options?: RequestOptionsArgs):Observable<Response>{
         console.log('Haha, using my post');
-        return super.post(url, options);
+        return this.intercept(super.post(url, options));
     }
 
     put(url: string, body:any, options?: RequestOptionsArgs):Observable<Response>{
         console.log('Haha, using my put');
-        return super.put(url, options);
+        return this.intercept(super.put(url, options));
     }
 
     delete(url: string, body:any, options?: RequestOptionsArgs):Observable<Response>{
         console.log('Haha, using my delete');
-        return super.delete(url, options);
+        return this.intercept(super.delete(url, options));
+    }
+
+    private intercept(observable: Observable<Response>): Observable<Response>{
+        console.log('Intercept works');
+        return observable;
     }
 
 }
