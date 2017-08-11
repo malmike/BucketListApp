@@ -91,13 +91,12 @@ export abstract class HttpInterceptor extends Http{
                 return this.refreshToken().mergeMap(res =>{
                     if(res){
                         let data = res.json();
-                        if(data.token){
-                            return this.saveToken(data.token);
+                        let token = data.auth_token;
+                        if(data.auth_token){
+                            this.saveToken(token);
                         }
-                        return "";
+                        return this.requestWithToken(req_method, req_body, req_options, req_url, token)
                     }
-                }).mergeMap(token =>{
-                    return this.requestWithToken(req_method, req_body, req_options, req_url, token)
                 })
             }
             return Observable.throw(err);
