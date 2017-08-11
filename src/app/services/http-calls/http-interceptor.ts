@@ -17,8 +17,13 @@ export abstract class HttpInterceptor extends Http{
         super(backend, defaultOptions);
     }
 
-    private requestWithToken(){
-
+    private requestWithToken(req: Request, token: string, header: string): Observable<Response>{
+        if(!token){
+            return Observable.throw(new Error("No token provided"));
+        }
+        req.headers.set(header, token);
+        console.log(req.method)
+        return Observable.throw(new Error("Testing 123"));
     }
 
     private getRequestOptions(options?: RequestOptionsArgs): RequestOptionsArgs{
