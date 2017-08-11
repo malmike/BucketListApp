@@ -47,38 +47,38 @@ export abstract class HttpInterceptor extends Http{
         return options;
     }
 
-    get(url: string, options?: RequestOptionsArgs):Observable<Response>{
+    get(url: string, options?: RequestOptionsArgs, noIntercept?: boolean):Observable<Response>{
         this.request_url = url;
         this.request_options = options;
         this.request_method = RequestMethod.Get;
-        console.log('Haha, using my get');
+        if(noIntercept) return super.get(url, options);
         return this.intercept(super.get(url, options));
     }
 
-    post(url: string, body:any, options?: RequestOptionsArgs):Observable<Response>{
+    post(url: string, body:any, options?: RequestOptionsArgs, noIntercept?: boolean):Observable<Response>{
         this.request_url = url;
         this.request_options = options;
         this.request_method = RequestMethod.Post;
         this.request_body = body;
-        console.log('Haha, using my post');
+        if(noIntercept) return super.post(url, body, options);
         return this.intercept(super.post(url, body, options));
     }
 
-    put(url: string, body:any, options?: RequestOptionsArgs):Observable<Response>{
+    put(url: string, body:any, options?: RequestOptionsArgs, noIntercept?: boolean):Observable<Response>{
         this.request_url = url;
         this.request_options = options;
         this.request_method = RequestMethod.Put;
         this.request_body = body;
-        console.log('Haha, using my put');
+        if(noIntercept) return super.put(url, body, options);
         return this.intercept(super.put(url, body, options));
     }
 
-    delete(url: string, body:any, options?: RequestOptionsArgs):Observable<Response>{
+    delete(url: string, body:any, options?: RequestOptionsArgs, noIntercept?: boolean):Observable<Response>{
         this.request_url = url;
         this.request_options = options;
         this.request_method = RequestMethod.Delete;
         this.request_body = body;
-        console.log('Haha, using my delete');
+        if(noIntercept) return super.delete(url, options);
         return this.intercept(super.delete(url, options));
     }
 
