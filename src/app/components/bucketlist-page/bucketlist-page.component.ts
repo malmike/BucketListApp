@@ -6,17 +6,24 @@ import { MdSnackBar } from '@angular/material';
 
 // Models
 import { BucketlistModel } from '../../models/bucketlist.model';
+import { CurrentUserModel } from '../../models/current-user.model';
+
+// Services
+import { AddBucketlistService } from '../../services/http-calls/add-bucketlist.service';
+import { WebApiPathService } from '../../services/shared-information/webapi-path.service';
+
 
 @Component({
-  selector: 'bucketlistpage',
-  templateUrl: './bucketlist-page.component.html',
-  styleUrls: ['./bucketlist-page.component.css']
+    selector: 'bucketlistpage',
+    templateUrl: './bucketlist-page.component.html',
+    styleUrls: ['./bucketlist-page.component.css']
 })
 
 export class BucketlistPageComponent implements OnInit{
     addbucketlistForm: FormGroup;
     active:boolean = true;
-    bucketlistModel: BucketlistModel = new BucketlistModel();
+    bucketlist: BucketlistModel = new BucketlistModel();
+    currentUser: CurrentUserModel = new CurrentUserModel();
 
     ngOnInit(): void {
         this.buildForm();
@@ -25,7 +32,9 @@ export class BucketlistPageComponent implements OnInit{
     constructor(
         private fb: FormBuilder,
         private router: Router,
-        private snackBar: MdSnackBar){}
+        private snackBar: MdSnackBar,
+        private addBucketlistService: AddBucketlistService,
+        private webApiPathService: WebApiPathService){}
 
     buildForm(): void {
          this.addbucketlistForm = this.fb.group({
@@ -68,6 +77,30 @@ export class BucketlistPageComponent implements OnInit{
             'minlength': 'Bucketlist name must be at least 3 characters long.'
         }
     }
-    
+
+    onSubmitForm(){
+        this.bucketlist = this.addbucketlistForm.value;
+        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        this.addBucketlistService.addBucketlist(this.bucketlist, this.webApiPathService.getWebApiPath('bucketlist').path, this.currentUser.token)
+            .subscribe(response => {
+                if (response.status === "success") {
+                    console.log(response.message);
+                    this.snackBar.open(response.message, '', {
+                        duration: 2000,
+                    });
+                }else{
+                    this.snackBar.open(response.message, '', {
+                        duration: 2000,
+                    });
+                    console.log(response.message);
+                }
+            },
+            errMsg => {
+                this.snackBar.open(errMsg, '', {
+                        duration: 2000,
+                });
+                console.log(errMsg);
+            });
+    }
 
 }
