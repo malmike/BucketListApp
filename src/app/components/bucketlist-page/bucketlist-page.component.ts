@@ -99,6 +99,7 @@ export class BucketlistPageComponent implements OnInit{
                     this.snackBar.open(response.message, '', {
                         duration: 2000,
                     });
+                    this.getBucketLists();
                 }else{
                     this.snackBar.open(response.message, '', {
                         duration: 2000,
@@ -144,6 +145,10 @@ export class BucketlistPageComponent implements OnInit{
 
     getBucketListPage(): BucketlistPageModel{
         return this.getBucketlistService.getBucketlistPage();
+    }
+
+    navBucketlistItem(id:number){
+        console.log(id);
     }
 
 }
