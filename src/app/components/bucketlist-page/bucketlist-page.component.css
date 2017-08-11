@@ -24,7 +24,23 @@
     margin-top: 0.5em;
     margin-bottom: 0.5em;
     width:80%;
-    padding: 1em 0.5em 1em 3em;
+    padding: 1em 0.5em 2em 3em;
+}
+
+#item_name{
+    float: left;
+}
+
+#item_delete{
+    float:right;
+}
+
+#item_delete:hover{
+    background: red;
+}
+
+#item_span{
+    float:none;
 }
 
 #list_card:hover{
