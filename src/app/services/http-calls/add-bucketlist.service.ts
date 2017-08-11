@@ -11,7 +11,6 @@ import { ResponseModel } from '../../models/response.model';
 export class AddBucketlistService {
 
     authUrl:string = GlobalVariables.getInstance().getWebApi();
-    private bucketlist: BucketlistModel = new BucketlistModel();
     private response: ResponseModel = new ResponseModel();
 
     constructor(private http: Http) {}
@@ -31,12 +30,9 @@ export class AddBucketlistService {
         return this.http
             .post(urlPath, JSON.stringify(bucketlist), requestoptions)
             .map((res: Response) => {
-                let resp = res.json();
+                let resp: ResponseModel = res.json();
                 if(resp.status === 'success'){
-                    this.bucketlist = resp.data;
-                    this.response.status = "success";
-                    this.response.message = "Bucketlist has been added";
-                    return this.response;
+                    return resp;
                 }else{
                     this.response.status = "fail";
                     this.response.message = resp.message;
@@ -59,7 +55,4 @@ export class AddBucketlistService {
         return Observable.throw(errMsg);
     }
 
-    getBucketlist(): BucketlistModel{
-        return this.bucketlist;
-    }
 }
