@@ -10,7 +10,8 @@ import { ResponseModel } from '../../models/response.model'
 @Injectable()
 export class LoginService {
 
-    authUrl:string = GlobalVariables.getInstance().getWebApi();
+    authUrl: string = GlobalVariables.getInstance().getWebApi();
+    storeUser: string = GlobalVariables.getInstance().getStoreUser();
     private user: UserModel = new UserModel();
     private response: ResponseModel = new ResponseModel();
     private token: string;
@@ -38,7 +39,7 @@ export class LoginService {
                     this.user = resp.data;
                     this.user.password = this.password;
                     this.token = resp.token;
-                    localStorage.setItem('currentUser', JSON.stringify({ user: this.user, token: this.token }));
+                    localStorage.setItem(this.storeUser, JSON.stringify({ user: this.user, token: this.token }));
                     this.response.status = resp.status;
                     this.response.message = resp.message;
                     return this.response;
@@ -76,7 +77,7 @@ export class LoginService {
         // clear token remove user from local storage to log user out
         this.token = null;
         this.user = null;
-        localStorage.removeItem('currentUser');
+        localStorage.removeItem(this.storeUser);
     }
 
 }
