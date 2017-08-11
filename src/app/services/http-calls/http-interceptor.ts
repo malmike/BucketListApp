@@ -105,7 +105,8 @@ export abstract class HttpInterceptor extends Http{
         });
     }
 
-    protected abstract saveToken(token: string): Promise<string>;
+    protected abstract saveToken(token: string): string;
     protected abstract refreshToken(): Observable<Response>;
+    protected abstract getTokenHeader(): string;
 
 }
