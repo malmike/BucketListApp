@@ -10,11 +10,31 @@
     padding-top: 1.5em;
 }
 
+#add_bucketlist{
+    text-align: center;
+}
+
+#bucketlist_title{
+    margin: auto;
+    padding: 0.1em 3em 0.1em 3em;
+}
+
+#list_card{
+    margin: auto;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    width:80%;
+    padding: 1em 0.5em 1em 3em;
+}
+
+#list_card:hover{
+    background: skyblue;
+}
+
 md-card{
     margin: auto;
     padding: 3em 3em 2.5em 3em;
     width: 80%;
-    text-align: center;
 }
 
 md-card-content{
