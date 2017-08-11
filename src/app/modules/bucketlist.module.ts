@@ -21,6 +21,8 @@ import { Permissions, CanActivateGuard } from '../guards/router.guard';
 
 // Service
 import { HttpInterceptorService } from '../services/http-calls/http-interceptor.service';
+import { AddBucketlistService } from '../services/http-calls/add-bucketlist.service';
+import { WebApiPathService } from '../services/shared-information/webapi-path.service';
 
 export function getHttpInterceptor(backend: ConnectionBackend, defaultOptions: RequestOptions){
     return new HttpInterceptorService(backend, defaultOptions);
@@ -46,7 +48,9 @@ export function getHttpInterceptor(backend: ConnectionBackend, defaultOptions: R
             deps:[XHRBackend, RequestOptions]
         },
         Permissions,
-        CanActivateGuard
+        CanActivateGuard,
+        AddBucketlistService,
+        WebApiPathService
     ]
 })
 
