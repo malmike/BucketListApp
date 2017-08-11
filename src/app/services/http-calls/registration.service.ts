@@ -11,6 +11,7 @@ import { ResponseModel } from '../../models/response.model';
 export class RegistrationService {
 
     authUrl:string = GlobalVariables.getInstance().getWebApi();
+    storeUser:string = GlobalVariables.getInstance().getStoreUser();
     private user: UserModel = new UserModel();
     private response: ResponseModel = new ResponseModel();
     private token: string;
@@ -36,7 +37,7 @@ export class RegistrationService {
                             this.user = resp.data;
                             this.user.password = this.password;
                             this.token = resp.token;
-                            localStorage.setItem('currentUser', JSON.stringify({ user: this.user, token: this.token }));
+                            localStorage.setItem(this.storeUser, JSON.stringify({ user: this.user, token: this.token }));
                             console.log(resp)
                             this.response.status = resp.status;
                             this.response.message = resp.message;
