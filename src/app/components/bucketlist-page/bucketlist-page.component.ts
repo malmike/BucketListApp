@@ -14,6 +14,7 @@ import { UserModel } from '../../models/user.model';
 import { AddBucketlistService } from '../../services/http-calls/add-bucketlist.service';
 import { GetBucketlistService } from '../../services/http-calls/get-bucketlists.service'
 import { WebApiPathService } from '../../services/shared-information/webapi-path.service';
+import { SharedBucketlistService } from '../../services/shared-information/shared-bucketlist.service';
 
 // Global Variables
 import { GlobalVariables } from '../../global-variables/global-variables';
@@ -46,7 +47,8 @@ export class BucketlistPageComponent implements OnInit{
         private snackBar: MdSnackBar,
         private addBucketlistService: AddBucketlistService,
         private webApiPathService: WebApiPathService,
-        private getBucketlistService: GetBucketlistService){}
+        private getBucketlistService: GetBucketlistService,
+        private sharedBucketlistService: SharedBucketlistService){}
 
     buildForm(): void {
          this.addbucketlistForm = this.fb.group({
@@ -148,7 +150,8 @@ export class BucketlistPageComponent implements OnInit{
     }
 
     navBucketlistItem(id:number){
-        console.log(id);
+        let bucketlist = this.bucketlists.find(item => item.id === id);
+        this.sharedBucketlistService.setBucketlist(bucketlist);
     }
 
 }
