@@ -15,7 +15,7 @@
 
     <md-list>
         <md-list-item *ngFor="let single_bucketlist of bucketlists">
-            <md-card id="list_card"  (click)="">
+            <md-card id="list_card"  (click)="navBucketlistItem(single_bucketlist.id)">
                 <md-card-content>
                     <p>{{single_bucketlist.name}}</p>
                 </md-card-content>
