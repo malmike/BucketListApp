@@ -1,5 +1,5 @@
  <div layout="row" layout-align="center center" id="container">
-    <md-card>
+    <md-card id="add_bucketlist">
         <md-card-content>
             <form [formGroup]="addbucketlistForm" *ngIf="active" (ngSubmit)="onSubmitForm()">
                 <md-input-container>
@@ -10,4 +10,17 @@
             </form>
         </md-card-content>
     </md-card>
+    <br><br>
+    <h1 id="bucketlist_title">{{user_name}}'s Bucket Lists</h1>
+
+    <md-list>
+        <md-list-item *ngFor="let single_bucketlist of bucketlists">
+            <md-card id="list_card"  (click)="">
+                <md-card-content>
+                    <p>{{single_bucketlist.name}}</p>
+                </md-card-content>
+            </md-card>
+        </md-list-item>
+    </md-list>
+
 </div>
