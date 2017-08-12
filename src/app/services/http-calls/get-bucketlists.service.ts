@@ -5,16 +5,18 @@ import 'rxjs/add/operator/map';
 
 import { GlobalVariables } from '../../global-variables/global-variables';
 import { BucketlistPageModel } from '../../models/bucketlist_page.model';
+import { ResponseModel } from '../../models/response.model'
 
 @Injectable()
 export class GetBucketlistService {
 
     apiUrl: string = GlobalVariables.getInstance().getWebApi();
     private bucketlist_page: BucketlistPageModel = new BucketlistPageModel();
+    private response: ResponseModel = new ResponseModel();
 
     constructor(private http: Http) {}
 
-    getBucketlists(path: string, token: string): Observable<Boolean>{
+    getBucketlists(path: string, token: string): Observable<ResponseModel>{
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('x-access-token', token);
@@ -31,9 +33,13 @@ export class GetBucketlistService {
                 let test: BucketlistPageModel = res.json();
                 this.bucketlist_page = test;
                 if(this.bucketlist_page.page < 1){
-                    return false;
+                    this.response.status = "fail";
+                    this.response.message = "Failure retrieving bucketlists";
+                    return this.response;
                 }else{
-                    return true;
+                    this.response.status = "success";
+                    this.response.message = "Bucketlists retrieved";
+                    return this.response;
                 }
             })
             .catch((err) => this.handleError(err));
