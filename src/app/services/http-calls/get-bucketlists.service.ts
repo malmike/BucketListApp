@@ -29,7 +29,6 @@ export class GetBucketlistService {
             .get(urlPath, requestoptions)
             .map((res: Response) => {
                 let test: BucketlistPageModel = res.json();
-                console.log(test)
                 this.bucketlist_page = test;
                 if(this.bucketlist_page.page < 1){
                     return false;
