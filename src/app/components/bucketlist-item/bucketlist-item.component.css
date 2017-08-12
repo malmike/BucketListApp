@@ -35,6 +35,10 @@
     float:right;
 }
 
+#name{
+    font-size: 2em;
+}
+
 #item_delete:hover{
     background: red;
 }
@@ -62,9 +66,13 @@ md-input-container{
 }
 
 button{
-    width: 25%;
+    width: 12.5%;
     background-color: navy;
     color: whitesmoke;
+}
+
+#cancel{
+    background-color: red;
 }
 
 a{
