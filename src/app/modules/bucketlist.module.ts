@@ -12,6 +12,7 @@ import { CustomMaterialModule } from './custom-material.module';
 // Components
 import { BucketlistComponent } from '../components/bucketlist/bucketlist.component';
 import { BucketlistPageComponent } from '../components/bucketlist-page/bucketlist-page.component';
+import { BucketlistItemComponent } from '../components/bucketlist-item/bucketlist-item.component';
 
 // Routing Modules
 import { BucketlistRoutingModule } from '../routes/bucketlist-routing.module';
@@ -24,7 +25,6 @@ import { HttpInterceptorService } from '../services/http-calls/http-interceptor.
 import { AddBucketlistService } from '../services/http-calls/add-bucketlist.service';
 import { GetBucketlistService } from '../services/http-calls/get-bucketlists.service';
 import { DeleteBucketlistService } from '../services/http-calls/delete-bucketlist.service';
-
 import { WebApiPathService } from '../services/shared-information/webapi-path.service';
 import { SharedBucketlistService } from '../services/shared-information/shared-bucketlist.service';
 
@@ -43,7 +43,8 @@ export function getHttpInterceptor(backend: ConnectionBackend, defaultOptions: R
     ],
     declarations: [
         BucketlistComponent,
-        BucketlistPageComponent
+        BucketlistPageComponent,
+        BucketlistComponent
     ],
     providers: [
         {
