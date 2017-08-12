@@ -18,7 +18,7 @@
             <md-card id="list_card"  (click)="navBucketlistItem(single_bucketlist.id)">
                 <md-card-content id="list_content">
                     <p id="item_name">{{single_bucketlist.name}}</p>
-                    <img id="item_delete" src="./assets/svg/ic_delete_black_24px.svg">
+                    <img id="item_delete" src="./assets/svg/ic_delete_black_24px.svg" (click)="deleteBucketlist(single_bucketlist.id)">
                 </md-card-content>
             </md-card>
         </md-list-item>
