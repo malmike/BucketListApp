@@ -44,7 +44,7 @@ export function getHttpInterceptor(backend: ConnectionBackend, defaultOptions: R
     declarations: [
         BucketlistComponent,
         BucketlistPageComponent,
-        BucketlistComponent
+        BucketlistItemComponent
     ],
     providers: [
         {
