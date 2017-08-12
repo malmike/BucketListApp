@@ -17,12 +17,11 @@ export class DeleteBucketlistService {
     deleteBucketlist(path: string, token: string): Observable<ResponseModel>{
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        headers.append('x-access-token', token);
+        headers.append(GlobalVariables.getInstance().getTokenHeader(), token);
         headers.append('Accept', 'application/json');
         let requestoptions = new RequestOptions({
             headers: headers
         });
-
 
         let urlPath: string = this.apiUrl + path;
 
