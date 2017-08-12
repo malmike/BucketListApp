@@ -152,6 +152,7 @@ export class BucketlistPageComponent implements OnInit{
     navBucketlistItem(id:number){
         let bucketlist = this.bucketlists.find(item => item.id === id);
         this.sharedBucketlistService.setBucketlist(bucketlist);
+        this.router.navigate(['/bucketlistitem']);
     }
 
     deleteBucketlist(id:number){
