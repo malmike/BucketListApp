@@ -1,5 +1,6 @@
 // External Dependencies
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MdSnackBar } from '@angular/material';
 
@@ -16,13 +17,55 @@ import { BucketlistModel } from '../../models/bucketlist.model';
 })
 
 export class BucketlistItemComponent implements OnInit{
-
+    editbucketlistForm: FormGroup;
+    active:boolean = true;
     private bucketlist: BucketlistModel = new BucketlistModel();
     private edit: boolean = false;
 
     constructor(
+        private fb: FormBuilder,
+        private router: Router,
         private sharedBucketlistService: SharedBucketlistService
     ){}
+
+    buildForm(): void {
+        console.log(this.bucketlist.name)
+        this.editbucketlistForm = this.fb.group({
+            'name': [this.bucketlist.name, Validators.minLength(3)]
+        });
+
+        this.editbucketlistForm.valueChanges
+            .subscribe(data => this.onValueChanged(data));
+
+        this.onValueChanged();
+    }
+
+     onValueChanged(data?: any){
+        if(!this.editbucketlistForm) { return; }
+        const form = this.editbucketlistForm;
+
+        for(const field in this.formErrors){
+            //Clear previous error messages (if any)
+            this.formErrors[field] = '';
+            const control = form.get(field);
+            if(control && control.dirty && !control.valid){
+                const messages = this.validationMessages[field];
+                for(const key in control.errors){
+                    this.formErrors[field] = messages[key];
+                }
+            }
+        }
+    }
+
+    formErrors = {
+        'name': ''
+    };
+
+    validationMessages = {
+        'name': {
+            'minlength': 'Bucketlist name must be at least 3 characters long.'
+        }
+    }
 
     ngOnInit(): void {
         this.getBucketlist();
@@ -30,9 +73,14 @@ export class BucketlistItemComponent implements OnInit{
 
     getBucketlist(){
         this.bucketlist = this.sharedBucketlistService.getBucketlist();
+        this.buildForm();
     }
 
     canEdit(){
         this.edit = true;
+    }
+
+    cancel(){
+        this.edit = false;
     }
 }
