@@ -23,7 +23,8 @@ import { Permissions, CanActivateGuard } from '../guards/router.guard';
 // Service
 import { HttpInterceptorService } from '../services/http-calls/http-interceptor.service';
 import { AddBucketlistService } from '../services/http-calls/add-bucketlist.service';
-import { GetBucketlistService } from '../services/http-calls/get-bucketlists.service';
+import { GetBucketlistsService } from '../services/http-calls/get-bucketlists.service';
+import { GetBucketlistService } from '../services/http-calls/get-bucketlist.service';
 import { DeleteBucketlistService } from '../services/http-calls/delete-bucketlist.service';
 import { WebApiPathService } from '../services/shared-information/webapi-path.service';
 
@@ -54,9 +55,10 @@ export function getHttpInterceptor(backend: ConnectionBackend, defaultOptions: R
         Permissions,
         CanActivateGuard,
         AddBucketlistService,
+        GetBucketlistsService,
         GetBucketlistService,
         DeleteBucketlistService,
-        WebApiPathService,
+        WebApiPathService
     ]
 })
 
