@@ -12,7 +12,7 @@ import { UserModel } from '../../models/user.model';
 
 // Services
 import { AddBucketlistService } from '../../services/http-calls/add-bucketlist.service';
-import { GetBucketlistService } from '../../services/http-calls/get-bucketlists.service';
+import { GetBucketlistsService } from '../../services/http-calls/get-bucketlists.service';
 import { DeleteBucketlistService } from '../../services/http-calls/delete-bucketlist.service';
 import { WebApiPathService } from '../../services/shared-information/webapi-path.service';
 
@@ -48,7 +48,7 @@ export class BucketlistPageComponent implements OnInit{
         private snackBar: MdSnackBar,
         private addBucketlistService: AddBucketlistService,
         private webApiPathService: WebApiPathService,
-        private getBucketlistService: GetBucketlistService,
+        private getBucketlistsService: GetBucketlistsService,
         private deleteBucketlistService: DeleteBucketlistService){}
 
     buildForm(): void {
@@ -120,7 +120,7 @@ export class BucketlistPageComponent implements OnInit{
         if(query !== null ){
             urlPath += query;
         }
-        this.getBucketlistService.getBucketlists(urlPath, this.currentUser.token)
+        this.getBucketlistsService.getBucketlists(urlPath, this.currentUser.token)
             .subscribe(response => {
                 if (response.status === "success") {
                     this.snackBar.open(response.message, '', {
@@ -151,14 +151,14 @@ export class BucketlistPageComponent implements OnInit{
     }
 
     getBucketListPage(): BucketlistPageModel{
-        return this.getBucketlistService.getBucketlistPage();
+        return this.getBucketlistsService.getBucketlistPage();
     }
 
     navBucketlistItem(id:number){
         if(this.delete){
             this.delete = false;
         }else{
-            let bucketlist = this.bucketlists.find(item => item.id === id);
+            localStorage.setItem(GlobalVariables.getInstance().getBucketlistId(), id.toString());
             this.router.navigate(['/bucketlistitem']);
         }
     }
