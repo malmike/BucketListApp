@@ -3,7 +3,7 @@
         <md-card-content>
             <form>
                  <md-input-container>
-                    <input mdInput type="text" id="name" required>
+                    <input mdInput [readonly]="!edit" value="{{bucketlist.name}}" type="text" id="name" required>
                     <md-hint align="end"></md-hint>
                 </md-input-container>
                 <img id="item_edit" *ngIf="!edit" src="./assets/svg/ic_mode_edit_black_24px.svg" (click)="canEdit()">
