@@ -3,12 +3,14 @@ import { BucketlistModel } from '../../models/bucketlist.model';
 
 @Injectable()
 export class SharedBucketlistService{
-    private bucketlist: BucketlistModel = new BucketlistModel();
-    setBucketlist(bucketlist: BucketlistModel): void{
-        this.bucketlist = bucketlist;
+    private single_bucketlist: BucketlistModel;
+
+    set bucketlist_item(single_bucketlist: BucketlistModel){
+        this.single_bucketlist = single_bucketlist;
     }
 
-    getBucketlist(): BucketlistModel{
-        return this.bucketlist;
+    get bucketlist_item(): BucketlistModel{
+        return this.single_bucketlist;
     }
+
 }
