@@ -8,7 +8,7 @@
                 </md-input-container>
                 <img id="item_edit" *ngIf="!edit" src="./assets/svg/ic_mode_edit_black_24px.svg" (click)="canEdit()">
                 <button md-raised-button type="submit" *ngIf="edit">UPDATE</button>
-                <button md-raised-button id="cancel" *ngIf="edit">CANCEL</button>
+                <button md-raised-button id="cancel" (click)="cancel()" *ngIf="edit">CANCEL</button>
             </form>
         </md-card-content>
     </md-card>
