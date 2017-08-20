@@ -18,8 +18,8 @@ import { BucketlistModel } from '../../models/bucketlist.model';
 export class BucketlistItemComponent implements OnInit{
     editbucketlistForm: FormGroup;
     active:boolean = true;
+    edit: boolean = false;
     private bucketlist: BucketlistModel = new BucketlistModel();
-    private edit: boolean = false;
 
     constructor(
         private fb: FormBuilder,
