@@ -36,7 +36,9 @@
 }
 
 #name{
+    font-weight: bold;
     font-size: 2em;
+    color: blue;
 }
 
 #item_delete:hover{
