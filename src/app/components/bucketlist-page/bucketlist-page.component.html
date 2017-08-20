@@ -1,13 +1,27 @@
  <div layout="row" layout-align="center center" id="container">
-    <md-card>
+    <md-card id="add_bucketlist">
         <md-card-content>
-            <form [formGroup]="addbucketlistForm" *ngIf="active">
+            <form [formGroup]="addbucketlistForm" *ngIf="active" (ngSubmit)="onSubmitForm()">
                 <md-input-container>
                     <input mdInput placeholder="Bucketlist Name" formControlName="name" type="text" id="name" required>
                     <md-hint align="end" *ngIf="formErrors.name">{{ formErrors.name }}</md-hint>
                 </md-input-container>
-                <button md-raised-button type="submit">ADD BUCKETLIST</button>
+                <button md-raised-button type="submit" [disabled]="!addbucketlistForm.valid">ADD BUCKETLIST</button>
             </form>
         </md-card-content>
     </md-card>
+    <br><br>
+    <h1 id="bucketlist_title">{{user_name}}'s Bucket Lists</h1>
+
+    <md-list>
+        <md-list-item *ngFor="let single_bucketlist of bucketlists">
+            <md-card id="list_card"  (click)="navBucketlistItem(single_bucketlist.id)">
+                <md-card-content id="list_content">
+                    <p id="item_name">{{single_bucketlist.name}}</p>
+                    <img id="item_delete" src="./assets/svg/ic_delete_black_24px.svg" (click)="deleteBucketlist(single_bucketlist.id)">
+                </md-card-content>
+            </md-card>
+        </md-list-item>
+    </md-list>
+
 </div>

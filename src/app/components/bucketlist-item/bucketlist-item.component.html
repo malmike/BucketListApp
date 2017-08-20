@@ -1,0 +1,17 @@
+  <div layout="row" layout-align="center center" id="container">
+    <md-card id="bucketlist_header">
+        <md-card-content>
+            <form>
+                 <md-input-container>
+                    <input mdInput type="text" id="name" required>
+                    <md-hint align="end"></md-hint>
+                </md-input-container>
+                <img id="item_edit" *ngIf="!edit" src="./assets/svg/ic_mode_edit_black_24px.svg" (click)="canEdit()">
+                <button md-raised-button type="submit" *ngIf="edit">UPDATE</button>
+                <button md-raised-button id="cancel" (click)="cancel()" *ngIf="edit">CANCEL</button>
+            </form>
+        </md-card-content>
+    </md-card>
+    <br><br>
+    <h1 id="bucketlist_title">Bucket List Items</h1>
+</div>

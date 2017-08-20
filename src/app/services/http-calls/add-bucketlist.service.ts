@@ -4,25 +4,21 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
 import { GlobalVariables } from '../../global-variables/global-variables';
-import { UserModel } from '../../models/user.model';
-import { ResponseModel } from '../../models/response.model'
+import { BucketlistModel } from '../../models/bucketlist.model';
+import { ResponseModel } from '../../models/response.model';
 
 @Injectable()
-export class LoginService {
+export class AddBucketlistService {
 
-    authUrl: string = GlobalVariables.getInstance().getWebApi();
-    storeUser: string = GlobalVariables.getInstance().getStoreUser();
-    private user: UserModel = new UserModel();
+    authUrl:string = GlobalVariables.getInstance().getWebApi();
     private response: ResponseModel = new ResponseModel();
-    private token: string;
-    private password: string;
 
     constructor(private http: Http) {}
 
-    authenticate(user: UserModel, path: string): Observable<ResponseModel>{
+    addBucketlist(bucketlist: BucketlistModel, path: string, token: string): Observable<ResponseModel>{
         let headers = new Headers();
-        this.password = user.password;
         headers.append('Content-Type', 'application/json');
+        headers.append('x-access-token', token);
         headers.append('Accept', 'application/json');
         let requestoptions = new RequestOptions({
             headers: headers
@@ -32,17 +28,11 @@ export class LoginService {
         let urlPath: string = this.authUrl + path;
 
         return this.http
-            .post(urlPath, JSON.stringify(user), requestoptions)
+            .post(urlPath, JSON.stringify(bucketlist), requestoptions)
             .map((res: Response) => {
-                let resp = res.json();
+                let resp: ResponseModel = res.json();
                 if(resp.status === 'success'){
-                    this.user = resp.data;
-                    this.user.password = this.password;
-                    this.token = resp.token;
-                    localStorage.setItem(this.storeUser, JSON.stringify({ user: this.user, token: this.token }));
-                    this.response.status = resp.status;
-                    this.response.message = resp.message;
-                    return this.response;
+                    return resp;
                 }else{
                     this.response.status = "fail";
                     this.response.message = resp.message;
@@ -63,21 +53,6 @@ export class LoginService {
         }
         console.error(errMsg);
         return Observable.throw(errMsg);
-    }
-
-    getUser(): UserModel{
-        return this.user;
-    }
-
-    getToken():string{
-        return this.token;
-    }
-
-    logout(): void {
-        // clear token remove user from local storage to log user out
-        this.token = null;
-        this.user = null;
-        localStorage.removeItem(this.storeUser);
     }
 
 }
