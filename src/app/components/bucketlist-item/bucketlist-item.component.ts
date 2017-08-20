@@ -5,9 +5,18 @@ import { Router } from '@angular/router';
 import { MdSnackBar } from '@angular/material';
 
 // Services
+import { GetBucketlistService } from '../../services/http-calls/get-bucketlist.service';
+import { WebApiPathService } from '../../services/shared-information/webapi-path.service';
+
 
 // Models
 import { BucketlistModel } from '../../models/bucketlist.model';
+import { BucketlistItemModel } from '../../models/bucketlist_item.model';
+import { CurrentUserModel } from '../../models/current-user.model';
+
+
+// Global Variables
+import { GlobalVariables } from '../../global-variables/global-variables';
 
 @Component({
     selector: 'bucketlistitem',
@@ -19,17 +28,22 @@ export class BucketlistItemComponent implements OnInit{
     editbucketlistForm: FormGroup;
     active:boolean = true;
     edit: boolean = false;
-    private bucketlist: BucketlistModel = new BucketlistModel();
+    currentUser: CurrentUserModel = JSON.parse(localStorage.getItem(GlobalVariables.getInstance().getStoreUser()));
+    bucketlist: BucketlistModel = new BucketlistModel();
+    private bucketlist_item: Array<BucketlistItemModel> = new Array<BucketlistItemModel>();
 
     constructor(
         private fb: FormBuilder,
         private router: Router,
+        private snackBar: MdSnackBar,
+        private webApiPathService: WebApiPathService,
+        private getBucketlistService: GetBucketlistService
     ){}
 
     buildForm(): void {
         console.log(this.bucketlist.name)
         this.editbucketlistForm = this.fb.group({
-            'name': [this.bucketlist.name, Validators.minLength(3)]
+            'name': ["", Validators.minLength(3)]
         });
 
         this.editbucketlistForm.valueChanges
@@ -67,10 +81,39 @@ export class BucketlistItemComponent implements OnInit{
 
     ngOnInit(): void {
         this.getBucketlist();
+        this.buildForm();
     }
 
     getBucketlist(){
-        this.buildForm();
+        let id = localStorage.getItem(GlobalVariables.getInstance().getBucketlistId());
+        let urlPath: string = this.webApiPathService.getWebApiPath('bucketlist').path+'/'+id;
+        this.getBucketlistService.getBucketlist(urlPath,  this.currentUser.token, Number(id))
+            .subscribe(response => {
+                if (response.status === "success") {
+                    this.snackBar.open(response.message, '', {
+                        duration: 2000,
+                    });
+                    this.bucketlist = this.getSingleBucketList();
+                    console.log('Successful getting of bucketlist:', response.message);
+                    this.bucketlist_item = this.bucketlist.bucketlist_items;
+                    console.log(this.bucketlist_item);
+                }else{
+                    this.snackBar.open(response.message, '', {
+                        duration: 2000,
+                    });
+                    console.log('Failure getting bucketlist:', response.message);
+                }
+            },
+            errMsg => {
+                this.snackBar.open(errMsg, '', {
+                        duration: 2000,
+                });
+                console.log('Failure getting bucketlist:', errMsg);
+            });
+    }
+
+    getSingleBucketList(): BucketlistModel{
+        return this.getBucketlistService.getSingleBucketlist();
     }
 
     canEdit(){
