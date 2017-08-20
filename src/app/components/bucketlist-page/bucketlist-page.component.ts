@@ -15,7 +15,6 @@ import { AddBucketlistService } from '../../services/http-calls/add-bucketlist.s
 import { GetBucketlistService } from '../../services/http-calls/get-bucketlists.service';
 import { DeleteBucketlistService } from '../../services/http-calls/delete-bucketlist.service';
 import { WebApiPathService } from '../../services/shared-information/webapi-path.service';
-import { SharedBucketlistService } from '../../services/shared-information/shared-bucketlist.service';
 
 // Global Variables
 import { GlobalVariables } from '../../global-variables/global-variables';
@@ -49,7 +48,6 @@ export class BucketlistPageComponent implements OnInit{
         private addBucketlistService: AddBucketlistService,
         private webApiPathService: WebApiPathService,
         private getBucketlistService: GetBucketlistService,
-        private sharedBucketlistService: SharedBucketlistService,
         private deleteBucketlistService: DeleteBucketlistService){}
 
     buildForm(): void {
@@ -151,7 +149,6 @@ export class BucketlistPageComponent implements OnInit{
 
     navBucketlistItem(id:number){
         let bucketlist = this.bucketlists.find(item => item.id === id);
-        this.sharedBucketlistService.setBucketlist(bucketlist);
         this.router.navigate(['/bucketlistitem']);
     }
 

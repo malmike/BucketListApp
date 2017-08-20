@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { MdSnackBar } from '@angular/material';
 
 // Services
-import { SharedBucketlistService } from '../../services/shared-information/shared-bucketlist.service';
 
 // Models
 import { BucketlistModel } from '../../models/bucketlist.model';
@@ -25,7 +24,6 @@ export class BucketlistItemComponent implements OnInit{
     constructor(
         private fb: FormBuilder,
         private router: Router,
-        private sharedBucketlistService: SharedBucketlistService
     ){}
 
     buildForm(): void {
@@ -72,7 +70,6 @@ export class BucketlistItemComponent implements OnInit{
     }
 
     getBucketlist(){
-        this.bucketlist = this.sharedBucketlistService.getBucketlist();
         this.buildForm();
     }
 
