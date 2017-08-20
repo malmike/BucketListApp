@@ -4,9 +4,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MdSnackBar } from '@angular/material';
 
-//Form Validators
-import { StructureValidator } from '../../../form-validators/structure.validator';
-
 // Services
 import { RegExpService } from '../../../services/shared-information/reg-exp.service';
 import { WebApiPathService } from '../../../services/shared-information/webapi-path.service';
@@ -48,7 +45,7 @@ export class LoginComponent implements OnInit{
          this.loginForm = this.fb.group({
             'email':[null,[
                 Validators.required,
-                StructureValidator([this.regExpService.getRegExp('email').regExp])
+                Validators.pattern(this.regExpService.getRegExp('email').regExp)
             ]],
             'password': [null, Validators.required]
         });
@@ -83,7 +80,7 @@ export class LoginComponent implements OnInit{
     validationMessages = {
         'email': {
             'required': '',
-            'forbiddenStructure': 'Email format should be "john@doe.com".'
+            'pattern': 'Email format should be "john@doe.com".'
         }
     }
 

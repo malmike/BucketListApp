@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { MdSnackBar } from '@angular/material';
 
 //Form Validators
-import { StructureValidator } from '../../../form-validators/structure.validator';
 import { CompareItemsValidator } from '../../../form-validators/compare-items.validator'
 
 // Services
@@ -56,7 +55,7 @@ export class RegistrationComponent implements OnInit{
             ]],
             'email':[null,[
                 Validators.required,
-                StructureValidator([this.regExpService.getRegExp('email').regExp])
+                Validators.pattern(this.regExpService.getRegExp('email').regExp)
             ]],
             'password': [null, [
                 Validators.required,
@@ -119,7 +118,7 @@ export class RegistrationComponent implements OnInit{
         },
         'email': {
             'required': 'Email is required.',
-            'forbiddenStructure': 'Email format should be "john@doe.com".'
+            'pattern': 'Email format should be "john@doe.com".'
         },
         'password': {
             'required': 'Password is required.',
