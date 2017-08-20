@@ -28,6 +28,7 @@ import { GlobalVariables } from '../../global-variables/global-variables';
 export class BucketlistPageComponent implements OnInit{
     addbucketlistForm: FormGroup;
     active:boolean = true;
+    delete:boolean = false;
     bucketlist: BucketlistModel = new BucketlistModel();
     bucketlists: Array<BucketlistModel> = new Array<BucketlistModel>();
     bucketlist_page: BucketlistPageModel = new BucketlistPageModel();
@@ -132,6 +133,9 @@ export class BucketlistPageComponent implements OnInit{
                     this.snackBar.open(response.message, '', {
                         duration: 2000,
                     });
+                    if (response.message =="User has no single bucketlist"){
+                        this.bucketlists = [];
+                    }
                     console.log('Failure getting bucketlists:', response.message);
                 }
             },
@@ -139,6 +143,9 @@ export class BucketlistPageComponent implements OnInit{
                 this.snackBar.open(errMsg, '', {
                         duration: 2000,
                 });
+                if(errMsg=="User has no single bucketlist"){
+                    this.bucketlists = [];
+                }
                 console.log('Failure getting bucketlists:', errMsg);
             });
     }
@@ -148,11 +155,16 @@ export class BucketlistPageComponent implements OnInit{
     }
 
     navBucketlistItem(id:number){
-        let bucketlist = this.bucketlists.find(item => item.id === id);
-        this.router.navigate(['/bucketlistitem']);
+        if(this.delete){
+            this.delete = false;
+        }else{
+            let bucketlist = this.bucketlists.find(item => item.id === id);
+            this.router.navigate(['/bucketlistitem']);
+        }
     }
 
     deleteBucketlist(id:number){
+        this.delete = true;
         let urlPath = this.webApiPathService.getWebApiPath('bucketlist').path + '/' + id;
         this.deleteBucketlistService.deleteBucketlist(urlPath, this.currentUser.token)
             .subscribe(response => {
