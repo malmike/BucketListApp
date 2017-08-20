@@ -8,7 +8,7 @@ import { BucketlistPageModel } from '../../models/bucketlist_page.model';
 import { ResponseModel } from '../../models/response.model'
 
 @Injectable()
-export class GetBucketlistService {
+export class GetBucketlistsService {
 
     apiUrl: string = GlobalVariables.getInstance().getWebApi();
     private bucketlist_page: BucketlistPageModel = new BucketlistPageModel();
