@@ -42,7 +42,6 @@ export class CanActivateGuard implements CanActivate{
 
     canActivate(): boolean | Observable<boolean> | Promise<boolean> {
         let currentUser: CurrentUserModel = JSON.parse(localStorage.getItem(GlobalVariables.getInstance().getStoreUser()));
-        console.log(currentUser);
         if(this.permissions.canLoadChildren(currentUser)){
             return true;
         }
