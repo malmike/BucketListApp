@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
 import { CurrentUserModel } from '../models/current-user.model';
+import { GlobalVariables } from '../global-variables/global-variables';
 
 export class Permissions{
     canLoadChildren(currentUser: CurrentUserModel): boolean{
@@ -25,7 +26,7 @@ export class CanLoadGuard implements CanLoad{
     }
 
     canLoad(): boolean | Observable<boolean> | Promise<boolean> {
-        let currentUser: CurrentUserModel = JSON.parse(localStorage.getItem('currentUser'));
+        let currentUser: CurrentUserModel = JSON.parse(localStorage.getItem(GlobalVariables.getInstance().getStoreUser()));
         return this.permissions.canLoadChildren(currentUser);
     }
 }
@@ -40,7 +41,8 @@ export class CanActivateGuard implements CanActivate{
     }
 
     canActivate(): boolean | Observable<boolean> | Promise<boolean> {
-        let currentUser: CurrentUserModel = JSON.parse(localStorage.getItem('currentUser'));
+        let currentUser: CurrentUserModel = JSON.parse(localStorage.getItem(GlobalVariables.getInstance().getStoreUser()));
+        console.log(currentUser);
         if(this.permissions.canLoadChildren(currentUser)){
             return true;
         }
