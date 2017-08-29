@@ -1,6 +1,6 @@
 export class GlobalVariables {
     private static instance: GlobalVariables;
-    private webApi:string = "http://localhost:5000/";
+    private webApi:string = "https://m2bucketlistapi.herokuapp.com/";
     private token_header:string = "x-access-token";
     private bucketlist_id:string = "bl";
     private bucketlist_item_id:string = "bli";
