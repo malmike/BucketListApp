@@ -40,7 +40,7 @@ export class HttpInterceptorService extends HttpInterceptor{
         });
         let user: UserModel = this.currentUser.user;
         let urlPath = this.loginUrl;
-        return super.post(urlPath, JSON.stringify(user), requestoptions, false);
+        return super.post(urlPath, JSON.stringify(user), requestoptions, true);
     }
 
     protected getTokenHeader(): string {
