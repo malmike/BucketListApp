@@ -7,7 +7,6 @@ import { MdSnackBar } from '@angular/material';
 // Models
 import { BucketlistModel } from '../../models/bucketlist.model';
 import { BucketlistPageModel } from '../../models/bucketlist_page.model';
-import { CurrentUserModel } from '../../models/current-user.model';
 import { UserModel } from '../../models/user.model';
 
 // Services
@@ -15,6 +14,7 @@ import { AddBucketlistService } from '../../services/http-calls/add-bucketlist.s
 import { GetBucketlistsService } from '../../services/http-calls/get-bucketlists.service';
 import { DeleteBucketlistService } from '../../services/http-calls/delete-bucketlist.service';
 import { WebApiPathService } from '../../services/shared-information/webapi-path.service';
+import { GetUserDetails } from '../../services/shared-information/user-details.service';
 
 // Global Variables
 import { GlobalVariables } from '../../global-variables/global-variables';
@@ -32,12 +32,12 @@ export class BucketlistPageComponent implements OnInit{
     bucketlist: BucketlistModel = new BucketlistModel();
     bucketlists: Array<BucketlistModel> = new Array<BucketlistModel>();
     bucketlist_page: BucketlistPageModel = new BucketlistPageModel();
-    currentUser: CurrentUserModel = JSON.parse(localStorage.getItem(GlobalVariables.getInstance().getStoreUser()));
-    user:UserModel = this.currentUser.user;
-    user_name = this.user.fname+" "+this.user.lname;
+    user: UserModel = new UserModel()
+    user_name:string = "";
 
 
     ngOnInit(): void {
+        this.getUser();
         this.buildForm();
         this.getBucketLists();
     }
@@ -49,7 +49,8 @@ export class BucketlistPageComponent implements OnInit{
         private addBucketlistService: AddBucketlistService,
         private webApiPathService: WebApiPathService,
         private getBucketlistsService: GetBucketlistsService,
-        private deleteBucketlistService: DeleteBucketlistService){}
+        private deleteBucketlistService: DeleteBucketlistService,
+        private user_details: GetUserDetails){}
 
     buildForm(): void {
          this.addbucketlistForm = this.fb.group({
@@ -62,7 +63,12 @@ export class BucketlistPageComponent implements OnInit{
         this.onValueChanged();
     }
 
-     onValueChanged(data?: any){
+    getUser(){
+        this.user = this.user_details.getUser();
+        this.user_name = this.user.fname+" "+this.user.lname;
+    }
+
+    onValueChanged(data?: any){
         if(!this.addbucketlistForm) { return; }
         const form = this.addbucketlistForm;
 
@@ -92,7 +98,7 @@ export class BucketlistPageComponent implements OnInit{
     onSubmitForm(){
         this.bucketlist = this.addbucketlistForm.value;
         this.addbucketlistForm.controls.name.setValue("");
-        this.addBucketlistService.addBucketlist(this.bucketlist, this.webApiPathService.getWebApiPath('bucketlist').path, this.currentUser.token)
+        this.addBucketlistService.addBucketlist(this.bucketlist, this.webApiPathService.getWebApiPath('bucketlist').path, this.user_details.gettoken())
             .subscribe(response => {
                 if (response.status === "success") {
                     this.snackBar.open(response.message, '', {
@@ -120,7 +126,7 @@ export class BucketlistPageComponent implements OnInit{
         if(query !== null ){
             urlPath += query;
         }
-        this.getBucketlistsService.getBucketlists(urlPath, this.currentUser.token)
+        this.getBucketlistsService.getBucketlists(urlPath, this.user_details.gettoken())
             .subscribe(response => {
                 if (response.status === "success") {
                     this.snackBar.open(response.message, '', {
@@ -166,7 +172,7 @@ export class BucketlistPageComponent implements OnInit{
     deleteBucketlist(id:number){
         this.delete = true;
         let urlPath = this.webApiPathService.getWebApiPath('bucketlist').path + '/' + id;
-        this.deleteBucketlistService.deleteBucketlist(urlPath, this.currentUser.token)
+        this.deleteBucketlistService.deleteBucketlist(urlPath, this.user_details.gettoken())
             .subscribe(response => {
                 if (response.status === "success"){
                     this.snackBar.open( response.message, '', {
