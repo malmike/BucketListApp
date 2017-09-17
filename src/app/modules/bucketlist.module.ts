@@ -27,9 +27,21 @@ import { GetBucketlistsService } from '../services/http-calls/get-bucketlists.se
 import { GetBucketlistService } from '../services/http-calls/get-bucketlist.service';
 import { DeleteBucketlistService } from '../services/http-calls/delete-bucketlist.service';
 import { WebApiPathService } from '../services/shared-information/webapi-path.service';
+import { GetUserDetails } from '../services/shared-information/user-details.service';
+
+//Models
+import { CurrentUserModel } from '../models/current-user.model';
+
+//Global Variables
+import { GlobalVariables } from '../global-variables/global-variables';
 
 export function getHttpInterceptor(backend: ConnectionBackend, defaultOptions: RequestOptions){
     return new HttpInterceptorService(backend, defaultOptions);
+}
+
+export function getCurrentUser(){
+    let currentUser: CurrentUserModel = JSON.parse(localStorage.getItem(GlobalVariables.getInstance().getStoreUser()));
+    return new GetUserDetails(currentUser);
 }
 
 @NgModule({
@@ -51,6 +63,10 @@ export function getHttpInterceptor(backend: ConnectionBackend, defaultOptions: R
             provide: Http,
             useFactory: getHttpInterceptor,
             deps:[XHRBackend, RequestOptions]
+        },
+        {
+            provide: GetUserDetails,
+            useFactory: getCurrentUser
         },
         Permissions,
         CanActivateGuard,
