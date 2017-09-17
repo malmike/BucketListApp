@@ -28,6 +28,7 @@ import { GetBucketlistService } from '../services/http-calls/get-bucketlist.serv
 import { DeleteBucketlistService } from '../services/http-calls/delete-bucketlist.service';
 import { WebApiPathService } from '../services/shared-information/webapi-path.service';
 import { GetUserDetails } from '../services/shared-information/user-details.service';
+import { UpdateBucketlistService } from '../services/http-calls/update-bucketlist.service';
 
 //Models
 import { CurrentUserModel } from '../models/current-user.model';
@@ -73,6 +74,7 @@ export function getCurrentUser(){
         AddBucketlistService,
         GetBucketlistsService,
         GetBucketlistService,
+        UpdateBucketlistService,
         DeleteBucketlistService,
         WebApiPathService
     ]
