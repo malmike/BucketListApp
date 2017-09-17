@@ -38,7 +38,7 @@ export class LoginService {
                 if(resp.status === 'success'){
                     this.user = resp.data;
                     this.user.password = this.password;
-                    this.token = resp.token;
+                    this.token = resp.auth_token;
                     localStorage.setItem(this.storeUser, JSON.stringify({ user: this.user, token: this.token }));
                     this.response.status = resp.status;
                     this.response.message = resp.message;

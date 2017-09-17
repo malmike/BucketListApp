@@ -36,7 +36,7 @@ export class RegistrationService {
                         if(resp.status === 'success'){
                             this.user = resp.data;
                             this.user.password = this.password;
-                            this.token = resp.token;
+                            this.token = resp.auth_token;
                             localStorage.setItem(this.storeUser, JSON.stringify({ user: this.user, token: this.token }));
                             console.log(resp)
                             this.response.status = resp.status;
