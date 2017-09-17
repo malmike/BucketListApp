@@ -16,7 +16,7 @@
 
 #bucketlist_title{
     margin: auto;
-    padding: 0.1em 3em 0.1em 3em;
+    padding: 0.1em 2em 0.1em 3em;
 }
 
 #list_card{
@@ -25,6 +25,25 @@
     margin-bottom: 0.5em;
     width:80%;
     padding: 1em 0.5em 2em 3em;
+}
+
+#create_details{
+    display: inline-flex;
+    text-align: left;
+}
+
+#create{
+    padding:  0.1em 3em 0.1em 3em;
+}
+#modify{
+    padding:  0.1em 3em 0.1em 3em;
+}
+
+#create i{
+    color:blue;
+}
+#modify i{
+    color:blue;
 }
 
 #item_name{

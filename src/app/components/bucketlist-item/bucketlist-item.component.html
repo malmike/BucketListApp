@@ -11,6 +11,12 @@
                 <button md-raised-button id="cancel" (click)="cancel()" *ngIf="edit">CANCEL</button>
             </form>
         </md-card-content>
+        <md-card-footer>
+            <div id='create_details'>
+                <h5 id='create'>DATE CREATED: <i>{{bucketlist.date_created | date:'medium'}}</i></h5>
+                <h5 id='modify'>DATE MODIFIED: <i>{{bucketlist.date_modified | date:'medium'}}</i></h5>
+            </div>
+        </md-card-footer>
     </md-card>
     <br><br>
     <h1 id="bucketlist_title">Bucket List Items</h1>
