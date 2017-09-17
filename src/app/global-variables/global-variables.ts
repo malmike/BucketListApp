@@ -2,7 +2,7 @@ export class GlobalVariables {
     private static instance: GlobalVariables;
     private webApi:string = "https://m2bucketlistapi.herokuapp.com/";
     private token_header:string = "x-access-token";
-    private bucketlist_id:string = "bl";
+    private bucketlist_details:string = "bl";
     private bucketlist_item_id:string = "bli";
     private store_user:string = "current_user";
     private loginUrl: string = this.webApi + "api/v1/auth/login";
@@ -25,8 +25,8 @@ export class GlobalVariables {
     getStoreUser():string {
         return this.store_user;
     }
-    getBucketlistId():string{
-        return this.bucketlist_id;
+    getBucketlistDetails():string{
+        return this.bucketlist_details;
     }
     getBucketlistItemId():string{
         return this.bucketlist_item_id;

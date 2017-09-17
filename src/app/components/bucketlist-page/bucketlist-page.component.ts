@@ -160,11 +160,14 @@ export class BucketlistPageComponent implements OnInit{
         return this.getBucketlistsService.getBucketlistPage();
     }
 
-    navBucketlistItem(id:number){
+    navBucketlistItem(id:number, name:string){
         if(this.delete){
             this.delete = false;
         }else{
-            localStorage.setItem(GlobalVariables.getInstance().getBucketlistId(), id.toString());
+            localStorage.setItem(
+                GlobalVariables.getInstance().getBucketlistDetails(),
+                JSON.stringify({ id: id.toString(), name: name})
+            );
             this.router.navigate(['/bucketlistitem']);
         }
     }
