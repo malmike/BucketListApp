@@ -7,7 +7,7 @@ import { MdSnackBar } from '@angular/material';
 // Services
 import { GetBucketlistService } from '../../services/http-calls/get-bucketlist.service';
 import { WebApiPathService } from '../../services/shared-information/webapi-path.service';
-
+import { GetUserDetails } from '../../services/shared-information/user-details.service';
 
 // Models
 import { BucketlistModel } from '../../models/bucketlist.model';
@@ -28,7 +28,6 @@ export class BucketlistItemComponent implements OnInit{
     editbucketlistForm: FormGroup;
     active:boolean = true;
     edit: boolean = false;
-    currentUser: CurrentUserModel = JSON.parse(localStorage.getItem(GlobalVariables.getInstance().getStoreUser()));
     bucketlist: BucketlistModel = new BucketlistModel();
     private bucketlist_item: Array<BucketlistItemModel> = new Array<BucketlistItemModel>();
 
@@ -37,7 +36,8 @@ export class BucketlistItemComponent implements OnInit{
         private router: Router,
         private snackBar: MdSnackBar,
         private webApiPathService: WebApiPathService,
-        private getBucketlistService: GetBucketlistService
+        private getBucketlistService: GetBucketlistService,
+        private user_details: GetUserDetails
     ){}
 
     buildForm(): void {
@@ -87,7 +87,7 @@ export class BucketlistItemComponent implements OnInit{
     getBucketlist(){
         let id = localStorage.getItem(GlobalVariables.getInstance().getBucketlistId());
         let urlPath: string = this.webApiPathService.getWebApiPath('bucketlist').path+'/'+id;
-        this.getBucketlistService.getBucketlist(urlPath,  this.currentUser.token, Number(id))
+        this.getBucketlistService.getBucketlist(urlPath,  this.user_details.gettoken(), Number(id))
             .subscribe(response => {
                 if (response.status === "success") {
                     this.snackBar.open(response.message, '', {
