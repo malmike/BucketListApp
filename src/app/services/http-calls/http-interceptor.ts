@@ -87,7 +87,7 @@ export abstract class HttpInterceptor extends Http{
                 let req_body = this.request_body;
                 let req_options = this.request_options;
                 let req_url = this.request_url;
-                return this.refreshToken().mergeMap(res =>{
+                return this.refreshToken(err).mergeMap(res =>{
                     if(res){
                         let data = res.json();
                         let token = data.auth_token;
@@ -103,7 +103,7 @@ export abstract class HttpInterceptor extends Http{
     }
 
     protected abstract saveToken(token: string): string;
-    protected abstract refreshToken(): Observable<Response>;
+    protected abstract refreshToken(err: Error): Observable<Response>;
     protected abstract getTokenHeader(): string;
 
 }

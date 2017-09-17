@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Headers, Response, RequestOptions, ConnectionBackend } from '@angular/http';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 
 import { HttpInterceptor } from './http-interceptor';
@@ -30,8 +31,11 @@ export class HttpInterceptorService extends HttpInterceptor{
         return token;
     }
 
-    protected refreshToken(): Observable<Response> {
+    protected refreshToken(err): Observable<Response> {
         this.currentUser = JSON.parse(localStorage.getItem(GlobalVariables.getInstance().getStoreUser()));
+        if(this.currentUser == null){
+            return Observable.throw(err);
+        }
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Accept', 'application/json');
