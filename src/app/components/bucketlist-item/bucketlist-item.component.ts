@@ -6,6 +6,7 @@ import { MdSnackBar } from '@angular/material';
 
 // Services
 import { GetBucketlistService } from '../../services/http-calls/get-bucketlist.service';
+import { UpdateBucketlistService } from '../../services/http-calls/update-bucketlist.service';
 import { WebApiPathService } from '../../services/shared-information/webapi-path.service';
 import { GetUserDetails } from '../../services/shared-information/user-details.service';
 
@@ -29,6 +30,8 @@ export class BucketlistItemComponent implements OnInit{
     active:boolean = true;
     edit: boolean = false;
     bucketlist: BucketlistModel = new BucketlistModel();
+    original_name:string = "";
+    edit_bucketlist: BucketlistModel = new BucketlistModel();
     private bucketlist_item: Array<BucketlistItemModel> = new Array<BucketlistItemModel>();
 
     constructor(
@@ -37,13 +40,16 @@ export class BucketlistItemComponent implements OnInit{
         private snackBar: MdSnackBar,
         private webApiPathService: WebApiPathService,
         private getBucketlistService: GetBucketlistService,
-        private user_details: GetUserDetails
+        private user_details: GetUserDetails,
+        private updateBucketlistService: UpdateBucketlistService
     ){}
 
     buildForm(): void {
         console.log(this.bucketlist.name)
         this.editbucketlistForm = this.fb.group({
-            'name': ["", Validators.minLength(3)]
+            'name': [null,[
+                Validators.required,
+                Validators.minLength(3)]]
         });
 
         this.editbucketlistForm.valueChanges
@@ -75,6 +81,7 @@ export class BucketlistItemComponent implements OnInit{
 
     validationMessages = {
         'name': {
+            'required': 'Bucketlist name required',
             'minlength': 'Bucketlist name must be at least 3 characters long.'
         }
     }
@@ -94,6 +101,7 @@ export class BucketlistItemComponent implements OnInit{
                         duration: 2000,
                     });
                     this.bucketlist = this.getSingleBucketList();
+                    this.original_name = this.bucketlist.name;
                     console.log('Successful getting of bucketlist:', response.message);
                     this.bucketlist_item = this.bucketlist.bucketlist_items;
                     console.log(this.bucketlist_item);
@@ -121,6 +129,46 @@ export class BucketlistItemComponent implements OnInit{
     }
 
     cancel(){
+        this.editbucketlistForm.controls.name.setValue(this.original_name);
         this.edit = false;
+    }
+
+    updateBucketlistName(){
+        let name:string = this.editbucketlistForm.controls.name.value;
+        if(name === this.original_name){
+            this.edit = false;
+        }else{
+            let urlpath = this.webApiPathService.getWebApiPath('bucketlist').path+'/'+this.bucketlist.id;
+            this.edit_bucketlist = this.editbucketlistForm.value;
+            this.updateBucketlistService.updateBucketlist(this.edit_bucketlist, urlpath, this.user_details.gettoken())
+                .subscribe(response => {
+                    if (response.status === "success") {
+                        this.snackBar.open(response.message, '', {
+                            duration: 2000,
+                        });
+                        console.log('Successful updating of bucketlists:', response.message);
+                        this.bucketlist = this.updateBucketlistService.getBucketlist();
+                        this.original_name = this.bucketlist.name;
+                        this.edit = false;
+                    }else{
+                        this.snackBar.open(response.message, '', {
+                            duration: 2000,
+                        });
+                        if (response.message = "Failure updating bucketlist"){
+                        }
+                        console.log('Failure updating bucketlists:', response.message);
+                        this.cancel()
+                    }
+                },
+                errMsg => {
+                    this.snackBar.open(errMsg, '', {
+                            duration: 2000,
+                    });
+                    if(errMsg=="User has no single bucketlist"){
+                    }
+                    console.log('Failure getting bucketlists:', errMsg);
+                    this.cancel()
+                });
+        }
     }
 }
