@@ -1,0 +1,34 @@
+.ng-valid[required], .ng-valid.required, md-input-container{
+    color: black;
+}
+
+.ng-invalid:not(md-input-container){
+    color: blue;
+}
+
+.additem, #date_picker{
+    width: 80%;
+    margin: 0 auto;
+}
+
+.custom_button{
+    margin-top: 1em;
+    width: 100%;
+    background-color: navy;
+    color: whitesmoke;
+}
+
+
+#additem-div{
+    text-align: center;
+    margin: 5em auto;
+    width: 75%;
+}
+
+md-hint{
+    color: red;
+}
+
+.cancel{
+    float: right;
+}
