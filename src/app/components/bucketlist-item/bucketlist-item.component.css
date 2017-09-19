@@ -89,6 +89,7 @@ md-input-container{
 
 .item_header{
     display: inline-flex;
+    padding-bottom: 1em;
 }
 
 .custom_button{

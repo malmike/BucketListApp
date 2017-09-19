@@ -7,6 +7,7 @@ import { MdSnackBar } from '@angular/material';
 // Services
 import { GetBucketlistService } from '../../services/http-calls/get-bucketlist.service';
 import { UpdateBucketlistService } from '../../services/http-calls/update-bucketlist.service';
+import { DeleteItemService } from '../../services/http-calls/delete-item.service';
 import { WebApiPathService } from '../../services/shared-information/webapi-path.service';
 import { GetUserDetails } from '../../services/shared-information/user-details.service';
 import { AddItemDialogService } from '../../services/dialogs/add-item-dialog.service';
@@ -30,12 +31,13 @@ export class BucketlistItemComponent implements OnInit{
     editbucketlistForm: FormGroup;
     additemForm: FormGroup;
     active:boolean = true;
+    delete:boolean = false;
     edit: boolean = false;
     bucketlist: BucketlistModel = new BucketlistModel();
     bucketlist_name:string = "";
     edit_bucketlist: BucketlistModel = new BucketlistModel();
     bucketlist_id: string = "";
-    private bucketlist_item: Array<BucketlistItemModel> = new Array<BucketlistItemModel>();
+    private bucketlist_items: Array<BucketlistItemModel> = new Array<BucketlistItemModel>();
 
     constructor(
         private fb: FormBuilder,
@@ -45,6 +47,7 @@ export class BucketlistItemComponent implements OnInit{
         private getBucketlistService: GetBucketlistService,
         private user_details: GetUserDetails,
         private updateBucketlistService: UpdateBucketlistService,
+        private deleteItemService: DeleteItemService,
         public addItemDialogService: AddItemDialogService
     ){}
 
@@ -113,8 +116,7 @@ export class BucketlistItemComponent implements OnInit{
                     this.bucketlist = this.getSingleBucketList();
                     this.bucketlist_name = this.bucketlist.name;
                     console.log('Successful getting of bucketlist:', response.message);
-                    this.bucketlist_item = this.bucketlist.bucketlist_items;
-                    console.log(this.bucketlist_item);
+                    this.bucketlist_items = this.bucketlist.bucketlist_items;
                 }else{
                     this.snackBar.open(response.message, '', {
                         duration: 2000,
@@ -183,11 +185,38 @@ export class BucketlistItemComponent implements OnInit{
     }
 
     openAddItemDialog(): void{
-        let result: boolean = false;
         this.addItemDialogService
             .addBucketlistItem(this.bucketlist_id)
             .subscribe(res => {
-                console.log(res)
+                if(res){
+                    this.getBucketlist()
+                }
             })
+    }
+
+    deleteItem(id: string): void{
+        this.delete = true;
+        let urlPath = this.webApiPathService.getWebApiPath('bucketlist').path + '/' + this.bucketlist_id + '/items/' +id;
+        this.deleteItemService.deleteItem(urlPath, this.user_details.gettoken())
+            .subscribe(response => {
+                if (response.status === "success"){
+                    this.snackBar.open( response.message, '', {
+                        duration: 2000,
+                    });
+                    console.log("Successful deleting of bucketlist:", response.message)
+                    this.getBucketlist();
+                }else{
+                    this.snackBar.open( response.message, '', {
+                        duration: 2000,
+                    });
+                    console.log('Failure deleting bucketlists:', response.message);
+                }
+            },
+            errMsg => {
+                this.snackBar.open(errMsg, '', {
+                        duration: 2000,
+                });
+                console.log('Failure deleting bucketlists:', errMsg);
+            });
     }
 }
