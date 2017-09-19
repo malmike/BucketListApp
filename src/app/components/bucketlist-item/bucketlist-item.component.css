@@ -84,9 +84,14 @@ md-card-content{
 
 md-input-container{
     width: 60%;
+    margin: 0 auto;
 }
 
-button{
+.item_header{
+    display: inline-flex;
+}
+
+.custom_button{
     width: 12.5%;
     background-color: navy;
     color: whitesmoke;

@@ -183,5 +183,11 @@ export class BucketlistItemComponent implements OnInit{
     }
 
     openAddItemDialog(): void{
+        let result: boolean = false;
+        this.addItemDialogService
+            .addBucketlistItem(this.bucketlist_id)
+            .subscribe(res => {
+                console.log(res)
+            })
     }
 }
