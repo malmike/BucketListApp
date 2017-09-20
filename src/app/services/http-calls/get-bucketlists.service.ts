@@ -54,7 +54,9 @@ export class GetBucketlistsService {
         } else {
             errMsg = error.message ? error.message : error.toString();
         }
-        console.error(errMsg);
+        if(error.status === 404){
+            errMsg = "User has no single bucketlist";
+        }
         return Observable.throw(errMsg);
     }
 

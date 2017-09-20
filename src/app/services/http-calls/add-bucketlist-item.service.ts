@@ -31,7 +31,6 @@ export class AddBucketlistItemService {
             .post(urlPath, JSON.stringify(bucketlistitem), requestoptions)
             .map((res: Response) => {
                 let resp: ResponseModel = res.json();
-                console.log(resp)
                 if(resp.status === 'success'){
                     return resp;
                 }else{
