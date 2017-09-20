@@ -4,24 +4,19 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
 import { GlobalVariables } from '../../global-variables/global-variables';
-import { UserModel } from '../../models/user.model';
 import { ResponseModel } from '../../models/response.model'
 
 @Injectable()
-export class LoginService {
+export class LogoutService {
 
     authUrl: string = GlobalVariables.getInstance().getWebApi();
     storeUser: string = GlobalVariables.getInstance().getStoreUser();
-    private user: UserModel = new UserModel();
     private response: ResponseModel = new ResponseModel();
-    private token: string;
-    private password: string;
 
     constructor(private http: Http) {}
 
-    authenticate(user: UserModel, path: string): Observable<ResponseModel>{
+    logout(path: string, token: string): Observable<ResponseModel> {
         let headers = new Headers();
-        this.password = user.password;
         headers.append('Content-Type', 'application/json');
         headers.append('Accept', 'application/json');
         let requestoptions = new RequestOptions({
@@ -32,14 +27,11 @@ export class LoginService {
         let urlPath: string = this.authUrl + path;
 
         return this.http
-            .post(urlPath, JSON.stringify(user), requestoptions)
+            .get(urlPath, requestoptions)
             .map((res: Response) => {
                 let resp = res.json();
                 if(resp.status === 'success'){
-                    this.user = resp.data;
-                    this.user.password = this.password;
-                    this.token = resp.auth_token;
-                    localStorage.setItem(this.storeUser, JSON.stringify({ user: this.user, token: this.token }));
+                    localStorage.removeItem(this.storeUser);
                     this.response.status = resp.status;
                     this.response.message = resp.message;
                     return this.response;
@@ -61,7 +53,6 @@ export class LoginService {
         } else {
             errMsg = error.message ? error.message : error.toString();
         }
-        console.error(errMsg);
         return Observable.throw(errMsg);
     }
 
