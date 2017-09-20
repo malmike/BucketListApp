@@ -15,6 +15,7 @@ import { BucketlistComponent } from '../components/bucketlist/bucketlist.compone
 import { BucketlistPageComponent } from '../components/bucketlist-page/bucketlist-page.component';
 import { BucketlistItemComponent } from '../components/bucketlist-item/bucketlist-item.component';
 import { AddItemDialogComponent } from '../components/add-item-dialog-component/add-item-dialog.component';
+import { UpdateItemDialogComponent } from '../components/update-item-dialog-component/update-item-dialog.component';
 
 // Routing Modules
 import { BucketlistRoutingModule } from '../routes/bucketlist-routing.module';
@@ -33,7 +34,9 @@ import { DeleteItemService } from '../services/http-calls/delete-item.service';
 import { WebApiPathService } from '../services/shared-information/webapi-path.service';
 import { GetUserDetails } from '../services/shared-information/user-details.service';
 import { UpdateBucketlistService } from '../services/http-calls/update-bucketlist.service';
+import { UpdateBucketlistItemService } from '../services/http-calls/update-bucketlist-item.service';
 import { AddItemDialogService } from '../services/dialogs/add-item-dialog.service';
+import { UpdateItemDialogService } from '../services/dialogs/update-item-dialog.service';
 import { MdDialog } from '@angular/material';
 
 
@@ -49,6 +52,10 @@ export function getHttpInterceptor(backend: ConnectionBackend, defaultOptions: R
 
 export function addItemDialgService(dialog: MdDialog){
     return new AddItemDialogService(dialog);
+}
+
+export function updatetemDialgService(dialog: MdDialog){
+    return new UpdateItemDialogService(dialog);
 }
 
 export function getCurrentUser(){
@@ -67,13 +74,15 @@ export function getCurrentUser(){
         MyDatePickerModule
     ],
     exports:[
-        AddItemDialogComponent
+        AddItemDialogComponent,
+        UpdateItemDialogComponent
     ],
     declarations: [
         AddItemDialogComponent,
         BucketlistComponent,
         BucketlistPageComponent,
-        BucketlistItemComponent
+        BucketlistItemComponent,
+        UpdateItemDialogComponent
     ],
     providers: [
         {
@@ -87,6 +96,11 @@ export function getCurrentUser(){
             deps:[MdDialog]
         },
         {
+            provide: UpdateItemDialogService,
+            useFactory: updatetemDialgService,
+            deps:[MdDialog]
+        },
+        {
             provide: GetUserDetails,
             useFactory: getCurrentUser
         },
@@ -97,12 +111,14 @@ export function getCurrentUser(){
         GetBucketlistsService,
         GetBucketlistService,
         UpdateBucketlistService,
+        UpdateBucketlistItemService,
         DeleteBucketlistService,
         DeleteItemService,
         WebApiPathService
     ],
     entryComponents: [
-        AddItemDialogComponent
+        AddItemDialogComponent,
+        UpdateItemDialogComponent
     ]
 })
 
