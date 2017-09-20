@@ -1,0 +1,47 @@
+.ng-valid[required], .ng-valid.required, md-input-container{
+    color: blue;
+}
+
+.ng-invalid:not(md-input-container){
+    color: red;
+}
+
+.additem, #date_picker{
+    width: 80%;
+    margin: 0 auto;
+}
+
+.custom_button{
+    margin-top: 1em;
+    width: 100%;
+    background-color: navy;
+    color: whitesmoke;
+}
+
+
+#updateitem-div, #item_details{
+    text-align: left;
+    text-justify: auto;
+    margin: 2em auto;
+    width: 90%;
+}
+
+md-hint{
+    color: red;
+}
+
+.cancel{
+    float: right;
+}
+
+.title{
+    text-align: center;
+}
+
+.to-blue{
+    color: #4169E1;
+}
+
+.item_name{
+    width: 100%;
+}
