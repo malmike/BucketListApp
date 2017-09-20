@@ -15,8 +15,7 @@ import { BucketlistItemComponent } from '../components/bucketlist-item/bucketlis
     imports: [RouterModule.forChild([
         {path: '', component:BucketlistComponent, canActivate:[CanActivateGuard],
             children:[
-                { path: '', redirectTo:'/bucketlist', pathMatch: 'full'},
-                { path: 'bucketlist', component: BucketlistPageComponent },
+                { path: '', component: BucketlistPageComponent },
                 { path: 'bucketlistitem', component:BucketlistItemComponent}
             ]
         }

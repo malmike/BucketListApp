@@ -93,7 +93,7 @@ export class LoginComponent implements OnInit{
                     this.snackBar.open(responseSp.message, '', {
                         duration: 2000,
                     });
-                    this.router.navigate(['/nav', 'bucketlist']);
+                    this.router.navigate(['/bucketlist']);
                 }else{
                     this.snackBar.open(responseSp.message, '', {
                         duration: 2000,
