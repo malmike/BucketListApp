@@ -8,6 +8,8 @@
 
 #container{
     padding-top: 1.5em;
+    width: 90%;
+    margin: 0 auto;
 }
 
 #add_bucketlist{
@@ -44,7 +46,19 @@
 }
 
 #list_card:hover{
-    background: skyblue;
+    background: #CCCCCC;
+}
+
+.item_header{
+    display: inline-flex;
+    padding-bottom: 1em;
+    padding-left: 2em;
+}
+
+.no_items{
+    padding-top: 2em;
+    text-align: center;
+    color: blueviolet;
 }
 
 md-card{
