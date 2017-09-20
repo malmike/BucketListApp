@@ -1,9 +1,9 @@
- <div layout="row" layout-align="center center" id="container">
-    <md-card>
-        <md-card-content>
-            <img md-card-image src="assets/images/BucketListLogo.png" style="margin:auto; width: 100%; background-color: skyblue ">
-        </md-card-content>
-    </md-card>
-</div>
-
+<md-toolbar class="toolbar">
+    <span class="spacer"></span>
+    <div layout="row" class="container">
+        <img md-card-image src="assets/images/BucketListLogo.png"  style="margin:auto; width: 100%;">
+    </div>
+    <span class="spacer"></span>
+    <button md-raised-button class="custom_button" (click)="logout()">SIGN OUT</button>
+</md-toolbar>
 <router-outlet></router-outlet>

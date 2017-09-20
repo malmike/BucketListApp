@@ -1,18 +1,10 @@
-#container{
-    padding-top: 1.5em;
+.toolbar{
+    background-color: royalblue;
+}
+.spacer{
+    flex: 1 1 auto;
 }
 
-md-card{
-    margin: auto;
-    padding: 0.15em 0.15em 0.15em 0.15em;
-    width: max-content;
+.container{
     text-align: center;
-}
-
-md-card-content{
-    padding: 0;
-}
-
-md-card-footer{
-    padding-top: 0;
 }
