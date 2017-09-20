@@ -38,7 +38,7 @@ export class BucketlistItemComponent implements OnInit{
     bucketlist_name:string = "";
     edit_bucketlist: BucketlistModel = new BucketlistModel();
     bucketlist_id: string = "";
-    private bucketlist_items: Array<BucketlistItemModel> = new Array<BucketlistItemModel>();
+    bucketlist_items: Array<BucketlistItemModel> = new Array<BucketlistItemModel>();
 
     constructor(
         private fb: FormBuilder,
