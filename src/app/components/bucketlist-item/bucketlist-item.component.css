@@ -50,7 +50,7 @@
     float: left;
 }
 
-#item_delete{
+.item_svg{
     float:right;
 }
 
@@ -60,8 +60,8 @@
     color: blue;
 }
 
-#item_delete:hover{
-    background: red;
+.item_delete:hover{
+    transform: scale(1.2);
 }
 
 #item_span{
@@ -92,6 +92,12 @@ md-input-container{
     padding-bottom: 1em;
 }
 
+.no_items{
+    padding-top: 2em;
+    text-align: center;
+    color: blueviolet;
+}
+
 .custom_button{
     width: 12.5%;
     background-color: navy;
@@ -115,3 +121,4 @@ a:hover{
 md-hint{
   color: red;
 }
+

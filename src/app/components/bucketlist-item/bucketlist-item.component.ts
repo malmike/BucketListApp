@@ -11,6 +11,7 @@ import { DeleteItemService } from '../../services/http-calls/delete-item.service
 import { WebApiPathService } from '../../services/shared-information/webapi-path.service';
 import { GetUserDetails } from '../../services/shared-information/user-details.service';
 import { AddItemDialogService } from '../../services/dialogs/add-item-dialog.service';
+import { UpdateItemDialogService } from '../../services/dialogs/update-item-dialog.service';
 
 // Models
 import { BucketlistModel } from '../../models/bucketlist.model';
@@ -48,7 +49,8 @@ export class BucketlistItemComponent implements OnInit{
         private user_details: GetUserDetails,
         private updateBucketlistService: UpdateBucketlistService,
         private deleteItemService: DeleteItemService,
-        public addItemDialogService: AddItemDialogService
+        public addItemDialogService: AddItemDialogService,
+        public updateItemDialogService: UpdateItemDialogService
     ){}
 
     buildForm(): void {
@@ -191,7 +193,21 @@ export class BucketlistItemComponent implements OnInit{
                 if(res){
                     this.getBucketlist()
                 }
-            })
+            });
+    }
+
+    openUpdateItemDialog(item: BucketlistItemModel, index: number): void{
+        if(this.delete){
+            this.delete = false;
+        }else {
+            this.updateItemDialogService
+                .updateBucketlistItem(item, this.bucketlist_id)
+                .subscribe(res => {
+                    if(res !== undefined && res !== item){
+                        this.bucketlist_items[index] = res;
+                    }
+                });
+        }
     }
 
     deleteItem(id: string): void{

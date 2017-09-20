@@ -25,13 +25,17 @@
             <md-icon class="md-24">add</md-icon>
         </button>
     </div>
+    <div class="no_items" *ngIf="bucketlist_items.length==0">
+        <i>NO EXISTING BUCKETLIST. USE THE ADD BUTTON ABOVE TO ADD BUCKETLIST</i>
+    </div>
 
     <md-list>
-        <md-list-item *ngFor="let item of bucketlist_items">
-            <md-card id="list_card">
+        <md-list-item *ngFor="let item of bucketlist_items; let idx = index">
+            <md-card id="list_card" (click)="openUpdateItemDialog(item, idx)">
                 <md-card-content id="list_content">
                     <p id="item_name">{{item.name}}</p>
-                    <img id="item_delete" src="./assets/svg/ic_delete_black_24px.svg" (click)="deleteItem(item.id)">
+                    <img class="item_delete item_svg" src="./assets/svg/ic_delete_black_24px.svg" (click)="deleteItem(item.id)">
+                    <img class="item_completed item_svg" *ngIf="item.completed" src="./assets/svg/ic_check_circle_black_24px.svg">
                 </md-card-content>
             </md-card>
         </md-list-item>
