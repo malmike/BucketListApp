@@ -21,6 +21,9 @@ import { RegExpService } from '../services/shared-information/reg-exp.service'
 import { RegistrationService } from '../services/http-calls/registration.service';
 import { LoginService } from '../services/http-calls/login.service';
 
+// Guards
+import { Permissions, LogoutGuard } from '../guards/router.guard';
+
 @NgModule({
     imports: [
         CommonModule,
@@ -35,6 +38,8 @@ import { LoginService } from '../services/http-calls/login.service';
         RegistrationComponent
     ],
     providers: [
+        Permissions,
+        LogoutGuard,
         WebApiPathService,
         RegExpService,
         RegistrationService,
