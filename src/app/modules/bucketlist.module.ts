@@ -36,6 +36,8 @@ import { GetUserDetails } from '../services/shared-information/user-details.serv
 import { UpdateBucketlistService } from '../services/http-calls/update-bucketlist.service';
 import { UpdateBucketlistItemService } from '../services/http-calls/update-bucketlist-item.service';
 import { LogoutService } from '../services/http-calls/logout.service';
+import { HandleErrorsService } from '../services/shared-information/handle-errors.service';
+import { GenerateHeadersService } from '../services/shared-information/generate-headers.service';
 import { AddItemDialogService } from '../services/dialogs/add-item-dialog.service';
 import { UpdateItemDialogService } from '../services/dialogs/update-item-dialog.service';
 import { MdDialog } from '@angular/material';
@@ -116,7 +118,9 @@ export function getCurrentUser(){
         UpdateBucketlistItemService,
         DeleteBucketlistService,
         DeleteItemService,
-        WebApiPathService
+        WebApiPathService,
+        HandleErrorsService,
+        GenerateHeadersService
     ],
     entryComponents: [
         AddItemDialogComponent,
