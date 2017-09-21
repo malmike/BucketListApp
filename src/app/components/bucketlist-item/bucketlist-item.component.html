@@ -1,5 +1,6 @@
   <div layout="row" layout-align="center center" id="container">
     <md-card id="bucketlist_header">
+        <img class="item_delete item_svg" src="./assets/svg/ic_arrow_back_blue_24px.svg" (click)="back()">
         <md-card-content>
             <form [formGroup]="editbucketlistForm" *ngIf="active" (ngSubmit)="updateBucketlistName()">
                 <md-input-container>
