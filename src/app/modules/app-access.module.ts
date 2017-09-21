@@ -17,6 +17,8 @@ import { AppAccessRoutingModule } from '../routes/app-access-routing.module';
 
 // Service
 import { WebApiPathService } from '../services/shared-information/webapi-path.service';
+import { HandleErrorsService } from '../services/shared-information/handle-errors.service';
+import { GenerateHeadersService } from '../services/shared-information/generate-headers.service';
 import { RegExpService } from '../services/shared-information/reg-exp.service'
 import { RegistrationService } from '../services/http-calls/registration.service';
 import { LoginService } from '../services/http-calls/login.service';
@@ -43,7 +45,9 @@ import { Permissions, LogoutGuard } from '../guards/router.guard';
         WebApiPathService,
         RegExpService,
         RegistrationService,
-        LoginService
+        LoginService,
+        HandleErrorsService,
+        GenerateHeadersService
     ]
 })
 
