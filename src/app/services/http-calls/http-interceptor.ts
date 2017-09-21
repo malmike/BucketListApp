@@ -31,8 +31,6 @@ export abstract class HttpInterceptor extends Http{
         if(req_method === RequestMethod.Post) return super.post(req_url, req_body, req_options);
         if(req_method === RequestMethod.Put) return super.put(req_url, req_body, req_options);
         if(req_method === RequestMethod.Delete) return super.delete(req_url, req_options);
-
-        return Observable.throw(new Error("Testing 123"));
     }
 
     private getRequestOptions(options?: RequestOptionsArgs): RequestOptionsArgs{

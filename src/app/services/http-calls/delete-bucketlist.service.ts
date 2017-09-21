@@ -1,5 +1,5 @@
 import { Injectable }    from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
@@ -19,10 +19,11 @@ export class DeleteBucketlistService {
         private generateHeadersService: GenerateHeadersService,
         private handleErrorsService: HandleErrorsService) {}
 
-    deleteBucketlist(path: string): Observable<ResponseModel>{
+    deleteBucketlist(path: string, token: string): Observable<ResponseModel>{
+        let options: RequestOptions = new RequestOptions(this.generateHeadersService.getHeaders(token));
         let urlPath: string = this.apiUrl + path;
         return this.http
-            .delete(urlPath, this.generateHeadersService.getHeaders(true))
+            .delete(urlPath, options)
             .map((res: Response) => {
                 let resp: ResponseModel = res.json();
                 return resp;

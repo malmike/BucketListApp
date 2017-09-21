@@ -9,6 +9,7 @@ import { MdSnackBar } from '@angular/material';
 // Services
 import { UpdateBucketlistItemService } from '../../services/http-calls/update-bucketlist-item.service';
 import { WebApiPathService } from '../../services/shared-information/webapi-path.service';
+import { GetUserDetails } from '../../services/shared-information/user-details.service';
 
 //Models
 import { BucketlistItemModel } from '../../models/bucketlist_item.model';
@@ -30,16 +31,23 @@ export class UpdateItemDialogComponent implements OnInit{
     private today: Date = new Date();
     public bucketlist_item: BucketlistItemModel;
     public bucketlist_id: string;
+    private token: string;
 
     constructor(
         public dialogRef: MdDialogRef<UpdateItemDialogComponent>,
         private fb: FormBuilder,
         private snackBar: MdSnackBar,
         private webApiPathService: WebApiPathService,
-        private updateBucketlistItemService: UpdateBucketlistItemService){}
+        private updateBucketlistItemService: UpdateBucketlistItemService,
+        private getUserDetails: GetUserDetails){}
 
     ngOnInit(): void {
+        this.get_token();
         this.buildForm();
+    }
+
+    private get_token(){
+        this.token = this.getUserDetails.gettoken();
     }
 
     buildForm(): void {
@@ -90,7 +98,7 @@ export class UpdateItemDialogComponent implements OnInit{
             this.close()
             this.snackBar.open('Nothing to update', '', {duration: 2000});
         }else{
-            this.updateBucketlistItemService.updateBucketlistItem(item, urlPath)
+            this.updateBucketlistItemService.updateBucketlistItem(item, urlPath, this.token)
             .subscribe(response =>{
                 this.snackBar.open(response.message, '', {duration: 2000});
                 this.bucketlist_item = this.updateBucketlistItemService.getItem();

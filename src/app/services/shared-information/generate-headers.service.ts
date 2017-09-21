@@ -10,10 +10,10 @@ export class GenerateHeadersService {
     constructor(
         private user_details: GetUserDetails){}
 
-    public getHeaders(get_token?:boolean): RequestOptionsArgs {
+    public getHeaders(token?: string): RequestOptionsArgs {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        if(get_token)headers.append(GlobalVariables.getInstance().getTokenHeader(), this.user_details.gettoken());
+        if(token)headers.append(GlobalVariables.getInstance().getTokenHeader(), token);
         headers.append('Accept', 'application/json');
         let requestoptions = new RequestOptions({
             headers: headers

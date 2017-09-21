@@ -1,5 +1,5 @@
 import { Injectable }    from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
@@ -20,11 +20,11 @@ export class AddBucketlistItemService {
         private generateHeadersService: GenerateHeadersService,
         private handleErrorsService: HandleErrorsService) {}
 
-    addBucketlistItem(bucketlistitem: BucketlistItemModel, path: string): Observable<ResponseModel>{
+    addBucketlistItem(bucketlistitem: BucketlistItemModel, path: string, token: string): Observable<ResponseModel>{
+        let options: RequestOptions = new RequestOptions(this.generateHeadersService.getHeaders(token));
         let urlPath: string = this.authUrl + path;
-
         return this.http
-            .post(urlPath, JSON.stringify(bucketlistitem), this.generateHeadersService.getHeaders(true))
+            .post(urlPath, JSON.stringify(bucketlistitem), options)
             .map((res: Response) => {
                 let resp: ResponseModel = res.json();
                 return resp;

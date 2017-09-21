@@ -1,5 +1,5 @@
 import { Injectable }    from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
@@ -21,10 +21,11 @@ export class UpdateBucketlistItemService {
         private generateHeadersService: GenerateHeadersService,
         private handleErrorsService: HandleErrorsService) {}
 
-    updateBucketlistItem(item: BucketlistItemModel, path: string): Observable<ResponseModel>{
+    updateBucketlistItem(item: BucketlistItemModel, path: string, token: string): Observable<ResponseModel>{
+        let options: RequestOptions = new RequestOptions(this.generateHeadersService.getHeaders(token));
         let urlPath: string = this.authUrl + path;
         return this.http
-            .put(urlPath, JSON.stringify(item), this.generateHeadersService.getHeaders(true))
+            .put(urlPath, JSON.stringify(item), options)
             .map((res: Response) => {
                 let resp = res.json();
                 this.item = resp;

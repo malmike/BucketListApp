@@ -5,12 +5,15 @@ import { GlobalVariables } from '../../global-variables/global-variables';
 
 @Injectable()
 export class GetUserDetails{
-    constructor(private currentUser: CurrentUserModel){}
+
     gettoken(): string{
-        return this.currentUser.token;
+        let currentUser = JSON.parse(localStorage.getItem(GlobalVariables.getInstance().getStoreUser()));
+        return currentUser.token;
     }
 
     getUser(): UserModel{
-        return this.currentUser.user;
+        let currentUser = JSON.parse(localStorage.getItem(GlobalVariables.getInstance().getStoreUser()));
+        return currentUser.user;
     }
+    
 }

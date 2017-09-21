@@ -9,6 +9,7 @@ import { GetBucketlistService } from '../../services/http-calls/get-bucketlist.s
 import { UpdateBucketlistService } from '../../services/http-calls/update-bucketlist.service';
 import { DeleteItemService } from '../../services/http-calls/delete-item.service';
 import { WebApiPathService } from '../../services/shared-information/webapi-path.service';
+import { GetUserDetails } from '../../services/shared-information/user-details.service';
 import { AddItemDialogService } from '../../services/dialogs/add-item-dialog.service';
 import { UpdateItemDialogService } from '../../services/dialogs/update-item-dialog.service';
 
@@ -38,6 +39,7 @@ export class BucketlistItemComponent implements OnInit{
     edit_bucketlist: BucketlistModel = new BucketlistModel();
     bucketlist_id: string = "";
     bucketlist_items: Array<BucketlistItemModel> = new Array<BucketlistItemModel>();
+    private token: string;
 
     constructor(
         private fb: FormBuilder,
@@ -47,6 +49,7 @@ export class BucketlistItemComponent implements OnInit{
         private getBucketlistService: GetBucketlistService,
         private updateBucketlistService: UpdateBucketlistService,
         private deleteItemService: DeleteItemService,
+        private getUserDetails: GetUserDetails,
         public addItemDialogService: AddItemDialogService,
         public updateItemDialogService: UpdateItemDialogService
     ){}
@@ -100,14 +103,19 @@ export class BucketlistItemComponent implements OnInit{
     }
 
     ngOnInit(): void {
+        this.get_token();
         this.getBucketListDetails();
         this.getBucketlist();
         this.buildForm();
     }
 
+    private get_token(){
+        this.token = this.getUserDetails.gettoken();
+    }
+
     getBucketlist(){
         let urlPath: string = this.webApiPathService.getWebApiPath('bucketlist').path+'/'+this.bucketlist_id;
-        this.getBucketlistService.getBucketlist(urlPath)
+        this.getBucketlistService.getBucketlist(urlPath, this.token)
             .subscribe(response => {
                 this.snackBar.open(response.message, '', {
                     duration: 2000,
@@ -143,7 +151,7 @@ export class BucketlistItemComponent implements OnInit{
         }else{
             let urlpath = this.webApiPathService.getWebApiPath('bucketlist').path+'/'+this.bucketlist.id;
             this.edit_bucketlist = this.editbucketlistForm.value;
-            this.updateBucketlistService.updateBucketlist(this.edit_bucketlist, urlpath)
+            this.updateBucketlistService.updateBucketlist(this.edit_bucketlist, urlpath, this.token)
                 .subscribe(response => {
                     this.snackBar.open(response.message, '', {
                         duration: 2000,
@@ -188,7 +196,7 @@ export class BucketlistItemComponent implements OnInit{
     deleteItem(id: string): void{
         this.delete = true;
         let urlPath = this.webApiPathService.getWebApiPath('bucketlist').path + '/' + this.bucketlist_id + '/items/' +id;
-        this.deleteItemService.deleteItem(urlPath)
+        this.deleteItemService.deleteItem(urlPath, this.token)
             .subscribe(response => {
                 this.snackBar.open( response.message, '', {
                     duration: 2000,

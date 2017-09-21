@@ -1,5 +1,5 @@
 import { Injectable }    from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
@@ -20,10 +20,11 @@ export class LogoutService {
         private generateHeadersService: GenerateHeadersService,
         private handleErrorsService: HandleErrorsService) {}
 
-    logout(path: string): Observable<ResponseModel> {
+    logout(path: string, token: string): Observable<ResponseModel> {
+        let options: RequestOptions = new RequestOptions(this.generateHeadersService.getHeaders(token));
         let urlPath: string = this.authUrl + path;
         return this.http
-            .get(urlPath, this.generateHeadersService.getHeaders(true))
+            .get(urlPath, options)
             .map((res: Response) => {
                 let resp = res.json();
                 localStorage.removeItem(this.storeUser);

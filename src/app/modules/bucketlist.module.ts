@@ -42,13 +42,6 @@ import { AddItemDialogService } from '../services/dialogs/add-item-dialog.servic
 import { UpdateItemDialogService } from '../services/dialogs/update-item-dialog.service';
 import { MdDialog } from '@angular/material';
 
-
-//Models
-import { CurrentUserModel } from '../models/current-user.model';
-
-//Global Variables
-import { GlobalVariables } from '../global-variables/global-variables';
-
 export function getHttpInterceptor(backend: ConnectionBackend, defaultOptions: RequestOptions){
     return new HttpInterceptorService(backend, defaultOptions);
 }
@@ -59,11 +52,6 @@ export function addItemDialgService(dialog: MdDialog){
 
 export function updatetemDialgService(dialog: MdDialog){
     return new UpdateItemDialogService(dialog);
-}
-
-export function getCurrentUser(){
-    let currentUser: CurrentUserModel = JSON.parse(localStorage.getItem(GlobalVariables.getInstance().getStoreUser()));
-    return new GetUserDetails(currentUser);
 }
 
 @NgModule({
@@ -103,10 +91,7 @@ export function getCurrentUser(){
             useFactory: updatetemDialgService,
             deps:[MdDialog]
         },
-        {
-            provide: GetUserDetails,
-            useFactory: getCurrentUser
-        },
+        GetUserDetails,
         Permissions,
         CanActivateGuard,
         AddBucketlistService,

@@ -1,5 +1,5 @@
 import { Injectable }    from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
@@ -11,7 +11,7 @@ import { HandleErrorsService } from '../shared-information/handle-errors.service
 
 @Injectable()
 export class GetBucketlistsService {
-
+    
     apiUrl: string = GlobalVariables.getInstance().getWebApi();
     private bucketlist_page: BucketlistPageModel = new BucketlistPageModel();
     private response: ResponseModel = new ResponseModel();
@@ -21,10 +21,11 @@ export class GetBucketlistsService {
         private generateHeadersService: GenerateHeadersService,
         private handleErrorsService: HandleErrorsService) {}
 
-    getBucketlists(path: string): Observable<ResponseModel>{
+    getBucketlists(path: string, token: string): Observable<ResponseModel>{
+        let options: RequestOptions = new RequestOptions(this.generateHeadersService.getHeaders(token));
         let urlPath: string = this.apiUrl + path;
         return this.http
-            .get(urlPath, this.generateHeadersService.getHeaders(true))
+            .get(urlPath, options)
             .map((res: Response) => {
                 let test: BucketlistPageModel = res.json();
                 this.bucketlist_page = test;

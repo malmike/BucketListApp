@@ -34,6 +34,7 @@ export class BucketlistPageComponent implements OnInit{
     bucketlist_page: BucketlistPageModel = new BucketlistPageModel();
     user: UserModel = new UserModel()
     user_name:string = "";
+    private token: string;
 
 
     ngOnInit(): void {
@@ -63,9 +64,10 @@ export class BucketlistPageComponent implements OnInit{
         this.onValueChanged();
     }
 
-    getUser(){
+    private getUser(){
         this.user = this.user_details.getUser();
         this.user_name = this.user.fname+" "+this.user.lname;
+        this.token = this.user_details.gettoken();
     }
 
     onValueChanged(data?: any){
@@ -98,7 +100,7 @@ export class BucketlistPageComponent implements OnInit{
     onSubmitForm(){
         this.bucketlist = this.addbucketlistForm.value;
         this.addbucketlistForm.controls.name.setValue("");
-        this.addBucketlistService.addBucketlist(this.bucketlist, this.webApiPathService.getWebApiPath('bucketlist').path)
+        this.addBucketlistService.addBucketlist(this.bucketlist, this.webApiPathService.getWebApiPath('bucketlist').path, this.token)
             .subscribe(response => {
                 this.snackBar.open(response.message, '', {
                     duration: 2000,
@@ -117,7 +119,7 @@ export class BucketlistPageComponent implements OnInit{
         if(query !== null ){
             urlPath += query;
         }
-        this.getBucketlistsService.getBucketlists(urlPath)
+        this.getBucketlistsService.getBucketlists(urlPath, this.token)
             .subscribe(response => {
                 this.snackBar.open(response.message, '', {
                     duration: 2000,
@@ -154,7 +156,7 @@ export class BucketlistPageComponent implements OnInit{
     deleteBucketlist(id:number){
         this.delete = true;
         let urlPath = this.webApiPathService.getWebApiPath('bucketlist').path + '/' + id;
-        this.deleteBucketlistService.deleteBucketlist(urlPath)
+        this.deleteBucketlistService.deleteBucketlist(urlPath, this.token)
             .subscribe(response => {
                 this.snackBar.open( response.message, '', {
                     duration: 2000,
