@@ -21,7 +21,7 @@ export class UpdateBucketlistService {
         private generateHeadersService: GenerateHeadersService,
         private handleErrorsService: HandleErrorsService) {}
 
-    updateBucketlist(bucketlist: BucketlistModel, path: string, token: string): Observable<ResponseModel>{
+    updateBucketlist(bucketlist: BucketlistModel, path: string): Observable<ResponseModel>{
         let urlPath: string = this.authUrl + path;
 
         return this.http

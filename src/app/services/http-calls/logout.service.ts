@@ -20,7 +20,7 @@ export class LogoutService {
         private generateHeadersService: GenerateHeadersService,
         private handleErrorsService: HandleErrorsService) {}
 
-    logout(path: string, token: string): Observable<ResponseModel> {
+    logout(path: string): Observable<ResponseModel> {
         let urlPath: string = this.authUrl + path;
         return this.http
             .get(urlPath, this.generateHeadersService.getHeaders(true))

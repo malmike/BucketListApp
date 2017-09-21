@@ -9,7 +9,6 @@ import { MdSnackBar } from '@angular/material';
 // Services
 import { AddBucketlistItemService} from '../../services/http-calls/add-bucketlist-item.service';
 import { WebApiPathService } from '../../services/shared-information/webapi-path.service';
-import { GetUserDetails } from '../../services/shared-information/user-details.service';
 
 //Models
 import { BucketlistItemModel } from '../../models/bucketlist_item.model';
@@ -34,7 +33,6 @@ export class AddItemDialogComponent implements OnInit{
         public dialogRef: MdDialogRef<AddItemDialogComponent>,
         private fb: FormBuilder,
         private snackBar: MdSnackBar,
-        private user_details: GetUserDetails,
         private webApiPathService: WebApiPathService,
         private addBucketlistItemService: AddBucketlistItemService){}
 
@@ -99,27 +97,17 @@ export class AddItemDialogComponent implements OnInit{
         let data: any = this.additemForm.value;
         let item: BucketlistItemModel = {name: data.item_name, finished_by: data.end_date.formatted};
         let urlPath = this.webApiPathService.getWebApiPath('bucketlist').path+'/'+this.bucketlist_id+'/items/';
-        this.addBucketlistItemService.addBucketlistItem(item, urlPath, this.user_details.gettoken())
+        this.addBucketlistItemService.addBucketlistItem(item, urlPath)
         .subscribe(response => {
-            if (response.status === "success") {
-                this.snackBar.open(response.message, '', {
-                    duration: 2000,
-                });
-                console.log('Successful adding of bucketlists item:', response.message);
-                this.dialogRef.close(true);
-            }else{
-                this.snackBar.open(response.message, '', {
-                    duration: 2000,
-                });
-                console.log('Failure adding bucketlists item:', response.message);
-                this.dialogRef.close(false);
-            }
+            this.snackBar.open(response.message, '', {
+                duration: 2000,
+            });
+            this.dialogRef.close(true);
         },
         errMsg => {
             this.snackBar.open(errMsg, '', {
                 duration: 2000,
             });
-            console.log('Failure adding bucketlist item:', errMsg);
             this.dialogRef.close(false);
         });
     }

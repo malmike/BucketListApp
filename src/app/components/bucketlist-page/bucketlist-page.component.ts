@@ -98,26 +98,17 @@ export class BucketlistPageComponent implements OnInit{
     onSubmitForm(){
         this.bucketlist = this.addbucketlistForm.value;
         this.addbucketlistForm.controls.name.setValue("");
-        this.addBucketlistService.addBucketlist(this.bucketlist, this.webApiPathService.getWebApiPath('bucketlist').path, this.user_details.gettoken())
+        this.addBucketlistService.addBucketlist(this.bucketlist, this.webApiPathService.getWebApiPath('bucketlist').path)
             .subscribe(response => {
-                if (response.status === "success") {
-                    this.snackBar.open(response.message, '', {
-                        duration: 2000,
-                    });
-                    console.log("Successful adding of bucketlist:", response.message);
-                    this.getBucketLists();
-                }else{
-                    this.snackBar.open(response.message, '', {
-                        duration: 2000,
-                    });
-                    console.log("Failure adding bucketlist:", response.message);
-                }
+                this.snackBar.open(response.message, '', {
+                    duration: 2000,
+                });
+                this.getBucketLists();
             },
             errMsg => {
                 this.snackBar.open(errMsg, '', {
                         duration: 2000,
                 });
-                console.log("Failure adding bucketlist:", errMsg);
             });
     }
 
@@ -126,24 +117,13 @@ export class BucketlistPageComponent implements OnInit{
         if(query !== null ){
             urlPath += query;
         }
-        this.getBucketlistsService.getBucketlists(urlPath, this.user_details.gettoken())
+        this.getBucketlistsService.getBucketlists(urlPath)
             .subscribe(response => {
-                if (response.status === "success") {
-                    this.snackBar.open(response.message, '', {
-                        duration: 2000,
-                    });
-                    this.bucketlist_page = this.getBucketListPage();
-                    console.log('Successful gettting of bucketlists:', response.message);
-                    this.bucketlists = this.bucketlist_page.data;
-                }else{
-                    this.snackBar.open(response.message, '', {
-                        duration: 2000,
-                    });
-                    if (response.message =="User has no single bucketlist"){
-                        this.bucketlists = [];
-                    }
-                    console.log('Failure getting bucketlists:', response.message);
-                }
+                this.snackBar.open(response.message, '', {
+                    duration: 2000,
+                });
+                this.bucketlist_page = this.getBucketListPage();
+                this.bucketlists = this.bucketlist_page.data;
             },
             errMsg => {
                 this.snackBar.open(errMsg, '', {
@@ -152,7 +132,6 @@ export class BucketlistPageComponent implements OnInit{
                 if(errMsg=="User has no single bucketlist"){
                     this.bucketlists = [];
                 }
-                console.log('Failure getting bucketlists:', errMsg);
             });
     }
 
@@ -175,26 +154,17 @@ export class BucketlistPageComponent implements OnInit{
     deleteBucketlist(id:number){
         this.delete = true;
         let urlPath = this.webApiPathService.getWebApiPath('bucketlist').path + '/' + id;
-        this.deleteBucketlistService.deleteBucketlist(urlPath, this.user_details.gettoken())
+        this.deleteBucketlistService.deleteBucketlist(urlPath)
             .subscribe(response => {
-                if (response.status === "success"){
-                    this.snackBar.open( response.message, '', {
-                        duration: 2000,
-                    });
-                    console.log("Successful deleting of bucketlist:", response.message)
-                    this.getBucketLists();
-                }else{
-                    this.snackBar.open( response.message, '', {
-                        duration: 2000,
-                    });
-                    console.log('Failure deleting bucketlists:', response.message);
-                }
+                this.snackBar.open( response.message, '', {
+                    duration: 2000,
+                });
+                this.getBucketLists();
             },
             errMsg => {
                 this.snackBar.open(errMsg, '', {
                         duration: 2000,
                 });
-                console.log('Failure deleting bucketlists:', errMsg);
             });
     }
 

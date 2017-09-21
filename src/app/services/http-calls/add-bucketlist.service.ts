@@ -20,7 +20,7 @@ export class AddBucketlistService {
         private generateHeadersService: GenerateHeadersService,
         private handleErrorsService: HandleErrorsService) {}
 
-    addBucketlist(bucketlist: BucketlistModel, path: string, token: string): Observable<ResponseModel>{
+    addBucketlist(bucketlist: BucketlistModel, path: string): Observable<ResponseModel>{
         let urlPath: string = this.authUrl + path;
 
         return this.http

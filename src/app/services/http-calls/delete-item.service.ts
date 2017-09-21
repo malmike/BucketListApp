@@ -19,7 +19,7 @@ export class DeleteItemService {
         private generateHeadersService: GenerateHeadersService,
         private handleErrorsService: HandleErrorsService) {}
 
-    deleteItem(path: string, token: string): Observable<ResponseModel>{
+    deleteItem(path: string): Observable<ResponseModel>{
         let urlPath: string = this.apiUrl + path;
         return this.http
             .delete(urlPath, this.generateHeadersService.getHeaders(true))

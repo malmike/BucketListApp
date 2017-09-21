@@ -17,7 +17,6 @@ export class HandleErrorsService {
         if(change_message && error.status === 404){
             errMsg = "User has no single bucketlist";
         }
-        console.error(errMsg);
         return Observable.throw(errMsg);
     }
 }

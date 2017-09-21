@@ -21,7 +21,7 @@ export class GetBucketlistService {
         private generateHeadersService: GenerateHeadersService,
         private handleErrorsService: HandleErrorsService) {}
 
-    getBucketlist(path: string, token: string, id:number): Observable<ResponseModel>{
+    getBucketlist(path: string): Observable<ResponseModel>{
         let urlPath: string = this.apiUrl + path;
         return this.http
             .get(urlPath, this.generateHeadersService.getHeaders(true))

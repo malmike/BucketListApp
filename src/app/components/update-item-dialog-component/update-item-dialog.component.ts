@@ -9,7 +9,6 @@ import { MdSnackBar } from '@angular/material';
 // Services
 import { UpdateBucketlistItemService } from '../../services/http-calls/update-bucketlist-item.service';
 import { WebApiPathService } from '../../services/shared-information/webapi-path.service';
-import { GetUserDetails } from '../../services/shared-information/user-details.service';
 
 //Models
 import { BucketlistItemModel } from '../../models/bucketlist_item.model';
@@ -36,7 +35,6 @@ export class UpdateItemDialogComponent implements OnInit{
         public dialogRef: MdDialogRef<UpdateItemDialogComponent>,
         private fb: FormBuilder,
         private snackBar: MdSnackBar,
-        private user_details: GetUserDetails,
         private webApiPathService: WebApiPathService,
         private updateBucketlistItemService: UpdateBucketlistItemService){}
 
@@ -92,22 +90,14 @@ export class UpdateItemDialogComponent implements OnInit{
             this.close()
             this.snackBar.open('Nothing to update', '', {duration: 2000});
         }else{
-            this.updateBucketlistItemService.updateBucketlistItem(item, urlPath, this.user_details.gettoken())
+            this.updateBucketlistItemService.updateBucketlistItem(item, urlPath)
             .subscribe(response =>{
-                if(response.status === "success"){
-                    this.snackBar.open(response.message, '', {duration: 2000});
-                    console.log('Successful updating of bucketlist item:', response.message);
-                    this.bucketlist_item = this.updateBucketlistItemService.getItem();
-                    this.close()
-                }else{
-                    this.snackBar.open(response.message, '', {duration: 2000});
-                    console.log('Failure updating bucketlist item:', response.message);
-                    this.close()
-                }
+                this.snackBar.open(response.message, '', {duration: 2000});
+                this.bucketlist_item = this.updateBucketlistItemService.getItem();
+                this.close()
             },
             errMsg => {
                 this.snackBar.open(errMsg, '', {duration: 2000});
-                console.log('Failure updating bucketlist item:', errMsg);
                 this.close()
             });
         }

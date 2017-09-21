@@ -19,7 +19,7 @@ export class DeleteBucketlistService {
         private generateHeadersService: GenerateHeadersService,
         private handleErrorsService: HandleErrorsService) {}
 
-    deleteBucketlist(path: string, token: string): Observable<ResponseModel>{
+    deleteBucketlist(path: string): Observable<ResponseModel>{
         let urlPath: string = this.apiUrl + path;
         return this.http
             .delete(urlPath, this.generateHeadersService.getHeaders(true))
