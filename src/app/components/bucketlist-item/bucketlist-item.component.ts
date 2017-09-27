@@ -25,7 +25,7 @@ import { GlobalVariables } from '../../global-variables/global-variables';
 @Component({
     selector: 'bucketlistitem',
     templateUrl: './bucketlist-item.component.html',
-    styleUrls: ['./bucketlist-item.component.css']
+    styleUrls: ['./bucketlist-item.component.scss']
 })
 
 export class BucketlistItemComponent implements OnInit{

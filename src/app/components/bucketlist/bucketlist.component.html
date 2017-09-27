@@ -1,9 +1,14 @@
 <md-toolbar class="toolbar">
-    <span class="spacer"></span>
     <div layout="row" class="container">
         <img md-card-image src="assets/images/BucketListLogo.png"  style="margin:auto; width: 100%;">
     </div>
     <span class="spacer"></span>
-    <button md-raised-button class="custom_button" (click)="logout()">SIGN OUT</button>
+    <!-- <button md-raised-button class="custom_button" (click)="logout()">SIGN OUT</button> -->
+    <md-menu #appMenu="mdMenu">
+        <button md-menu-item (click)="logout()"> SIGN OUT </button>
+    </md-menu>
+    <button md-icon-button [mdMenuTriggerFor]="appMenu">
+        <md-icon>more_vert</md-icon>
+    </button>
 </md-toolbar>
 <router-outlet></router-outlet>

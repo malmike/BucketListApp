@@ -9,7 +9,7 @@ import { GetUserDetails } from '../../services/shared-information/user-details.s
 @Component({
     selector: 'bucketlist',
     templateUrl: './bucketlist.component.html',
-    styleUrls: ['./bucketlist.component.css']
+    styleUrls: ['./bucketlist.component.scss']
 })
 
 export class BucketlistComponent implements OnInit{

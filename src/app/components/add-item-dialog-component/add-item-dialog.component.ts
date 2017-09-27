@@ -21,7 +21,7 @@ import { GlobalVariables } from '../../global-variables/global-variables';
 @Component({
     selector: 'add-item-dialog',
     templateUrl: './add-item-dialog.component.html',
-    styleUrls: ['./add-item-dialog.component.css']
+    styleUrls: ['./add-item-dialog.component.scss']
 })
 
 export class AddItemDialogComponent implements OnInit{

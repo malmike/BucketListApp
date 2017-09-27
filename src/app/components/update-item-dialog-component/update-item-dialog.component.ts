@@ -21,7 +21,7 @@ import { GlobalVariables } from '../../global-variables/global-variables';
 @Component({
     selector: 'update-item',
     templateUrl: './update-item-dialog.component.html',
-    styleUrls: ['./update-item-dialog.component.css']
+    styleUrls: ['./update-item-dialog.component.scss']
 })
 
 export class UpdateItemDialogComponent implements OnInit{

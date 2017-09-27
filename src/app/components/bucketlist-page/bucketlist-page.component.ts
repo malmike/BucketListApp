@@ -22,7 +22,7 @@ import { GlobalVariables } from '../../global-variables/global-variables';
 @Component({
     selector: 'bucketlistpage',
     templateUrl: './bucketlist-page.component.html',
-    styleUrls: ['./bucketlist-page.component.css']
+    styleUrls: ['./bucketlist-page.component.scss']
 })
 
 export class BucketlistPageComponent implements OnInit{

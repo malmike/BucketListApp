@@ -1,10 +1,10 @@
 //External modules and dependencies
 import { NgModule } from '@angular/core';
-import { MdCardModule, MdInputModule, MdButtonModule, MdSnackBarModule, MdDialogModule, MdIconModule, MdCheckboxModule, MdToolbarModule } from '@angular/material';
+import { MdCardModule, MdInputModule, MdButtonModule, MdSnackBarModule, MdDialogModule, MdIconModule, MdCheckboxModule, MdToolbarModule, MdMenuModule } from '@angular/material';
 
 @NgModule({
-  imports: [MdCardModule, MdInputModule, MdButtonModule, MdSnackBarModule, MdDialogModule, MdIconModule, MdCheckboxModule, MdToolbarModule],
-  exports: [MdCardModule, MdInputModule, MdButtonModule, MdSnackBarModule, MdDialogModule, MdIconModule, MdCheckboxModule, MdToolbarModule]
+  imports: [MdCardModule, MdInputModule, MdButtonModule, MdSnackBarModule, MdDialogModule, MdIconModule, MdCheckboxModule, MdToolbarModule, MdMenuModule],
+  exports: [MdCardModule, MdInputModule, MdButtonModule, MdSnackBarModule, MdDialogModule, MdIconModule, MdCheckboxModule, MdToolbarModule, MdMenuModule]
 })
 
 export class CustomMaterialModule { }
