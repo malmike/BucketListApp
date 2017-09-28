@@ -3,7 +3,13 @@
         <img md-card-image src="assets/images/Bucketlist_logo.png"  style="margin:auto; width: 70%;" (click)="home()">
     </div>
     <span class="spacer"></span>
-    <!-- <button md-raised-button class="custom_button" (click)="logout()">SIGN OUT</button> -->
+    <span class="spacer"></span>
+        <md-select class="item_no" placeholder="Item No">
+            <md-option *ngFor="let item_no of item_nos" value="item_no.value" (click)="change_item_no(item_no.value)">
+              {{ item_no.viewValue }}
+            </md-option>
+        </md-select>
+    <span class="spacer"></span>
     <md-menu #appMenu="mdMenu">
         <button md-menu-item (click)="logout()"> SIGN OUT </button>
     </md-menu>

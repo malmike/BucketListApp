@@ -1,8 +1,10 @@
 // External Dependencies
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MdSnackBar } from '@angular/material';
+import { Subscription }   from 'rxjs/Subscription';
+
 
 // Models
 import { BucketlistModel } from '../../models/bucketlist.model';
@@ -15,6 +17,7 @@ import { GetBucketlistsService } from '../../services/http-calls/get-bucketlists
 import { DeleteBucketlistService } from '../../services/http-calls/delete-bucketlist.service';
 import { WebApiPathService } from '../../services/shared-information/webapi-path.service';
 import { GetUserDetails } from '../../services/shared-information/user-details.service';
+import { PageService } from '../../services/shared-information/page.service';
 
 // Global Variables
 import { GlobalVariables } from '../../global-variables/global-variables';
@@ -25,25 +28,36 @@ import { GlobalVariables } from '../../global-variables/global-variables';
     styleUrls: ['./bucketlist-page.component.scss']
 })
 
-export class BucketlistPageComponent implements OnInit{
+export class BucketlistPageComponent implements OnInit, OnDestroy{
     addbucketlistForm: FormGroup;
     active:boolean = true;
     delete:boolean = false;
+    limit: string = "?limit=5";
     bucketlist: BucketlistModel = new BucketlistModel();
     bucketlists: Array<BucketlistModel> = new Array<BucketlistModel>();
     bucketlist_page: BucketlistPageModel = new BucketlistPageModel();
     user: UserModel = new UserModel()
     user_name:string = "";
     private token: string;
+    private subscription: Subscription;
 
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe()
+    }
 
     ngOnInit(): void {
+        this.subscription = this.pageService.limitAnnounced$.subscribe(limit => {
+            this.limit = limit;
+            this.getBucketLists()
+        })
+        this.pageService.announcePage("PAGE")
         this.getUser();
         this.buildForm();
         this.getBucketLists();
     }
 
     constructor(
+        private pageService: PageService,
         private fb: FormBuilder,
         private router: Router,
         private snackBar: MdSnackBar,
@@ -114,8 +128,8 @@ export class BucketlistPageComponent implements OnInit{
             });
     }
 
-    getBucketLists(query: string = null){
-        let urlPath: string = this.webApiPathService.getWebApiPath('bucketlist').path;
+    getBucketLists(page:number = 1, query: string = null){
+        let urlPath: string = this.webApiPathService.getWebApiPath('bucketlist').path+this.limit+"&page="+page.toString();
         if(query !== null ){
             urlPath += query;
         }

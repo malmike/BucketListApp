@@ -65,7 +65,7 @@ md-input-container{
     width: 60%;
 }
 
-button{
+.custom-button{
     width: 30%;
 }
 
@@ -81,4 +81,13 @@ a:hover{
 
 md-hint{
   color: red;
+}
+
+.page{
+    padding: 0em 1em;
+}
+
+.pagination{
+    margin: 0 auto;
+    width: fit-content;
 }

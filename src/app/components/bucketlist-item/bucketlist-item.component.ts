@@ -12,6 +12,7 @@ import { WebApiPathService } from '../../services/shared-information/webapi-path
 import { GetUserDetails } from '../../services/shared-information/user-details.service';
 import { AddItemDialogService } from '../../services/dialogs/add-item-dialog.service';
 import { UpdateItemDialogService } from '../../services/dialogs/update-item-dialog.service';
+import { PageService } from '../../services/shared-information/page.service';
 
 // Models
 import { BucketlistModel } from '../../models/bucketlist.model';
@@ -42,6 +43,7 @@ export class BucketlistItemComponent implements OnInit{
     private token: string;
 
     constructor(
+        private pageService: PageService,
         private fb: FormBuilder,
         private router: Router,
         private snackBar: MdSnackBar,
@@ -103,6 +105,7 @@ export class BucketlistItemComponent implements OnInit{
     }
 
     ngOnInit(): void {
+        this.pageService.announcePage("ITEM")
         this.get_token();
         this.getBucketListDetails();
         this.getBucketlist();
