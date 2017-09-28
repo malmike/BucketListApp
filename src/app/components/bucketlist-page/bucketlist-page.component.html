@@ -6,7 +6,7 @@
                     <input mdInput placeholder="Bucketlist Name" formControlName="name" type="text" id="name" required>
                     <md-hint align="end" *ngIf="formErrors.name">{{ formErrors.name }}</md-hint>
                 </md-input-container>
-                <button md-raised-button class="bg-primary" type="submit" [disabled]="!addbucketlistForm.valid">ADD BUCKETLIST</button>
+                <button md-raised-button class="custom-button bg-primary" type="submit" [disabled]="!addbucketlistForm.valid">ADD BUCKETLIST</button>
             </form>
         </md-card-content>
     </md-card>
@@ -28,5 +28,11 @@
             </md-card>
         </md-list-item>
     </md-list>
+    <br>
+    <div class="pagination" *ngIf="bucketlists.length !== 0">
+        <button md-mini-fab color="accent" [disabled]="bucketlist_page.page == 1" (click)="getBucketLists(bucketlist_page.page-1)">&lt;</button>
+        <b class="page">{{bucketlist_page.page}}</b>
+        <button md-mini-fab color="accent" [disabled]="bucketlist_page.page == bucketlist_page.pages"  (click)="getBucketLists(bucketlist_page.page+1)">&gt;</button>
+    </div>
 
 </div>

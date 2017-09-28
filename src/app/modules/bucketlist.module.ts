@@ -38,6 +38,7 @@ import { UpdateBucketlistItemService } from '../services/http-calls/update-bucke
 import { LogoutService } from '../services/http-calls/logout.service';
 import { HandleErrorsService } from '../services/shared-information/handle-errors.service';
 import { GenerateHeadersService } from '../services/shared-information/generate-headers.service';
+import { PageService } from '../services/shared-information/page.service';
 import { AddItemDialogService } from '../services/dialogs/add-item-dialog.service';
 import { UpdateItemDialogService } from '../services/dialogs/update-item-dialog.service';
 import { MdDialog } from '@angular/material';
@@ -105,7 +106,8 @@ export function updatetemDialgService(dialog: MdDialog){
         DeleteItemService,
         WebApiPathService,
         HandleErrorsService,
-        GenerateHeadersService
+        GenerateHeadersService,
+        PageService
     ],
     entryComponents: [
         AddItemDialogComponent,
