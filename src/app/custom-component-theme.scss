@@ -1,0 +1,63 @@
+@mixin custom-component-theme() {
+    $primary-color-dark:   #303F9F;
+    $primary-color:        #3F51B5;
+    $primary-color-light:  #C5CAE9;
+    $primary-color-text:   #FFFFFF;
+    $accent-color:         #FF4081;
+    $primary-text-color:   #212121;
+    $secondary-text-color: #757575;
+    $divider-color:        #BDBDBD;
+
+    .bg-primary{
+        background-color: $primary-color;
+        color: $primary-color-text;
+    }
+
+    .bg-accent{
+        background-color: $accent-color;
+        color: $primary-color-text;
+    }
+
+    .t-primary{
+        color: $primary-color;
+    }
+
+    a{
+        color: $primary-text-color;
+        text-decoration: none;
+    }
+
+    a:hover{
+        color: $primary-color;
+        text-decoration: underline;
+    }
+
+    .ng-invalid:not(md-input-container){
+        color: $primary-color-dark
+    }
+
+    .ng-valid[required], .ng-valid.required, md-input-container{
+        color: $primary-text-color;
+    }
+
+    md-hint{
+        color: red;
+    }
+
+    .toolbar{
+        background-color: $primary-color;
+    }
+
+    .date_modify{
+        color:$primary-color;
+    }
+
+    .cancel{
+        background-color: $accent-color;
+        color: $primary-color-text;
+    }
+
+    .list_card:hover{
+        background: $primary-color-light;
+    }
+}

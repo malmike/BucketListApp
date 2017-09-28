@@ -40,4 +40,8 @@ export class BucketlistComponent implements OnInit{
             this.snackBar.open(errMsg, '', {duration: 2000});
         });
     }
+
+    home(){
+        this.router.navigate(['/bucketlist']);
+    }
 }

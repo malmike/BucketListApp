@@ -209,8 +209,4 @@ export class BucketlistItemComponent implements OnInit{
                 });
             });
     }
-
-    back(){
-        this.router.navigate(['/bucketlist']);
-    }
 }

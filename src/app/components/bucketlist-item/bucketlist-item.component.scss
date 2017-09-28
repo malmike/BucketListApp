@@ -1,10 +1,5 @@
-.ng-valid[required], .ng-valid.required, md-input-container{
-  color: black;
-}
-
-.ng-invalid:not(md-input-container){
-  color: blue;
-}
+@import '../../custom-component-theme.scss';
+@include custom-component-theme();
 
 #container{
     padding-top: 1.5em;
@@ -21,7 +16,7 @@
     padding: 0.1em 2em 0.1em 3em;
 }
 
-#list_card{
+.list_card{
     margin: auto;
     margin-top: 0.5em;
     margin-bottom: 0.5em;
@@ -29,23 +24,16 @@
     padding: 1em 0.5em 2em 3em;
 }
 
-#create_details{
+.create_details{
     display: inline-flex;
     text-align: left;
 }
 
-#create{
+.create{
     padding:  0.1em 3em 0.1em 3em;
 }
-#modify{
+.modify{
     padding:  0.1em 3em 0.1em 3em;
-}
-
-#create i{
-    color:blue;
-}
-#modify i{
-    color:blue;
 }
 
 #item_name{
@@ -56,10 +44,9 @@
     float:right;
 }
 
-#name{
+.name{
     font-weight: bold;
     font-size: 2em;
-    color: blue;
 }
 
 .item_delete:hover{
@@ -68,10 +55,6 @@
 
 #item_span{
     float:none;
-}
-
-#list_card:hover{
-    background: #CCCCCC;
 }
 
 md-card{
@@ -98,30 +81,9 @@ md-input-container{
 .no_items{
     padding-top: 2em;
     text-align: center;
-    color: blueviolet;
 }
 
 .custom_button{
     width: 12.5%;
-    background-color: navy;
-    color: whitesmoke;
-}
-
-#cancel{
-    background-color: red;
-}
-
-a{
-    color: navy;
-    text-decoration: none;
-}
-
-a:hover{
-    color: blueviolet;
-    text-decoration: underline;
-}
-
-md-hint{
-  color: red;
 }
 

@@ -1,10 +1,5 @@
-.ng-valid[required], .ng-valid.required, md-input-container{
-    color: blue;
-}
-
-.ng-invalid:not(md-input-container){
-    color: red;
-}
+@import '../../custom-component-theme.scss';
+@include custom-component-theme();
 
 .additem, #date_picker{
     width: 80%;
@@ -14,8 +9,6 @@
 .custom_button{
     margin-top: 1em;
     width: 100%;
-    background-color: navy;
-    color: whitesmoke;
 }
 
 
@@ -26,20 +19,12 @@
     width: 90%;
 }
 
-md-hint{
-    color: red;
-}
-
-.cancel{
+.float-right{
     float: right;
 }
 
 .title{
     text-align: center;
-}
-
-.to-blue{
-    color: #4169E1;
 }
 
 .item_name{

@@ -1,10 +1,5 @@
-.ng-valid[required], .ng-valid.required, md-input-container{
-  color: black;
-}
-
-.ng-invalid:not(md-input-container){
-  color: blue;
-}
+@import '../../../custom-component-theme.scss';
+@include custom-component-theme();
 
 md-select .placeholder{
   text-align: right;
@@ -45,8 +40,6 @@ md-input-container{
 
 button{
     width: 100%;
-    background-color: black;
-    color: whitesmoke;
 }
 
 md-card-footer{
@@ -54,16 +47,3 @@ md-card-footer{
     padding-bottom: 1.5em;
 }
 
-a{
-    color: navy;
-    text-decoration: none;
-}
-
-a:hover{
-    color: blueviolet;
-    text-decoration: underline;
-}
-
-md-hint{
-  color: red;
-}
