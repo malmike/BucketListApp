@@ -40,15 +40,20 @@ export class BucketlistPageComponent implements OnInit, OnDestroy{
     user_name:string = "";
     private token: string;
     private subscription: Subscription;
+    private subscription2: Subscription;
 
     ngOnDestroy(): void {
         this.subscription.unsubscribe()
+        this.subscription2.unsubscribe()
     }
 
     ngOnInit(): void {
         this.subscription = this.pageService.limitAnnounced$.subscribe(limit => {
             this.limit = limit;
             this.getBucketLists()
+        })
+        this.subscription2 = this.pageService.searchAnnounced$.subscribe(search => {
+            this.getBucketLists(1, search)
         })
         this.pageService.announcePage("PAGE")
         this.getUser();
@@ -131,7 +136,7 @@ export class BucketlistPageComponent implements OnInit, OnDestroy{
     getBucketLists(page:number = 1, query: string = null){
         let urlPath: string = this.webApiPathService.getWebApiPath('bucketlist').path+this.limit+"&page="+page.toString();
         if(query !== null ){
-            urlPath += query;
+            urlPath += "&"+query;
         }
         this.getBucketlistsService.getBucketlists(urlPath, this.token)
             .subscribe(response => {
