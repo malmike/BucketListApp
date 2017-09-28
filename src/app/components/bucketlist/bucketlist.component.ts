@@ -19,6 +19,8 @@ export class BucketlistComponent implements OnInit, OnDestroy{
     private token: string;
     private subscription: Subscription;
     public page: boolean = false;
+    values = '';
+
     DataTransferItem
     item_nos = [
         {value: 5, viewValue: "5"},
@@ -43,6 +45,10 @@ export class BucketlistComponent implements OnInit, OnDestroy{
             if(page === "ITEM") this.page = false;
         })
         this.get_token()
+    }
+
+    onKey(event: any) {
+        this.values = event.target.value;
     }
 
     ngOnDestroy(): void {
@@ -71,5 +77,10 @@ export class BucketlistComponent implements OnInit, OnDestroy{
     change_item_no(item_no: number){
         let limit:string = "?limit="+item_no;
         this.pageService.announceLimit(limit);
+    }
+
+    search(){
+        let search:string = "q="+this.values;
+        this.pageService.announceSearch(search)
     }
 }

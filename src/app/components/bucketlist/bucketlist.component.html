@@ -10,6 +10,9 @@
             </md-option>
         </md-select>
     <span class="spacer"></span>
+    <input mdInput placeholder="Bucketlist Name" type="text" class="search bg-white" (keyup)="onKey($event)"  value="{{values}}" required>
+    <img src="./assets/svg/ic_search_white_24px.svg" (click)="search()">
+
     <md-menu #appMenu="mdMenu">
         <button md-menu-item (click)="logout()"> SIGN OUT </button>
     </md-menu>
