@@ -60,6 +60,14 @@ export class BucketlistItemComponent implements OnInit{
         public deleteDialogService: DeleteDialogService
     ){}
 
+    ngOnInit(): void {
+        this.pageService.announcePage("ITEM")
+        this.get_token();
+        this.getBucketListDetails();
+        this.getBucketlist();
+        this.buildForm();
+    }
+
     buildForm(): void {
         this.editbucketlistForm = this.fb.group({
             'name': [this.bucketlist_name,[
@@ -102,25 +110,17 @@ export class BucketlistItemComponent implements OnInit{
         }
     }
 
-    getBucketListDetails(){
+    private getBucketListDetails(): void{
         let bucketlist_details = JSON.parse(localStorage.getItem(GlobalVariables.getInstance().getBucketlistDetails()));
         this.bucketlist_id = bucketlist_details.id;
         this.bucketlist_name = bucketlist_details.name;
-    }
-
-    ngOnInit(): void {
-        this.pageService.announcePage("ITEM")
-        this.get_token();
-        this.getBucketListDetails();
-        this.getBucketlist();
-        this.buildForm();
     }
 
     private get_token(){
         this.token = this.getUserDetails.gettoken();
     }
 
-    getBucketlist(){
+    private getBucketlist(): void{
         let urlPath: string = this.webApiPathService.getWebApiPath('bucketlist').path+'/'+this.bucketlist_id;
         this.getBucketlistService.getBucketlist(urlPath, this.token)
             .subscribe(response => {
@@ -138,7 +138,7 @@ export class BucketlistItemComponent implements OnInit{
             });
     }
 
-    getSingleBucketList(): BucketlistModel{
+    private getSingleBucketList(): BucketlistModel{
         return this.getBucketlistService.getSingleBucketlist();
     }
 

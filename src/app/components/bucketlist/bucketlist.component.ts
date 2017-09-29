@@ -5,7 +5,6 @@ import { Subscription }   from 'rxjs/Subscription';
 
 import { LogoutService } from '../../services/http-calls/logout.service';
 import { WebApiPathService } from '../../services/shared-information/webapi-path.service';
-import { GetBucketlistsService } from '../../services/http-calls/get-bucketlists.service';
 import { GetUserDetails } from '../../services/shared-information/user-details.service';
 import { PageService } from '../../services/shared-information/page.service';
 
@@ -35,7 +34,6 @@ export class BucketlistComponent implements OnInit, OnDestroy{
         private logoutService: LogoutService,
         private router: Router,
         private snackBar: MdSnackBar,
-        private getBucketlistsService: GetBucketlistsService,
         private webApiPathService: WebApiPathService,
         private getUserDetails: GetUserDetails){}
 
