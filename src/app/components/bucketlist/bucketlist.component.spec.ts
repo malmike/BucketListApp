@@ -16,7 +16,7 @@ import { HandleErrorsService } from '../../services/shared-information/handle-er
 import { PageService } from '../../services/shared-information/page.service';
 import { LogoutService } from '../../services/http-calls/logout.service';
 import { GlobalVariables } from '../../global-variables/global-variables';
-import { TestToken, TestUser} from '../../tests/test.data';
+import { TestToken, TestUser} from '../../tests/test.data.spec';
 
 describe('Bucketlist', () => {
     let component: BucketlistComponent;

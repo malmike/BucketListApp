@@ -1,6 +1,6 @@
 import{ Observable } from "rxjs";
 
-import { TestBucketlistPage } from "./test.data";
+import { TestBucketlistPage } from "./test.data.spec";
 import { BucketlistItemModel } from '../models/bucketlist_item.model';
 import { ResponseModel } from '../models/response.model';
 

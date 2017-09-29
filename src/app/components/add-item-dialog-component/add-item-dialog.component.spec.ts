@@ -23,14 +23,14 @@ import { GenerateHeadersService } from '../../services/shared-information/genera
 import { HandleErrorsService } from '../../services/shared-information/handle-errors.service';
 import { AddItemDialogService } from '../../services/dialogs/add-item-dialog.service';
 import { AddBucketlistItemService } from '../../services/http-calls/add-bucketlist-item.service';
-import { MockAddBucketlistItemService } from '../../tests/mock-add-bucketlist-item-service';
+import { MockAddBucketlistItemService } from '../../tests/mock-add-bucketlist-item-service.spec';
 
 //global variables
 import { GlobalVariables } from '../../global-variables/global-variables';
 
 //test data
-import { TestToken, TestUser} from '../../tests/test.data';
-import { MockGetBucketlistService } from '../../tests/mock-get-bucketlist-service';
+import { TestToken, TestUser} from '../../tests/test.data.spec';
+import { MockGetBucketlistService } from '../../tests/mock-get-bucketlist-service.spec';
 
 
 class MdDialogRefMock {
