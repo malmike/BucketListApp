@@ -26,16 +26,15 @@
         </button>
     </div>
     <div class="no_items t-primary" *ngIf="bucketlist_items.length==0">
-        <i>NO EXISTING BUCKETLIST. USE THE ADD BUTTON ABOVE TO ADD BUCKETLIST ITEMS</i>
+        <i>NO EXISTING ITEMS. USE THE ADD BUTTON ABOVE TO ADD BUCKETLIST ITEMS</i>
     </div>
 
-    <md-list>
-        <md-list-item *ngFor="let item of bucketlist_items; let idx = index">
+    <md-list class="list-items">
+        <md-list-item *ngFor="let item of bucketlist_items; let idx = index" class="single-item">
             <md-card class="list_card" (click)="openUpdateItemDialog(item, idx)">
                 <md-card-content id="list_content">
-                    <p id="item_name">{{item.name}}</p>
-                    <img class="item_delete item_svg" src="./assets/svg/ic_delete_black_24px.svg" (click)="deleteItem(item.id)">
-                    <img class="item_completed item_svg" *ngIf="item.completed" src="./assets/svg/ic_check_circle_black_24px.svg">
+                    <md-checkbox (click)="update_complete(item, idx)" [(ngModel)]="item.completed">{{item.name}}</md-checkbox>
+                    <img class="item_delete item_svg" src="./assets/svg/ic_delete_black_24px.svg" (click)="openDeleteDialog(item.name, item.id)">
                 </md-card-content>
             </md-card>
         </md-list-item>

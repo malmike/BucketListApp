@@ -7,11 +7,13 @@ import { MdSnackBar } from '@angular/material';
 // Services
 import { GetBucketlistService } from '../../services/http-calls/get-bucketlist.service';
 import { UpdateBucketlistService } from '../../services/http-calls/update-bucketlist.service';
+import { UpdateBucketlistItemService } from '../../services/http-calls/update-bucketlist-item.service';
 import { DeleteItemService } from '../../services/http-calls/delete-item.service';
 import { WebApiPathService } from '../../services/shared-information/webapi-path.service';
 import { GetUserDetails } from '../../services/shared-information/user-details.service';
 import { AddItemDialogService } from '../../services/dialogs/add-item-dialog.service';
 import { UpdateItemDialogService } from '../../services/dialogs/update-item-dialog.service';
+import { DeleteDialogService } from '../../services/dialogs/delete-dialog.service';
 import { PageService } from '../../services/shared-information/page.service';
 
 // Models
@@ -50,10 +52,12 @@ export class BucketlistItemComponent implements OnInit{
         private webApiPathService: WebApiPathService,
         private getBucketlistService: GetBucketlistService,
         private updateBucketlistService: UpdateBucketlistService,
+        private updateBucketlistItemService: UpdateBucketlistItemService,
         private deleteItemService: DeleteItemService,
         private getUserDetails: GetUserDetails,
         public addItemDialogService: AddItemDialogService,
-        public updateItemDialogService: UpdateItemDialogService
+        public updateItemDialogService: UpdateItemDialogService,
+        public deleteDialogService: DeleteDialogService
     ){}
 
     buildForm(): void {
@@ -182,6 +186,19 @@ export class BucketlistItemComponent implements OnInit{
             });
     }
 
+    openDeleteDialog(item: string, id: string): void{
+        this.delete = true;
+        let name: string = "bucket list item " + item;
+        let title: string = "BUCKET LIST ITEM";
+        this.deleteDialogService
+            .deleteItem(title, name)
+            .subscribe(res => {
+                if(res){
+                    this.deleteItem(id)
+                }
+            });
+    }
+
     openUpdateItemDialog(item: BucketlistItemModel, index: number): void{
         if(this.delete){
             this.delete = false;
@@ -211,5 +228,31 @@ export class BucketlistItemComponent implements OnInit{
                         duration: 2000,
                 });
             });
+    }
+
+    update_complete(item:BucketlistItemModel, index:number): void{
+        this.delete = true;
+        item = this.change_completed(item);
+        let urlPath = this.webApiPathService.getWebApiPath('bucketlist').path+'/'+this.bucketlist_id+'/items/'+item.id;
+        this.updateBucketlistItemService.updateBucketlistItem(item, urlPath, this.token)
+        .subscribe(response =>{
+            this.snackBar.open(response.message, '', {duration: 2000});
+            item = this.updateBucketlistItemService.getItem();
+            this.bucketlist_items[index] = item
+        },
+        errMsg => {
+            this.snackBar.open(errMsg, '', {duration: 2000});
+            item = this.change_completed(item);
+            this.bucketlist_items[index] = item
+        });
+    }
+
+    change_completed(item:BucketlistItemModel): BucketlistItemModel{
+        if(item.completed){
+            item.completed = false;
+        }else{
+            item.completed = true;
+        }
+        return item;
     }
 }

@@ -18,12 +18,14 @@
         <i>NO EXISTING BUCKETLISTS. YOU CAN ADD THEM ABOVE</i>
     </div>
     <br><br>
-    <md-list>
-        <md-list-item *ngFor="let single_bucketlist of bucketlists">
+    <md-list class="list-items">
+        <md-list-item *ngFor="let single_bucketlist of bucketlists" class="single-item">
             <md-card class="list_card"  (click)="navBucketlistItem(single_bucketlist.id, single_bucketlist.name)">
                 <md-card-content id="list_content">
-                    <p id="item_name">{{single_bucketlist.name}}</p>
-                    <img id="item_delete" src="./assets/svg/ic_delete_black_24px.svg" (click)="deleteBucketlist(single_bucketlist.id)">
+                    <p id="item_name"><b>{{single_bucketlist.name}}</b></p>
+                    <img id="item_delete" src="./assets/svg/ic_delete_black_24px.svg" (click)="openDeleteDialog(single_bucketlist.name, single_bucketlist.id)">
+                    <br>
+                    <p class="number_of_items">{{single_bucketlist.bucketlist_items.length}} Bucketlist Items</p>
                 </md-card-content>
             </md-card>
         </md-list-item>

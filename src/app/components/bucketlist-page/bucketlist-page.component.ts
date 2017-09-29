@@ -17,6 +17,7 @@ import { GetBucketlistsService } from '../../services/http-calls/get-bucketlists
 import { DeleteBucketlistService } from '../../services/http-calls/delete-bucketlist.service';
 import { WebApiPathService } from '../../services/shared-information/webapi-path.service';
 import { GetUserDetails } from '../../services/shared-information/user-details.service';
+import { DeleteDialogService } from '../../services/dialogs/delete-dialog.service';
 import { PageService } from '../../services/shared-information/page.service';
 
 // Global Variables
@@ -53,7 +54,12 @@ export class BucketlistPageComponent implements OnInit, OnDestroy{
             this.getBucketLists()
         })
         this.subscription2 = this.pageService.searchAnnounced$.subscribe(search => {
-            this.getBucketLists(1, search)
+            console.log(search)
+            if(search == "q=*"){
+                this.getBucketLists();
+            }else{
+                this.getBucketLists(1, search)
+            }
         })
         this.pageService.announcePage("PAGE")
         this.getUser();
@@ -70,7 +76,8 @@ export class BucketlistPageComponent implements OnInit, OnDestroy{
         private webApiPathService: WebApiPathService,
         private getBucketlistsService: GetBucketlistsService,
         private deleteBucketlistService: DeleteBucketlistService,
-        private user_details: GetUserDetails){}
+        private user_details: GetUserDetails,
+        public deleteDialogService: DeleteDialogService){}
 
     buildForm(): void {
          this.addbucketlistForm = this.fb.group({
@@ -118,6 +125,7 @@ export class BucketlistPageComponent implements OnInit, OnDestroy{
 
     onSubmitForm(){
         this.bucketlist = this.addbucketlistForm.value;
+        this.buildForm();
         this.addbucketlistForm.controls.name.setValue("");
         this.addBucketlistService.addBucketlist(this.bucketlist, this.webApiPathService.getWebApiPath('bucketlist').path, this.token)
             .subscribe(response => {
@@ -170,6 +178,19 @@ export class BucketlistPageComponent implements OnInit, OnDestroy{
             );
             this.router.navigate(['/bucketlistitem']);
         }
+    }
+
+    openDeleteDialog(bucketlist: string, id: number): void{
+        this.delete = true;
+        let name: string = "bucket list " + bucketlist;
+        let title: string = "BUCKET LIST";
+        this.deleteDialogService
+            .deleteItem(title, name)
+            .subscribe(res => {
+                if(res){
+                    this.deleteBucketlist(id);
+                }
+            });
     }
 
     deleteBucketlist(id:number){

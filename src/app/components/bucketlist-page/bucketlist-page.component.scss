@@ -1,6 +1,7 @@
 @import '../../custom-component-theme.scss';
 @include custom-component-theme();
 
+
 #container{
     padding-top: 1.5em;
     width: 90%;
@@ -67,20 +68,6 @@ md-input-container{
 
 .custom-button{
     width: 30%;
-}
-
-a{
-    color: navy;
-    text-decoration: none;
-}
-
-a:hover{
-    color: blueviolet;
-    text-decoration: underline;
-}
-
-md-hint{
-  color: red;
 }
 
 .page{
