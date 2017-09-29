@@ -1,0 +1,10 @@
+<div id='updateitem-div'>
+    <h3 class="title">DELETE {{title}}</h3>
+    <div>
+        <p>Are you sure you what to delete {{name}}</p>
+    </div>
+    <div class="delete_item">
+        <button md-raised-button class="custom_button cancel" (click)="cancel()">CANCEL</button>
+        <button md-raised-button class="custom_button bg-primary" (click)="delete_item()">DELETE</button>
+    </div>
+</div>

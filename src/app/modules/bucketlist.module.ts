@@ -1,5 +1,6 @@
 // External Modules and Dependencies
 import { NgModule, Inject } from '@angular/core';
+import { MdDialog } from '@angular/material';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -16,6 +17,7 @@ import { BucketlistPageComponent } from '../components/bucketlist-page/bucketlis
 import { BucketlistItemComponent } from '../components/bucketlist-item/bucketlist-item.component';
 import { AddItemDialogComponent } from '../components/add-item-dialog-component/add-item-dialog.component';
 import { UpdateItemDialogComponent } from '../components/update-item-dialog-component/update-item-dialog.component';
+import { DeleteDialogComponent } from '../components/delete-dialog/delete-dialog.component';
 
 // Routing Modules
 import { BucketlistRoutingModule } from '../routes/bucketlist-routing.module';
@@ -41,7 +43,7 @@ import { GenerateHeadersService } from '../services/shared-information/generate-
 import { PageService } from '../services/shared-information/page.service';
 import { AddItemDialogService } from '../services/dialogs/add-item-dialog.service';
 import { UpdateItemDialogService } from '../services/dialogs/update-item-dialog.service';
-import { MdDialog } from '@angular/material';
+import { DeleteDialogService } from '../services/dialogs/delete-dialog.service';
 
 export function getHttpInterceptor(backend: ConnectionBackend, defaultOptions: RequestOptions){
     return new HttpInterceptorService(backend, defaultOptions);
@@ -53,6 +55,10 @@ export function addItemDialgService(dialog: MdDialog){
 
 export function updatetemDialgService(dialog: MdDialog){
     return new UpdateItemDialogService(dialog);
+}
+
+export function deleteDialgService(dialog: MdDialog){
+    return new DeleteDialogService(dialog);
 }
 
 @NgModule({
@@ -67,14 +73,16 @@ export function updatetemDialgService(dialog: MdDialog){
     ],
     exports:[
         AddItemDialogComponent,
-        UpdateItemDialogComponent
+        UpdateItemDialogComponent,
+        DeleteDialogComponent
     ],
     declarations: [
         AddItemDialogComponent,
         BucketlistComponent,
         BucketlistPageComponent,
         BucketlistItemComponent,
-        UpdateItemDialogComponent
+        UpdateItemDialogComponent,
+        DeleteDialogComponent
     ],
     providers: [
         {
@@ -90,6 +98,11 @@ export function updatetemDialgService(dialog: MdDialog){
         {
             provide: UpdateItemDialogService,
             useFactory: updatetemDialgService,
+            deps:[MdDialog]
+        },
+        {
+            provide: DeleteDialogService,
+            useFactory: deleteDialgService,
             deps:[MdDialog]
         },
         GetUserDetails,
@@ -111,7 +124,8 @@ export function updatetemDialgService(dialog: MdDialog){
     ],
     entryComponents: [
         AddItemDialogComponent,
-        UpdateItemDialogComponent
+        UpdateItemDialogComponent,
+        DeleteDialogComponent
     ]
 })
 

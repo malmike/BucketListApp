@@ -69,4 +69,14 @@
     .item_no{
         background-color: $primary-color-text;
     }
+
+    .list-items{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .single-item{
+        flex-basis: 50%;
+    }
 }
