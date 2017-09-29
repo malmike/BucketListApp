@@ -16,20 +16,17 @@ import { GenerateHeadersService } from '../../services/shared-information/genera
 import { HandleErrorsService } from '../../services/shared-information/handle-errors.service';
 import { PageService } from '../../services/shared-information/page.service';
 import { LogoutService } from '../../services/http-calls/logout.service';
-import { GetBucketlistService } from '../../services/http-calls/get-bucketlist.service';
-import { UpdateBucketlistItemService } from '../../services/http-calls/update-bucketlist-item.service';
-import { UpdateBucketlistService } from '../../services/http-calls/update-bucketlist.service';
-import { DeleteItemService } from '../../services/http-calls/delete-item.service';
-import { AddItemDialogService } from '../../services/dialogs/add-item-dialog.service';
+import { GetBucketlistsService } from '../../services/http-calls/get-bucketlists.service';
+import { AddBucketlistService } from '../../services/http-calls/add-bucketlist.service';
+import { DeleteBucketlistService } from '../../services/http-calls/delete-bucketlist.service';
 import { DeleteDialogService } from '../../services/dialogs/delete-dialog.service';
-import { UpdateItemDialogService } from '../../services/dialogs/update-item-dialog.service';
 import { GlobalVariables } from '../../global-variables/global-variables';
-import { TestToken, TestUser, BucketlistDetails} from '../../tests/test.data';
-import { MockGetBucketlistService } from '../../tests/mock-get-bucketlist-service';
+import { TestToken, TestUser} from '../../tests/test.data';
+import { MockGetBucketlistsService } from '../../tests/mock-get-bucketlists-service';
 
-describe('BucketlistItem', () => {
-    let component: BucketlistItemComponent;
-    let fixture: ComponentFixture<BucketlistItemComponent>;
+describe('BucketlistPage', () => {
+    let component: BucketlistPageComponent;
+    let fixture: ComponentFixture<BucketlistPageComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -55,21 +52,17 @@ describe('BucketlistItem', () => {
                 HandleErrorsService,
                 LogoutService,
                 PageService,
-                { provide:GetBucketlistService, useClass: MockGetBucketlistService},
-                UpdateBucketlistItemService,
-                UpdateBucketlistService,
-                DeleteItemService,
-                AddItemDialogService,
-                DeleteDialogService,
-                UpdateItemDialogService
+                AddBucketlistService,
+                {provide: GetBucketlistsService, useClass: MockGetBucketlistsService},
+                DeleteBucketlistService,
+                DeleteDialogService
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
         localStorage.setItem(GlobalVariables.getInstance().getStoreUser(), JSON.stringify({ user: TestUser, token: TestToken }));
-        localStorage.setItem(GlobalVariables.getInstance().getBucketlistDetails(), BucketlistDetails);
-        fixture = TestBed.createComponent(BucketlistItemComponent);
+        fixture = TestBed.createComponent(BucketlistPageComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     })
