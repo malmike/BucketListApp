@@ -3,16 +3,17 @@
         <img md-card-image src="assets/images/Bucketlist_logo.png"  style="margin:auto; width: 70%;" (click)="home()">
     </div>
     <span class="spacer"></span>
-    <span class="spacer"></span>
-    <md-select class="item_no" placeholder="Item No">
+    <span class="spacer" *ngIf="page"></span>
+    <md-select class="item_no" placeholder="Item No" *ngIf="page">
         <md-option *ngFor="let item_no of item_nos" value="item_no.value" (click)="change_item_no(item_no.value)">
             {{ item_no.viewValue }}
         </md-option>
     </md-select>
-    <span style="width:1em"></span>
-    <input mdInput placeholder="Bucketlist Name" type="text" class="search bg-white" (keyup)="onKey($event)"  value="{{values}}" required>
-    <img src="./assets/svg/ic_search_white_24px.svg" (click)="search()">
-    <span style="width:1em"></span>
+    <span style="width:1em" *ngIf="page"></span>
+    <input *ngIf="page" mdInput placeholder="Bucketlist Name" type="search" class="search bg-white" (keyup)="onKey($event)"  (search)="search()" value="{{values}}" required>
+    <span style="width:0.5em" *ngIf="page"></span>
+    <img src="./assets/svg/ic_search_white_24px.svg" (click)="search()" *ngIf="page">
+    <span style="width:1em" *ngIf="page"></span>
     <md-menu #appMenu="mdMenu">
         <button md-menu-item (click)="logout()"> SIGN OUT </button>
     </md-menu>

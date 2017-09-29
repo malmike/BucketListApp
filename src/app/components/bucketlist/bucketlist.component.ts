@@ -81,6 +81,7 @@ export class BucketlistComponent implements OnInit, OnDestroy{
 
     search(){
         let search:string = "q="+this.values;
+        this.values = "";
         this.pageService.announceSearch(search)
     }
 }
