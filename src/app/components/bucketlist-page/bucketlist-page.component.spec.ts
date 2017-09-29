@@ -21,8 +21,8 @@ import { AddBucketlistService } from '../../services/http-calls/add-bucketlist.s
 import { DeleteBucketlistService } from '../../services/http-calls/delete-bucketlist.service';
 import { DeleteDialogService } from '../../services/dialogs/delete-dialog.service';
 import { GlobalVariables } from '../../global-variables/global-variables';
-import { TestToken, TestUser} from '../../tests/test.data';
-import { MockGetBucketlistsService } from '../../tests/mock-get-bucketlists-service';
+import { TestToken, TestUser} from '../../tests/test.data.spec';
+import { MockGetBucketlistsService } from '../../tests/mock-get-bucketlists-service.spec';
 
 describe('BucketlistPage', () => {
     let component: BucketlistPageComponent;

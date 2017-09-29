@@ -24,8 +24,8 @@ import { AddItemDialogService } from '../../services/dialogs/add-item-dialog.ser
 import { DeleteDialogService } from '../../services/dialogs/delete-dialog.service';
 import { UpdateItemDialogService } from '../../services/dialogs/update-item-dialog.service';
 import { GlobalVariables } from '../../global-variables/global-variables';
-import { TestToken, TestUser, BucketlistDetails} from '../../tests/test.data';
-import { MockGetBucketlistService } from '../../tests/mock-get-bucketlist-service';
+import { TestToken, TestUser, BucketlistDetails} from '../../tests/test.data.spec';
+import { MockGetBucketlistService } from '../../tests/mock-get-bucketlist-service.spec';
 
 describe('BucketlistItem', () => {
     let component: BucketlistItemComponent;

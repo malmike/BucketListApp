@@ -28,8 +28,8 @@ import { UpdateBucketlistItemService } from '../../services/http-calls/update-bu
 import { GlobalVariables } from '../../global-variables/global-variables';
 
 //test data
-import { TestToken, TestUser, buckelist_1} from '../../tests/test.data';
-import { MockGetBucketlistService } from '../../tests/mock-get-bucketlist-service';
+import { TestToken, TestUser, buckelist_1} from '../../tests/test.data.spec';
+import { MockGetBucketlistService } from '../../tests/mock-get-bucketlist-service.spec';
 
 
 class MdDialogRefMock {
