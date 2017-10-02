@@ -10,8 +10,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "test_install": "NODE_ENV=test npm install",
     "preinstall": "npm install -g http-server",
-    "postinstall": "ng build --aot -prod && mv dist/* ."
+    "postinstall": "if [[ ${NODE_ENV} != \"test\" ]]; then ng build -aot --prod && mv dist/* .; else ng test -cc -sr; fi"
   },
   "private": true,
   "dependencies": {

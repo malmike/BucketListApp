@@ -49,7 +49,7 @@ describe('Delete Item Dialog', () => {
                 BucketlistPageComponent,
                 BucketlistItemComponent
             ],
-            providers:[
+            providers: [
                 {provide: APP_BASE_HREF, useValue: '/my/app'},
                 {
                     provide: MdDialogRef,

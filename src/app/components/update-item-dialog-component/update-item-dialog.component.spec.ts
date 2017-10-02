@@ -9,14 +9,14 @@ import { BucketlistRoutingModule } from '../../routes/bucketlist-routing.module'
 import { AppRoutingModule } from '../../routes/app-routing.module';
 import { MyDatePickerModule } from 'mydatepicker';
 
-//components
+// components
 import { UpdateItemDialogComponent } from './update-item-dialog.component';
 import { BucketlistComponent } from '../bucketlist/bucketlist.component';
 import { BucketlistPageComponent } from '../bucketlist-page/bucketlist-page.component';
 import { BucketlistItemComponent } from '../bucketlist-item/bucketlist-item.component';
 import { AppComponent } from '../../app.component';
 
-//services
+// services
 import { WebApiPathService } from '../../services/shared-information/webapi-path.service';
 import { GetUserDetails } from '../../services/shared-information/user-details.service';
 import { GenerateHeadersService } from '../../services/shared-information/generate-headers.service';
@@ -24,10 +24,10 @@ import { HandleErrorsService } from '../../services/shared-information/handle-er
 import { AddItemDialogService } from '../../services/dialogs/add-item-dialog.service';
 import { UpdateBucketlistItemService } from '../../services/http-calls/update-bucketlist-item.service';
 
-//global variables
+// global variables
 import { GlobalVariables } from '../../global-variables/global-variables';
 
-//test data
+// test data
 import { TestToken, TestUser, buckelist_1} from '../../tests/test.data.spec';
 import { MockGetBucketlistService } from '../../tests/mock-get-bucketlist-service.spec';
 
@@ -57,7 +57,7 @@ describe('Update Item Dialog', () => {
                 BucketlistPageComponent,
                 BucketlistItemComponent
             ],
-            providers:[
+            providers: [
                 {provide: APP_BASE_HREF, useValue: '/my/app'},
                 WebApiPathService,
                 GenerateHeadersService,
@@ -78,7 +78,7 @@ describe('Update Item Dialog', () => {
         component = fixture.componentInstance;
         component.bucketlist_item = buckelist_1;
         fixture.detectChanges();
-    })
+    });
 
     it('should be created', () => {
         expect(component).toBeTruthy();
