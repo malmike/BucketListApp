@@ -10,7 +10,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "test_install": "NODE_ENV=test npm install",
+    "test_install": "NODE_ENV=test yarn install",
     "preinstall": "if [[ ${NODE_ENV} != \"test\" ]]; then npm install -g http-server; fi",
     "postinstall": "if [[ ${NODE_ENV} != \"test\" ]]; then ng build -aot --prod && mv dist/* .; fi"
   },
