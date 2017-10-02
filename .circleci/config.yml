@@ -30,7 +30,7 @@ jobs:
           - v1-dependencies-
 
       - run: npm run test_install
-      - run: sudo PATH=$PATH:~/repo/node_modules/.bin
+      - run: PATH=$PATH:~/repo/node_modules/.bin
 
       - save_cache:
           paths:
