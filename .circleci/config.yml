@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: malmike/bucketlistapp:bucketlistapp
+      - image: circleci/node:[latest-browsers]
         env:
           - DISPLAY=:99
           - CHROME_BIN=/usr/bin/google-chrome

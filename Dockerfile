@@ -17,4 +17,7 @@ RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable 
 RUN apt-get update
 RUN apt-get install -y google-chrome-stable
 
+# Install Xvfb
+RUN apt-get install -y xvfb
+
 CMD ['echo', 'Done!']
