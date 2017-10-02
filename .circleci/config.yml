@@ -30,7 +30,7 @@ jobs:
           - v1-dependencies-
 
       - run: npm run test_install
-      - run: npm install @angular/cli@latest
+      - run: sudo PATH=$PATH:./node_modules/.bin
 
       - save_cache:
           paths:
