@@ -31,7 +31,7 @@ jobs:
 
       - run: npm run test_install
       - run: ls ~/repo/node_modules/.bin
-      - run: PATH=$PATH:~/repo/node_modules/.bin
+      - run: sudo export PATH=$PATH:~/repo/node_modules/.bin
 
       - save_cache:
           paths:
