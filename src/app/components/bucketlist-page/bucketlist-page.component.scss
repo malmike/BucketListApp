@@ -1,13 +1,11 @@
-.ng-valid[required], .ng-valid.required, md-input-container{
-  color: black;
-}
+@import '../../custom-component-theme.scss';
+@include custom-component-theme();
 
-.ng-invalid:not(md-input-container){
-  color: blue;
-}
 
 #container{
     padding-top: 1.5em;
+    width: 90%;
+    margin: 0 auto;
 }
 
 #add_bucketlist{
@@ -19,7 +17,7 @@
     padding: 0.1em 3em 0.1em 3em;
 }
 
-#list_card{
+.list_card{
     margin: auto;
     margin-top: 0.5em;
     margin-bottom: 0.5em;
@@ -36,15 +34,22 @@
 }
 
 #item_delete:hover{
-    background: red;
+    transform: scale(1.2);
 }
 
 #item_span{
     float:none;
 }
 
-#list_card:hover{
-    background: skyblue;
+.item_header{
+    display: inline-flex;
+    padding-bottom: 1em;
+    padding-left: 2em;
+}
+
+.no_items{
+    padding-top: 2em;
+    text-align: center;
 }
 
 md-card{
@@ -61,22 +66,15 @@ md-input-container{
     width: 60%;
 }
 
-button{
-    width: 25%;
-    background-color: navy;
-    color: whitesmoke;
+.custom-button{
+    width: 30%;
 }
 
-a{
-    color: navy;
-    text-decoration: none;
+.page{
+    padding: 0em 1em;
 }
 
-a:hover{
-    color: blueviolet;
-    text-decoration: underline;
-}
-
-md-hint{
-  color: red;
+.pagination{
+    margin: 0 auto;
+    width: fit-content;
 }

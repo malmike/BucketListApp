@@ -1,13 +1,14 @@
 // External Dependencies
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MdSnackBar } from '@angular/material';
+import { Subscription }   from 'rxjs/Subscription';
+
 
 // Models
 import { BucketlistModel } from '../../models/bucketlist.model';
 import { BucketlistPageModel } from '../../models/bucketlist_page.model';
-import { CurrentUserModel } from '../../models/current-user.model';
 import { UserModel } from '../../models/user.model';
 
 // Services
@@ -15,6 +16,9 @@ import { AddBucketlistService } from '../../services/http-calls/add-bucketlist.s
 import { GetBucketlistsService } from '../../services/http-calls/get-bucketlists.service';
 import { DeleteBucketlistService } from '../../services/http-calls/delete-bucketlist.service';
 import { WebApiPathService } from '../../services/shared-information/webapi-path.service';
+import { GetUserDetails } from '../../services/shared-information/user-details.service';
+import { DeleteDialogService } from '../../services/dialogs/delete-dialog.service';
+import { PageService } from '../../services/shared-information/page.service';
 
 // Global Variables
 import { GlobalVariables } from '../../global-variables/global-variables';
@@ -22,34 +26,58 @@ import { GlobalVariables } from '../../global-variables/global-variables';
 @Component({
     selector: 'bucketlistpage',
     templateUrl: './bucketlist-page.component.html',
-    styleUrls: ['./bucketlist-page.component.css']
+    styleUrls: ['./bucketlist-page.component.scss']
 })
 
-export class BucketlistPageComponent implements OnInit{
+export class BucketlistPageComponent implements OnInit, OnDestroy{
     addbucketlistForm: FormGroup;
     active:boolean = true;
     delete:boolean = false;
+    limit: string = "?limit=5";
     bucketlist: BucketlistModel = new BucketlistModel();
     bucketlists: Array<BucketlistModel> = new Array<BucketlistModel>();
     bucketlist_page: BucketlistPageModel = new BucketlistPageModel();
-    currentUser: CurrentUserModel = JSON.parse(localStorage.getItem(GlobalVariables.getInstance().getStoreUser()));
-    user:UserModel = this.currentUser.user;
-    user_name = this.user.fname+" "+this.user.lname;
+    user: UserModel = new UserModel()
+    user_name:string = "";
+    private token: string;
+    private subscription: Subscription;
+    private subscription2: Subscription;
 
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe()
+        this.subscription2.unsubscribe()
+    }
 
     ngOnInit(): void {
+        this.subscription = this.pageService.limitAnnounced$.subscribe(limit => {
+            this.limit = limit;
+            this.getBucketLists()
+        })
+        this.subscription2 = this.pageService.searchAnnounced$.subscribe(search => {
+            console.log(search)
+            if(search == "q=*"){
+                this.getBucketLists();
+            }else{
+                this.getBucketLists(1, search)
+            }
+        })
+        this.pageService.announcePage("PAGE")
+        this.getUser();
         this.buildForm();
         this.getBucketLists();
     }
 
     constructor(
+        private pageService: PageService,
         private fb: FormBuilder,
         private router: Router,
         private snackBar: MdSnackBar,
         private addBucketlistService: AddBucketlistService,
         private webApiPathService: WebApiPathService,
         private getBucketlistsService: GetBucketlistsService,
-        private deleteBucketlistService: DeleteBucketlistService){}
+        private deleteBucketlistService: DeleteBucketlistService,
+        private user_details: GetUserDetails,
+        public deleteDialogService: DeleteDialogService){}
 
     buildForm(): void {
          this.addbucketlistForm = this.fb.group({
@@ -62,7 +90,13 @@ export class BucketlistPageComponent implements OnInit{
         this.onValueChanged();
     }
 
-     onValueChanged(data?: any){
+    private getUser(){
+        this.user = this.user_details.getUser();
+        this.user_name = this.user.fname+" "+this.user.lname;
+        this.token = this.user_details.gettoken();
+    }
+
+    onValueChanged(data?: any){
         if(!this.addbucketlistForm) { return; }
         const form = this.addbucketlistForm;
 
@@ -91,53 +125,34 @@ export class BucketlistPageComponent implements OnInit{
 
     onSubmitForm(){
         this.bucketlist = this.addbucketlistForm.value;
+        this.buildForm();
         this.addbucketlistForm.controls.name.setValue("");
-        this.addBucketlistService.addBucketlist(this.bucketlist, this.webApiPathService.getWebApiPath('bucketlist').path, this.currentUser.token)
+        this.addBucketlistService.addBucketlist(this.bucketlist, this.webApiPathService.getWebApiPath('bucketlist').path, this.token)
             .subscribe(response => {
-                if (response.status === "success") {
-                    this.snackBar.open(response.message, '', {
-                        duration: 2000,
-                    });
-                    console.log("Successful adding of bucketlist:", response.message);
-                    this.getBucketLists();
-                }else{
-                    this.snackBar.open(response.message, '', {
-                        duration: 2000,
-                    });
-                    console.log("Failure adding bucketlist:", response.message);
-                }
+                this.snackBar.open(response.message, '', {
+                    duration: 2000,
+                });
+                this.getBucketLists();
             },
             errMsg => {
                 this.snackBar.open(errMsg, '', {
                         duration: 2000,
                 });
-                console.log("Failure adding bucketlist:", errMsg);
             });
     }
 
-    getBucketLists(query: string = null){
-        let urlPath: string = this.webApiPathService.getWebApiPath('bucketlist').path;
+    getBucketLists(page:number = 1, query: string = null){
+        let urlPath: string = this.webApiPathService.getWebApiPath('bucketlist').path+this.limit+"&page="+page.toString();
         if(query !== null ){
-            urlPath += query;
+            urlPath += "&"+query;
         }
-        this.getBucketlistsService.getBucketlists(urlPath, this.currentUser.token)
+        this.getBucketlistsService.getBucketlists(urlPath, this.token)
             .subscribe(response => {
-                if (response.status === "success") {
-                    this.snackBar.open(response.message, '', {
-                        duration: 2000,
-                    });
-                    this.bucketlist_page = this.getBucketListPage();
-                    console.log('Successful gettting of bucketlists:', response.message);
-                    this.bucketlists = this.bucketlist_page.data;
-                }else{
-                    this.snackBar.open(response.message, '', {
-                        duration: 2000,
-                    });
-                    if (response.message =="User has no single bucketlist"){
-                        this.bucketlists = [];
-                    }
-                    console.log('Failure getting bucketlists:', response.message);
-                }
+                this.snackBar.open(response.message, '', {
+                    duration: 2000,
+                });
+                this.bucketlist_page = this.getBucketListPage();
+                this.bucketlists = this.bucketlist_page.data;
             },
             errMsg => {
                 this.snackBar.open(errMsg, '', {
@@ -146,7 +161,6 @@ export class BucketlistPageComponent implements OnInit{
                 if(errMsg=="User has no single bucketlist"){
                     this.bucketlists = [];
                 }
-                console.log('Failure getting bucketlists:', errMsg);
             });
     }
 
@@ -154,38 +168,45 @@ export class BucketlistPageComponent implements OnInit{
         return this.getBucketlistsService.getBucketlistPage();
     }
 
-    navBucketlistItem(id:number){
+    navBucketlistItem(id:number, name:string){
         if(this.delete){
             this.delete = false;
         }else{
-            localStorage.setItem(GlobalVariables.getInstance().getBucketlistId(), id.toString());
+            localStorage.setItem(
+                GlobalVariables.getInstance().getBucketlistDetails(),
+                JSON.stringify({ id: id.toString(), name: name})
+            );
             this.router.navigate(['/bucketlistitem']);
         }
+    }
+
+    openDeleteDialog(bucketlist: string, id: number): void{
+        this.delete = true;
+        let name: string = "bucket list " + bucketlist;
+        let title: string = "BUCKET LIST";
+        this.deleteDialogService
+            .deleteItem(title, name)
+            .subscribe(res => {
+                if(res){
+                    this.deleteBucketlist(id);
+                }
+            });
     }
 
     deleteBucketlist(id:number){
         this.delete = true;
         let urlPath = this.webApiPathService.getWebApiPath('bucketlist').path + '/' + id;
-        this.deleteBucketlistService.deleteBucketlist(urlPath, this.currentUser.token)
+        this.deleteBucketlistService.deleteBucketlist(urlPath, this.token)
             .subscribe(response => {
-                if (response.status === "success"){
-                    this.snackBar.open( response.message, '', {
-                        duration: 2000,
-                    });
-                    console.log("Successful deleting of bucketlist:", response.message)
-                    this.getBucketLists();
-                }else{
-                    this.snackBar.open( response.message, '', {
-                        duration: 2000,
-                    });
-                    console.log('Failure deleting bucketlists:', response.message);
-                }
+                this.snackBar.open( response.message, '', {
+                    duration: 2000,
+                });
+                this.getBucketLists();
             },
             errMsg => {
                 this.snackBar.open(errMsg, '', {
                         duration: 2000,
                 });
-                console.log('Failure deleting bucketlists:', errMsg);
             });
     }
 

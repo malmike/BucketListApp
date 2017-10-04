@@ -1,0 +1,32 @@
+@import '../../custom-component-theme.scss';
+@include custom-component-theme();
+
+.additem, #date_picker{
+    width: 80%;
+    margin: 0 auto;
+}
+
+.custom_button{
+    margin-top: 1em;
+    width: 100%;
+}
+
+
+#updateitem-div, #item_details{
+    text-align: left;
+    text-justify: auto;
+    margin: 2em auto;
+    width: 90%;
+}
+
+.float-right{
+    float: right;
+}
+
+.title{
+    text-align: center;
+}
+
+.item_name{
+    width: 100%;
+}

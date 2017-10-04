@@ -1,0 +1,89 @@
+@import '../../custom-component-theme.scss';
+@include custom-component-theme();
+
+#container{
+    padding-top: 1.5em;
+    width: 90%;
+    margin: 0 auto;
+}
+
+#bucketlist_header{
+    text-align: center;
+}
+
+#bucketlist_title{
+    margin: auto;
+    padding: 0.1em 2em 0.1em 3em;
+}
+
+.list_card{
+    margin: auto;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    width:80%;
+    padding: 1em 0.5em 2em 3em;
+}
+
+.create_details{
+    display: inline-flex;
+    text-align: left;
+}
+
+.create{
+    padding:  0.1em 3em 0.1em 3em;
+}
+.modify{
+    padding:  0.1em 3em 0.1em 3em;
+}
+
+#item_name{
+    float: left;
+}
+
+.item_svg{
+    float:right;
+}
+
+.name{
+    font-weight: bold;
+    font-size: 2em;
+}
+
+.item_delete:hover{
+    transform: scale(1.2);
+}
+
+#item_span{
+    float:none;
+}
+
+md-card{
+    margin: auto;
+    padding: 3em 3em 2.5em 3em;
+    width: 80%;
+}
+
+md-card-content{
+    padding: 0.1em 1.5em 0 1.5em;
+}
+
+md-input-container{
+    width: 60%;
+    margin: 0 auto;
+}
+
+.item_header{
+    display: inline-flex;
+    padding-bottom: 1em;
+    padding-left: 2em;
+}
+
+.no_items{
+    padding-top: 2em;
+    text-align: center;
+}
+
+.custom_button{
+    width: 12.5%;
+}
+

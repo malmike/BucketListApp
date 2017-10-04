@@ -1,17 +1,43 @@
   <div layout="row" layout-align="center center" id="container">
     <md-card id="bucketlist_header">
         <md-card-content>
-            <form>
-                 <md-input-container>
-                    <input mdInput [readonly]="!edit" value="{{bucketlist.name}}" type="text" id="name" required>
-                    <md-hint align="end"></md-hint>
+            <form [formGroup]="editbucketlistForm" *ngIf="active" (ngSubmit)="updateBucketlistName()">
+                <md-input-container>
+                    <input mdInput [readonly]="!edit" value="{{bucketlist.name}}" formControlName="name"  type="text" id="name" class="name t-primary" required>
+                    <md-hint align="end" *ngIf="formErrors.name">{{ formErrors.name }}</md-hint>
                 </md-input-container>
                 <img id="item_edit" *ngIf="!edit" src="./assets/svg/ic_mode_edit_black_24px.svg" (click)="canEdit()">
-                <button md-raised-button type="submit" *ngIf="edit">UPDATE</button>
-                <button md-raised-button id="cancel" (click)="cancel()" *ngIf="edit">CANCEL</button>
+                <button md-raised-button class="custom_button bg-primary" type="submit" *ngIf="edit" [disabled]="!editbucketlistForm.valid">UPDATE</button>
+                <button md-raised-button class="custom_button cancel" (click)="cancel()" *ngIf="edit">CANCEL</button>
             </form>
         </md-card-content>
+        <md-card-footer>
+            <div class='create_details'>
+                <h5 class='create date_modify'>DATE CREATED: <i>{{bucketlist.date_created | date:'medium'}}</i></h5>
+                <h5 class='modify date_modify'>DATE MODIFIED: <i>{{bucketlist.date_modified | date:'medium'}}</i></h5>
+            </div>
+        </md-card-footer>
     </md-card>
     <br><br>
-    <h1 id="bucketlist_title">Bucket List Items</h1>
+    <div class="item_header">
+        <h1 id="bucketlist_title">Bucket List Items</h1>
+        <button md-mini-fab color="accent" (click)="openAddItemDialog()">
+            <md-icon class="md-24">add</md-icon>
+        </button>
+    </div>
+    <div class="no_items t-primary" *ngIf="bucketlist_items.length==0">
+        <i>NO EXISTING ITEMS. USE THE ADD BUTTON ABOVE TO ADD BUCKETLIST ITEMS</i>
+    </div>
+
+    <md-list class="list-items">
+        <md-list-item *ngFor="let item of bucketlist_items; let idx = index" class="single-item">
+            <md-card class="list_card" (click)="openUpdateItemDialog(item, idx)">
+                <md-card-content id="list_content">
+                    <md-checkbox (click)="update_complete(item, idx)" [(ngModel)]="item.completed">{{item.name}}</md-checkbox>
+                    <img class="item_delete item_svg" src="./assets/svg/ic_delete_black_24px.svg" (click)="openDeleteDialog(item.name, item.id)">
+                </md-card-content>
+            </md-card>
+        </md-list-item>
+    </md-list>
+
 </div>

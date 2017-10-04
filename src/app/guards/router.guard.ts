@@ -9,25 +9,11 @@ import { GlobalVariables } from '../global-variables/global-variables';
 export class Permissions{
     canLoadChildren(currentUser: CurrentUserModel): boolean{
         if (currentUser !== null){
-            if (currentUser.user !== null &&currentUser.token !== null){
+            if (currentUser.user !== null && currentUser.token !== null){
                 return true;
             }
         }
         return false;
-    }
-}
-
-@Injectable()
-export class CanLoadGuard implements CanLoad{
-
-    constructor(
-        private permissions: Permissions
-    ) {
-    }
-
-    canLoad(): boolean | Observable<boolean> | Promise<boolean> {
-        let currentUser: CurrentUserModel = JSON.parse(localStorage.getItem(GlobalVariables.getInstance().getStoreUser()));
-        return this.permissions.canLoadChildren(currentUser);
     }
 }
 
@@ -47,5 +33,24 @@ export class CanActivateGuard implements CanActivate{
         }
         this.router.navigate(['/login']);
         return false;
+    }
+}
+
+@Injectable()
+export class LogoutGuard implements CanActivate{
+
+    constructor(
+        private router: Router,
+        private permissions: Permissions
+    ) {
+    }
+
+    canActivate(): boolean | Observable<boolean> | Promise<boolean> {
+        let currentUser: CurrentUserModel = JSON.parse(localStorage.getItem(GlobalVariables.getInstance().getStoreUser()));
+        if(this.permissions.canLoadChildren(currentUser)){
+            this.router.navigate(['/bucketlist']);
+            return false;
+        }
+        return true;
     }
 }

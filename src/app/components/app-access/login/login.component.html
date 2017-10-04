@@ -1,7 +1,7 @@
  <div layout="row" layout-align="center center" id="container">
     <md-card>
         <md-card-header>
-            <img md-card-image src="assets/images/BucketListLogo.png" style="margin:auto; width: 70%; background-color: skyblue ">
+            <img md-card-image src="assets/images/Bucketlist_logo.png" style="margin:auto; width: 70%; padding: 0.5em;" class="bg-primary">
         </md-card-header><br>
         <md-card-content>
             <form [formGroup]="loginForm" *ngIf="active" (ngSubmit)="onSubmitForm()">
@@ -13,7 +13,7 @@
                     <input mdInput placeholder="Password" formControlName="password" type="password" id="password" required>
                 </md-input-container>
                 <div id="submit-container">
-                    <button md-raised-button type="submit" [disabled]="!loginForm.valid">LOGIN</button>
+                    <button md-raised-button type="submit" [disabled]="!loginForm.valid" class="bg-accent">LOGIN</button>
                 </div>
             </form>
         </md-card-content>

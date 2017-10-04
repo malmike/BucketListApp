@@ -1,11 +1,13 @@
 import { Injectable }    from '@angular/core';
-import { Headers, Http, Response, RequestOptions } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
 import { GlobalVariables } from '../../global-variables/global-variables';
 import { UserModel } from '../../models/user.model';
 import { ResponseModel } from '../../models/response.model';
+import { HandleErrorsService } from '../shared-information/handle-errors.service';
+import { GenerateHeadersService } from '../shared-information/generate-headers.service';
 
 @Injectable()
 export class RegistrationService {
@@ -17,51 +19,27 @@ export class RegistrationService {
     private token: string;
     private password: string;
 
-    constructor(private http: Http) {}
+    constructor(
+        private http: Http,
+        private generateHeadersService: GenerateHeadersService,
+        private handleErrorsService: HandleErrorsService) {}
 
     register(user: UserModel, path: string): Observable<ResponseModel>{
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Accept', 'application/json');
-        let requestoptions = new RequestOptions({
-            headers: headers
-        });
-
+        this.password = user.password;
         let urlPath: string = this.authUrl + path;
 
         return this.http
-                   .post(urlPath, JSON.stringify(user), requestoptions)
-                   .map((res: Response) => {
-                        let resp = res.json();
-                        if(resp.status === 'success'){
-                            this.user = resp.data;
-                            this.user.password = this.password;
-                            this.token = resp.token;
-                            localStorage.setItem(this.storeUser, JSON.stringify({ user: this.user, token: this.token }));
-                            console.log(resp)
-                            this.response.status = resp.status;
-                            this.response.message = resp.message;
-                            return this.response;
-                        }else{
-                            this.response.status = "fail";
-                            this.response.message = resp.message;
-                            return this.response;
-                        }
-                   })
-                   .catch((err) => this.handleError(err));
+            .post(urlPath, JSON.stringify(user), this.generateHeadersService.getHeaders())
+            .map((res: Response) => {
+                let resp = res.json();
+                this.user = resp.data;
+                this.user.password = this.password;
+                this.token = resp.auth_token;
+                localStorage.setItem(this.storeUser, JSON.stringify({ user: this.user, token: this.token }));
+                this.response.status = resp.status;
+                this.response.message = resp.message;
+                return this.response;
+            })
+            .catch((err) => this.handleErrorsService.handleError(err));
     }
-
-    public handleError (error: Response | any) {
-        let errMsg: string;
-        if (error instanceof Response) {
-            const body = error.json() || 'Failed';
-            const err = body.message || JSON.stringify(body);
-            errMsg = `${err}`;
-        } else {
-            errMsg = error.message ? error.message : error.toString();
-        }
-        console.error(errMsg);
-        return Observable.throw(errMsg);
-    }
-
 }

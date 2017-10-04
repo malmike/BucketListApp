@@ -1,0 +1,33 @@
+<img class="close float-right" src="./assets/svg/ic_cancel_red_24px.svg" (click)="close()">
+<img class="edit float-right" *ngIf="!edit" src="./assets/svg/ic_mode_edit_black_24px.svg" (click)="to_edit()">
+<img class="back float-right" *ngIf="edit" src="./assets/svg/ic_arrow_back_blue_24px.svg" (click)="go_back()">
+<div id='updateitem-div' *ngIf="edit">
+    <h3 class="title">UPDATE BUCKETLIST ITEM</h3>
+    <form [formGroup]="updateItemForm" *ngIf="active" (ngSubmit)="updateItem()">
+        <md-input-container class="md-input additem">
+            <input mdInput placeholder="Bucketlist Item Name" formControlName="name"  type="text" class="name" required>
+            <md-hint align="end" *ngIf="formErrors.name">{{ formErrors.name }}</md-hint>
+        </md-input-container>
+        <br>
+            <md-checkbox formControlName="completed">Task Completed</md-checkbox>
+        <br>
+        <br>
+        <div class="additem-button additem">
+            <button md-raised-button class="custom_button bg-primary" type="submit" [disabled]="!updateItemForm.valid">UPDATE ITEM</button>
+        </div>
+    </form>
+</div>
+
+<div id="item_details" *ngIf="!edit">
+    <h3 class="title">ITEM DETAILS</h3>
+    <div>
+        <p><b>ITEM NAME: </b></p><p class="t-primary">{{ bucketlist_item.name }}</p>
+        <p><b>TASK: </b></p>
+            <span *ngIf="bucketlist_item.completed;then complete else incomplete"></span>
+            <ng-template #complete><i style="color:green">completed</i></ng-template>
+            <ng-template #incomplete><i style="color:red">incomplete</i></ng-template>
+        <p><b>FINISHING DATE: </b></p><p class="t-primary">{{ bucketlist_item.finished_by | date }}</p>
+        <p><b>CREATION DATE: </b></p><p class="t-primary">{{ bucketlist_item.date_created | date:'medium' }}</p>
+        <p><b>MODIFICATION DATE: </b></p><p class="t-primary">{{ bucketlist_item.date_modified | date:'medium' }}</p>
+    </div>
+</div>

@@ -31,8 +31,6 @@ export abstract class HttpInterceptor extends Http{
         if(req_method === RequestMethod.Post) return super.post(req_url, req_body, req_options);
         if(req_method === RequestMethod.Put) return super.put(req_url, req_body, req_options);
         if(req_method === RequestMethod.Delete) return super.delete(req_url, req_options);
-
-        return Observable.throw(new Error("Testing 123"));
     }
 
     private getRequestOptions(options?: RequestOptionsArgs): RequestOptionsArgs{
@@ -87,7 +85,7 @@ export abstract class HttpInterceptor extends Http{
                 let req_body = this.request_body;
                 let req_options = this.request_options;
                 let req_url = this.request_url;
-                return this.refreshToken().mergeMap(res =>{
+                return this.refreshToken(err).mergeMap(res =>{
                     if(res){
                         let data = res.json();
                         let token = data.auth_token;
@@ -103,7 +101,7 @@ export abstract class HttpInterceptor extends Http{
     }
 
     protected abstract saveToken(token: string): string;
-    protected abstract refreshToken(): Observable<Response>;
+    protected abstract refreshToken(err: Error): Observable<Response>;
     protected abstract getTokenHeader(): string;
 
 }

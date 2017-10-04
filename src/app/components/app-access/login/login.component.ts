@@ -16,7 +16,7 @@ import { UserModel } from '../../../models/user.model';
 @Component({
     selector: 'login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css']
+    styleUrls: ['./login.component.scss']
 })
 
 export class LoginComponent implements OnInit{
@@ -88,24 +88,15 @@ export class LoginComponent implements OnInit{
         this.user = this.loginForm.value;
         this.loginService.authenticate(this.user, this.webApiPathService.getWebApiPath('login').path)
             .subscribe(responseSp => {
-                if (responseSp.status === "success") {
-                    console.log(responseSp.message);
-                    this.snackBar.open(responseSp.message, '', {
-                        duration: 2000,
-                    });
-                    this.router.navigate(['/nav', 'bucketlist']);
-                }else{
-                    this.snackBar.open(responseSp.message, '', {
-                        duration: 2000,
-                    });
-                    console.log(responseSp.message);
-                }
+                this.snackBar.open(responseSp.message, '', {
+                    duration: 2000,
+                });
+                this.router.navigate(['/bucketlist']);
             },
             errMsg => {
                 this.snackBar.open(errMsg, '', {
                         duration: 2000,
                 });
-                console.log(errMsg);
             });
     }
 

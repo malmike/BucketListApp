@@ -1,0 +1,15 @@
+@import '../../custom-component-theme.scss';
+@include custom-component-theme();
+
+.spacer{
+    flex: 1 1 auto;
+}
+
+.container{
+    text-align: center;
+}
+
+.search{
+    width: 10em;
+}
+

@@ -10,8 +10,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "preinstall": "npm install -g http-server",
-    "postinstall": "ng build --aot -prod && mv dist/* ."
+    "test_install": "NODE_ENV=test npm install",
+    "preinstall": "if [[ ${NODE_ENV} != \"test\" ]]; then npm install -g http-server; fi",
+    "postinstall": "if [[ ${NODE_ENV} != \"test\" ]]; then ng build -aot --prod && mv dist/* .; fi"
   },
   "private": true,
   "dependencies": {
@@ -30,6 +31,7 @@
     "@angular/router": "^4.0.0",
     "core-js": "^2.4.1",
     "hammerjs": "^2.0.8",
+    "mydatepicker": "^2.0.31",
     "rxjs": "^5.4.1",
     "zone.js": "^0.8.14"
   },

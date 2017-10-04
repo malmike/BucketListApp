@@ -18,7 +18,7 @@ import { UserModel } from '../../../models/user.model';
 @Component({
     selector: 'registration',
     templateUrl: './registration.component.html',
-    styleUrls: ['./registration.component.css']
+    styleUrls: ['./registration.component.scss']
 })
 
 export class RegistrationComponent implements OnInit{
@@ -133,24 +133,15 @@ export class RegistrationComponent implements OnInit{
         this.user = this.registrationForm.value;
         this.registrationService.register(this.user, this.webApiPathService.getWebApiPath('registration').path)
             .subscribe(responseSp => {
-                if (responseSp.status === "success") {
-                    console.log(responseSp.message);
-                    this.snackBar.open(responseSp.message, '', {
-                        duration: 2000,
-                    });
-                    this.router.navigate(['/nav', 'bucketlist']);
-                }else{
-                    this.snackBar.open(responseSp.message, '', {
-                        duration: 2000,
-                    });
-                    console.log(responseSp.message);
-                }
+                this.snackBar.open(responseSp.message, '', {
+                    duration: 2000,
+                });
+                this.router.navigate(['/bucketlist']);
             },
             errMsg => {
                 this.snackBar.open(errMsg, '', {
                         duration: 2000,
                 });
-                console.log(errMsg);
             });
     }
 

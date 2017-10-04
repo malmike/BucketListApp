@@ -1,0 +1,23 @@
+@import '../../custom-component-theme.scss';
+@include custom-component-theme();
+
+.additem, #date_picker{
+    width: 80%;
+    margin: 0 auto;
+}
+
+.custom_button{
+    margin-top: 1em;
+    width: 100%;
+}
+
+
+#additem-div{
+    text-align: center;
+    margin: 5em auto;
+    width: 75%;
+}
+
+.close{
+    float: right;
+}
