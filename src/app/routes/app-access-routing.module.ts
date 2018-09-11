@@ -11,8 +11,8 @@ import { RegistrationComponent } from '../components/app-access/registration/reg
 
 @NgModule({
   imports: [RouterModule.forChild([
-      { path: 'login', component: LoginComponent, canActivate: [LogoutGuard] },
-      { path: 'registration', component: RegistrationComponent, canActivate: [LogoutGuard]  }
+      { path: 'login', component: LoginComponent, canActivate:[LogoutGuard] },
+      { path: 'registration', component: RegistrationComponent, canActivate:[LogoutGuard]  }
   ])],
   exports: [RouterModule]
 })
