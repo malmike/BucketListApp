@@ -45,19 +45,19 @@ import { AddItemDialogService } from '../services/dialogs/add-item-dialog.servic
 import { UpdateItemDialogService } from '../services/dialogs/update-item-dialog.service';
 import { DeleteDialogService } from '../services/dialogs/delete-dialog.service';
 
-export function getHttpInterceptor(backend: ConnectionBackend, defaultOptions: RequestOptions) {
+export function getHttpInterceptor(backend: ConnectionBackend, defaultOptions: RequestOptions){
     return new HttpInterceptorService(backend, defaultOptions);
 }
 
-export function addItemDialgService(dialog: MdDialog) {
+export function addItemDialgService(dialog: MdDialog){
     return new AddItemDialogService(dialog);
 }
 
-export function updatetemDialgService(dialog: MdDialog) {
+export function updatetemDialgService(dialog: MdDialog){
     return new UpdateItemDialogService(dialog);
 }
 
-export function deleteDialgService(dialog: MdDialog) {
+export function deleteDialgService(dialog: MdDialog){
     return new DeleteDialogService(dialog);
 }
 
@@ -71,7 +71,7 @@ export function deleteDialgService(dialog: MdDialog) {
         CustomMaterialModule,
         MyDatePickerModule
     ],
-    exports: [
+    exports:[
         AddItemDialogComponent,
         UpdateItemDialogComponent,
         DeleteDialogComponent
@@ -88,22 +88,22 @@ export function deleteDialgService(dialog: MdDialog) {
         {
             provide: Http,
             useFactory: getHttpInterceptor,
-            deps: [XHRBackend, RequestOptions]
+            deps:[XHRBackend, RequestOptions]
         },
         {
             provide: AddItemDialogService,
             useFactory: addItemDialgService,
-            deps: [MdDialog]
+            deps:[MdDialog]
         },
         {
             provide: UpdateItemDialogService,
             useFactory: updatetemDialgService,
-            deps: [MdDialog]
+            deps:[MdDialog]
         },
         {
             provide: DeleteDialogService,
             useFactory: deleteDialgService,
-            deps: [MdDialog]
+            deps:[MdDialog]
         },
         GetUserDetails,
         Permissions,
