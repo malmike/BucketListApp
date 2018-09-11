@@ -18,6 +18,6 @@ export class GenerateHeadersService {
         let requestoptions = new RequestOptions({
             headers: headers
         });
-        return requestoptions;;
+        return requestoptions;
     }
 }

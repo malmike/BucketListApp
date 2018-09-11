@@ -1,5 +1,6 @@
 # BucketListApp
 This is bucket list web application built in angular that consumes data from BucketlistApi
+You can test the running application [running on heroku](https://m2bucketlistapp.herokuapp.com/)
 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.2.7.
