@@ -11,7 +11,7 @@ import { AddBucketlistItemService} from '../../services/http-calls/add-bucketlis
 import { WebApiPathService } from '../../services/shared-information/webapi-path.service';
 import { GetUserDetails } from '../../services/shared-information/user-details.service';
 
-//Models
+// Models
 import { BucketlistItemModel } from '../../models/bucketlist_item.model';
 
 // Global Variables
@@ -37,7 +37,7 @@ export class AddItemDialogComponent implements OnInit{
         private snackBar: MdSnackBar,
         private webApiPathService: WebApiPathService,
         private addBucketlistItemService: AddBucketlistItemService,
-        private getUserDetails: GetUserDetails){}
+        private getUserDetails: GetUserDetails) {}
 
     ngOnInit(): void {
         this.get_token();
